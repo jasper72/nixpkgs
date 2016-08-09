@@ -126,7 +126,7 @@ in
 
       environment = {
         LD_LIBRARY_PATH = ''/run/opengl-driver/lib:/run/opengl-driver-32/lib'';
-        DISPLAY = ":${toString config.services.xserver.display}";
+        DISPLAY = ":0";
         GPU_MAX_ALLOC_PERCENT = "100";
         GPU_USE_SYNC_OBJECTS = "1";
       };

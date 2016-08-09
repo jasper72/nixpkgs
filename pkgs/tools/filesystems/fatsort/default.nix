@@ -19,6 +19,5 @@ stdenv.mkDerivation rec {
     maintainers = [ maintainers.kovirobi ];
     license = licenses.gpl2;
     inherit version;
-    platforms = platforms.linux;
   };
 }

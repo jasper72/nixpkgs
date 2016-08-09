@@ -40,6 +40,5 @@ stdenv.mkDerivation rec {
       from it).
     '';
     maintainers = [ stdenv.lib.maintainers.mornfall ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -19,6 +19,5 @@ in stdenv.mkDerivation {
     description = "Common functions found on BSD systems";
     homepage = http://libbsd.freedesktop.org/;
     license = stdenv.lib.licenses.bsd3;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

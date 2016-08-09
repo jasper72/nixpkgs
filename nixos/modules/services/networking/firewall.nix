@@ -101,22 +101,9 @@ let
     # Perform a reverse-path test to refuse spoofers
     # For now, we just drop, as the raw table doesn't have a log-refuse yet
     ${optionalString (kernelHasRPFilter && cfg.checkReversePath) ''
-      # Clean up rpfilter rules
-      ip46tables -t raw -D PREROUTING -j nixos-fw-rpfilter 2> /dev/null || true
-      ip46tables -t raw -F nixos-fw-rpfilter 2> /dev/null || true
-      ip46tables -t raw -N nixos-fw-rpfilter 2> /dev/null || true
-
-      ip46tables -t raw -A nixos-fw-rpfilter -m rpfilter -j RETURN
-
-      # Allows this host to act as a DHCPv4 server
-      iptables -t raw -A nixos-fw-rpfilter -s 0.0.0.0 -d 255.255.255.255 -p udp --sport 68 --dport 67 -j RETURN
-
-      ${optionalString cfg.logReversePathDrops ''
-        ip46tables -t raw -A nixos-fw-rpfilter -j LOG --log-level info --log-prefix "rpfilter drop: "
-      ''}
-      ip46tables -t raw -A nixos-fw-rpfilter -j DROP
-
-      ip46tables -t raw -A PREROUTING -j nixos-fw-rpfilter
+      if ! ip46tables -A PREROUTING -t raw -m rpfilter --invert -j DROP; then
+        echo "<2>failed to initialise rpfilter support" >&2
+      fi
     ''}
 
     # Accept all traffic on the trusted interfaces.
@@ -201,7 +188,9 @@ let
     ip46tables -D INPUT -j nixos-fw 2>/dev/null || true
 
     ${optionalString (kernelHasRPFilter && cfg.checkReversePath) ''
-      ip46tables -t raw -D PREROUTING -j nixos-fw-rpfilter 2>/dev/null || true
+      if ! ip46tables -D PREROUTING -t raw -m rpfilter --invert -j DROP; then
+        echo "<2>failed to stop rpfilter support" >&2
+      fi
     ''}
 
     ${cfg.extraStopCommands}
@@ -384,16 +373,6 @@ in
           disable this setting and setup your own counter-measures.
 
           (needs kernel 3.3+)
-        '';
-    };
-
-    networking.firewall.logReversePathDrops = mkOption {
-      default = false;
-      type = types.bool;
-      description =
-        ''
-          Logs dropped packets failing the reverse path filter test if
-          the option networking.firewall.checkReversePath is enabled.
         '';
     };
 

@@ -15,6 +15,5 @@ stdenv.mkDerivation rec {
     description = "Library containing high-performance datastructures and utilities for C++";
     homepage = https://github.com/rescrv/e;
     license = licenses.bsd3;
-    platforms = [ "x86_64-linux" ];
   };
 }

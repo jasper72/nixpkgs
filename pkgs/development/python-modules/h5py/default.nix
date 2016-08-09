@@ -1,16 +1,17 @@
 { stdenv, fetchurl, python, buildPythonPackage
 , numpy, hdf5, cython, six, pkgconfig
-, mpi4py ? null }:
+, mpiSupport ? false, mpi4py ? null, mpi ? null }:
 
-assert hdf5.mpiSupport -> mpi4py != null && hdf5.mpi == mpi4py.mpi;
+assert mpiSupport == hdf5.mpiSupport;
+assert mpiSupport -> mpi != null
+  && mpi4py != null
+  && mpi == mpi4py.mpi
+  && mpi == hdf5.mpi
+  ;
 
 with stdenv.lib;
 
-let
-  mpi = hdf5.mpi;
-  mpiSupport = hdf5.mpiSupport;
-
-in buildPythonPackage rec {
+buildPythonPackage rec {
   name = "h5py-${version}";
   version = "2.5.0";
 

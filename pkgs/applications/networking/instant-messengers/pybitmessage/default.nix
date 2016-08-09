@@ -35,6 +35,5 @@ stdenv.mkDerivation rec {
     description = "The official Bitmessage client";
     license = licenses.mit;
     maintainers = with maintainers; [ jgillich ];
-    platforms = with platforms; linux;
   };
 }

@@ -12,7 +12,7 @@ let
 
   buildAndroidStudio = { name, version, build, src, license, description, wmClass }:
     let drv = (mkIdeaProduct rec {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "Studio";
       meta = with stdenv.lib; {
         homepage = https://developer.android.com/sdk/installing/studio.html;
@@ -24,7 +24,6 @@ let
           once it's ready.
         '';
         platforms = platforms.linux;
-        hydraPlatforms = []; # Depends on androidsdk, which hits Hydra's output limits
         maintainers = with maintainers; [ edwtjo ];
       };
     });
@@ -32,14 +31,13 @@ let
       buildInputs = x.buildInputs ++ [ makeWrapper ];
       installPhase = x.installPhase +  ''
         wrapProgram "$out/bin/android-studio" \
-          --set ANDROID_HOME "${androidsdk}/libexec/" \
-          --set LD_LIBRARY_PATH "${stdenv.cc.cc.lib}/lib" # Gradle installs libnative-platform.so in ~/.gradle, that requires libstdc++.so.6
+          --set ANDROID_HOME "${androidsdk}/libexec/android-sdk-linux/"
       '';
     });
 
   buildClion = { name, version, build, src, license, description, wmClass }:
     (mkIdeaProduct rec {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "CLion";
       meta = with stdenv.lib; {
         homepage = "https://www.jetbrains.com/clion/";
@@ -55,7 +53,7 @@ let
 
   buildIdea = { name, version, build, src, license, description, wmClass }:
     (mkIdeaProduct rec {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "IDEA";
       meta = with stdenv.lib; {
         homepage = "https://www.jetbrains.com/idea/";
@@ -72,7 +70,7 @@ let
 
   buildRubyMine = { name, version, build, src, license, description, wmClass }:
     (mkIdeaProduct rec {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "RubyMine";
       meta = with stdenv.lib; {
         homepage = "https://www.jetbrains.com/ruby/";
@@ -85,7 +83,7 @@ let
 
   buildPhpStorm = { name, version, build, src, license, description, wmClass }:
     (mkIdeaProduct {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "PhpStorm";
       meta = with stdenv.lib; {
         homepage = "https://www.jetbrains.com/phpstorm/";
@@ -102,7 +100,7 @@ let
 
   buildWebStorm = { name, version, build, src, license, description, wmClass }:
     (mkIdeaProduct {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "WebStorm";
       meta = with stdenv.lib; {
         homepage = "https://www.jetbrains.com/webstorm/";
@@ -119,7 +117,7 @@ let
 
   buildPycharm = { name, version, build, src, license, description, wmClass }:
     (mkIdeaProduct rec {
-      inherit name version build src wmClass jdk;
+      inherit name version build src wmClass;
       product = "PyCharm";
       meta = with stdenv.lib; {
         homepage = "https://www.jetbrains.com/pycharm/";
@@ -148,16 +146,16 @@ in
 
 {
 
-  android-studio = let buildNumber = "143.2915827"; in buildAndroidStudio rec {
+  android-studio = let buildNumber = "143.2821654"; in buildAndroidStudio rec {
     name = "android-studio-${version}";
-    version = "2.1.2.0";
+    version = "2.1.1.0";
     build = "AI-${buildNumber}";
     description = "Android development environment based on IntelliJ IDEA";
     license = stdenv.lib.licenses.asl20;
     src = fetchurl {
       url = "https://dl.google.com/dl/android/studio/ide-zips/${version}" +
             "/android-studio-ide-${buildNumber}-linux.zip";
-      sha256 = "0q61m8yln77valg7y6lyxlml53z387zh6fyfgc22sm3br5ahbams";
+      sha256 = "1zxxzyhny7j4vzlydrhwz3g8l8zcml84mhkcf5ckx8xr50j3m101";
     };
     wmClass = "jetbrains-studio";
   };
@@ -190,13 +188,13 @@ in
 
   idea-community = buildIdea rec {
     name = "idea-community-${version}";
-    version = "2016.2";
-    build = "IC-162.1121";
+    version = "2016.1.2";
+    build = "IC-145.971.21";
     description = "Integrated Development Environment (IDE) by Jetbrains, community edition";
     license = stdenv.lib.licenses.asl20;
     src = fetchurl {
       url = "https://download.jetbrains.com/idea/ideaIC-${version}.tar.gz";
-      sha256 = "164x4l0q31zpc1jh3js1xx9y6afrzsshmnkx1mwhmq8qmvzc4w32";
+      sha256 = "15c92wsfw16j48k12x4vw78886yf9yjx7hwwjamgf28lmzvc37iz";
     };
     wmClass = "jetbrains-idea-ce";
   };
@@ -229,13 +227,13 @@ in
 
   idea-ultimate = buildIdea rec {
     name = "idea-ultimate-${version}";
-    version = "2016.2";
-    build = "IU-162.1121";
+    version = "2016.1.2";
+    build = "IU-145.971.21";
     description = "Integrated Development Environment (IDE) by Jetbrains, requires paid license";
     license = stdenv.lib.licenses.unfree;
     src = fetchurl {
       url = "https://download.jetbrains.com/idea/ideaIU-${version}.tar.gz";
-      sha256 = "10hiqh6ccmai2cnc5p72vqjcz9kzmmcpn0hy5v514h4mq6vs4zk4";
+      sha256 = "0dxpx4nx845vgqxl5qz029d3w3kn3hi98wgzympidplxrphgalgy";
     };
     wmClass = "jetbrains-idea";
   };

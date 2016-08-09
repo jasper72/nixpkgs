@@ -44,6 +44,5 @@ stdenv.mkDerivation rec {
     homepage = http://pamusb.org/;
     description = "Authentication using USB Flash Drives";
     license = stdenv.lib.licenses.gpl2;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

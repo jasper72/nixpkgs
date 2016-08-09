@@ -29,6 +29,5 @@ stdenv.mkDerivation {
     description = "Library to access BD+ protected Blu-Ray disks";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ abbradar ];
-    platforms = with platforms; unix;
   };
 }

@@ -10,11 +10,10 @@ stdenv.mkDerivation rec {
 
   postPatch = ''sed -i "s|/usr|$out|" Makefile'';
 
-  meta = with stdenv.lib; {
-    homepage = "https://f00l.de/pcapfix/";
-    description = "Repair your broken pcap and pcapng files";
-    license = licenses.gpl3;
-    maintainers = [ maintainers.ehmry ];
-    platforms = platforms.linux;
-  };
+  meta = with stdenv.lib;
+    { homepage = "https://f00l.de/pcapfix/";
+      description = "Repair your broken pcap and pcapng files";
+      license = licenses.gpl3;
+      maintainers = [ maintainers.ehmry ];
+    };
 }

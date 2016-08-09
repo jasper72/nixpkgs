@@ -26,6 +26,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/Project-OSRM/osrm-backend/wiki;
     description = "Open Source Routing Machine computes shortest paths in a graph. It was designed to run well with map data from the Openstreetmap Project";
     license = stdenv.lib.licenses.bsd2;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

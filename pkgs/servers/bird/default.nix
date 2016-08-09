@@ -1,12 +1,11 @@
-{ stdenv, fetchurl, flex, bison, readline
-, enableIPv6 ? false }:
+{ stdenv, fetchurl, flex, bison, readline }:
 
 stdenv.mkDerivation rec {
-  name = "bird-1.6.0";
+  name = "bird-1.5.0";
 
   src = fetchurl {
     url = "ftp://bird.network.cz/pub/bird/${name}.tar.gz";
-    sha256 = "04qf07cb04xdjnq0qxj6y8iqwyszk1vyark9gn5v6wxcvqvzwgfv";
+    sha256 = "0pbvq6rx4ww46vcdslpiplb5fwq3mqma83434q38kx959qjw9mbr";
   };
 
   buildInputs = [ flex bison readline ];
@@ -17,13 +16,13 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--localstatedir /var"
-  ] ++ stdenv.lib.optional enableIPv6 "--enable-ipv6";
+  ];
 
   meta = {
     description = "BIRD Internet Routing Daemon";
     homepage = http://bird.network.cz;
     license = stdenv.lib.licenses.gpl2Plus;
-    maintainers = with stdenv.lib.maintainers; [ viric fpletz ];
+    maintainers = with stdenv.lib.maintainers; [viric];
     platforms  = stdenv.lib.platforms.linux;
   };
 }

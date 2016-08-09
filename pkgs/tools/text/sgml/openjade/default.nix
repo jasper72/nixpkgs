@@ -21,6 +21,5 @@ stdenv.mkDerivation rec {
     description = "An implementation of DSSSL, an ISO standard for formatting SGML (and XML) documents";
     license = stdenv.lib.licenses.mit;
     homepage = http://openjade.sourceforge.net/;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -13,6 +13,5 @@ stdenv.mkDerivation {
 
   meta = {
     description = "3D widget set based on the Athena Widget set";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

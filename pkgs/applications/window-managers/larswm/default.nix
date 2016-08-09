@@ -20,6 +20,5 @@ stdenv.mkDerivation {
     homepage = http://larswm.fnurt.net/;
     description = "9wm-like tiling window manager";
     license = stdenv.lib.licenses.free;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

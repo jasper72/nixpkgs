@@ -55,6 +55,5 @@ stdenv.mkDerivation rec {
     license = stdenv.lib.licenses.gpl2ClasspathPlus;
 
     maintainers = [ ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

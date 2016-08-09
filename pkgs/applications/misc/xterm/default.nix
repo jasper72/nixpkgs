@@ -1,13 +1,11 @@
-{ stdenv, fetchurl, xorg, ncurses, freetype, fontconfig, pkgconfig
-, enableDecLocator ? true
-}:
+{ stdenv, fetchurl, xorg, ncurses, freetype, fontconfig, pkgconfig }:
 
 stdenv.mkDerivation rec {
-  name = "xterm-325";
+  name = "xterm-320";
 
   src = fetchurl {
     url = "ftp://invisible-island.net/xterm/${name}.tgz";
-    sha256 = "06sz66z4hvjjkvm3r5a5z442iis8lz8yjfzc629pwhj01ixb0c9v";
+    sha256 = "19r4rs5pjq944m7aiqligazf6wgmv4f023x3bx183h1l8dbvn3d6";
   };
 
   buildInputs =
@@ -15,22 +13,16 @@ stdenv.mkDerivation rec {
       ncurses freetype fontconfig pkgconfig xorg.libXft xorg.luit
     ];
 
-  patches = [
-    ./sixel-256.support.patch
-  ];
-
   configureFlags = [
     "--enable-wide-chars"
     "--enable-256-color"
-    "--enable-sixel-graphics"
-    "--enable-regis-graphics"
     "--enable-load-vt-fonts"
     "--enable-i18n"
     "--enable-doublechars"
     "--enable-luit"
     "--enable-mini-luit"
     "--with-tty-group=tty"
-  ] ++ stdenv.lib.optional enableDecLocator "--enable-dec-locator";
+  ];
 
   # Work around broken "plink.sh".
   NIX_LDFLAGS = "-lXmu -lXt -lICE -lX11 -lfontconfig";
@@ -47,7 +39,7 @@ stdenv.mkDerivation rec {
   meta = {
     homepage = http://invisible-island.net/xterm;
     license = "BSD";
-    maintainers = with stdenv.lib.maintainers; [viric vrthra];
+    maintainers = with stdenv.lib.maintainers; [viric];
     platforms = with stdenv.lib.platforms; linux ++ darwin;
   };
 }

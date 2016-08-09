@@ -18,6 +18,5 @@ stdenv.mkDerivation rec {
     description = "SyncML client sdk by Funambol project";
     homepage = http://www.funambol.com;
     maintainers = [ stdenv.lib.maintainers.urkud ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

@@ -12,7 +12,7 @@ stdenv.mkDerivation rec {
     [ libv4l gd ];
 
   meta = {
-    description = "Neat and simple webcam app";
+    description = "neat and simple webcam app";
     homepage = http://www.sanslogic.co.uk/fswebcam;
     platforms = stdenv.lib.platforms.linux;
     license = stdenv.lib.licenses.gpl2;

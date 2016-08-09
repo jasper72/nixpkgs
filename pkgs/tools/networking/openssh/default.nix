@@ -27,12 +27,11 @@ with stdenv.lib;
 stdenv.mkDerivation rec {
   # Please ensure that openssh_with_kerberos still builds when
   # bumping the version here!
-  name = "openssh-${version}";
-  version = "7.3p1";
+  name = "openssh-7.2p2";
 
   src = fetchurl {
     url = "mirror://openbsd/OpenSSH/portable/${name}.tar.gz";
-    sha256 = "1k5y1wi29d47cgizbryxrhc1fbjsba2x8l5mqfa9b9nadnd9iyrz";
+    sha256 = "132lh9aanb0wkisji1d6cmsxi520m8nh7c7i9wi6m1s3l38q29x7";
   };
 
   prePatch = optionalString hpnSupport
@@ -45,9 +44,7 @@ stdenv.mkDerivation rec {
     [
       ./locale_archive.patch
       ./fix-host-key-algorithms-plus.patch
-
-      # See discussion in https://github.com/NixOS/nixpkgs/pull/16966
-      ./dont_create_privsep_path.patch
+      ./CVE-2015-8325.patch
     ]
     ++ optional withGssapiPatches gssapiSrc;
 
@@ -68,6 +65,11 @@ stdenv.mkDerivation rec {
     ++ optional withKerberos "--with-kerberos5=${kerberos}"
     ++ optional stdenv.isDarwin "--disable-libutil"
     ++ optional (!linkOpenssl) "--without-openssl";
+
+  preConfigure = ''
+    configureFlagsArray+=("--with-privsep-path=$out/empty")
+    mkdir -p $out/empty
+  '';
 
   enableParallelBuilding = true;
 

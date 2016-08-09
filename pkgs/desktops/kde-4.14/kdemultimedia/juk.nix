@@ -5,6 +5,6 @@ kde {
 
   buildInputs = [ kdelibs taglib_1_9 libtunepimp ];
   meta = {
-    description = "An audio jukebox application";
+    description = "an audio jukebox application";
   };
 }

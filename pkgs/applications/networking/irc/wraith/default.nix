@@ -5,19 +5,18 @@ with stdenv.lib;
 
 mkDerivation rec {
   name = "wraith-${version}";
-  version = "1.4.7";
+  version = "1.4.6";
   src = fetchurl {
     url = "mirror://sourceforge/wraithbotpack/wraith-v${version}.tar.gz";
-    sha256 = "0h6liac5y7im0jfm2sj18mibvib7d1l727fjs82irsjj1v9kif3j";
+    sha256 = "0vb2hbjmwh040f5yhxvwcfxvgxa0q9zdy9vvddydn8zn782d7wl8";
   };
   buildInputs = [ openssl ];
-  patches = [ ./configure.patch ./dlopen.patch ];
+  patches = [ ./dlopen.patch ];
   postPatch = ''
-    substituteInPlace configure        --subst-var-by openssl.dev ${openssl.dev} \
-                                       --subst-var-by openssl.out ${openssl.out}
-    substituteInPlace src/libssl.cc    --subst-var-by openssl ${openssl.out}
-    substituteInPlace src/libcrypto.cc --subst-var-by openssl ${openssl.out}
+    substituteInPlace src/libssl.cc    --subst-var-by openssl ${openssl}
+    substituteInPlace src/libcrypto.cc --subst-var-by openssl ${openssl}
   '';
+  configureFlags = "--with-openssl=${openssl.dev}";
   installPhase = ''
     mkdir -p $out/bin
     cp -a wraith $out/bin/wraith

@@ -1,23 +1,26 @@
-{ lib, buildGoPackage, fetchFromGitHub, src, version }:
+{ lib, buildGoPackage, fetchFromGitHub }:
 
 buildGoPackage rec {
-  name = "influxdb-${version}";
+  name = "influxdb-${rev}";
+  rev = "v0.9.4";
+  goPackagePath = "github.com/influxdb/influxdb";
 
-  goPackagePath = "github.com/influxdata/influxdb";
+  src = fetchFromGitHub {
+    inherit rev;
+    owner = "influxdb";
+    repo = "influxdb";
+    sha256 = "0yarymppnlpf2xab57i8jx595v47s5mdwnf13719mc1fv3q84yqn";
+  };
 
   excludedPackages = "test";
-  
-  inherit src;
 
-  # Generated with the `gdm2nix.rb` script and the `Godeps` file from the
-  # influxdb repo root.
   goDeps = ./deps.json;
 
   meta = with lib; {
     description = "An open-source distributed time series database";
     license = licenses.mit;
     homepage = https://influxdb.com/;
-    maintainers = with maintainers; [ offline zimbatm ];
+    maintainers = with maintainers; [ offline ];
     platforms = platforms.linux;
   };
 }

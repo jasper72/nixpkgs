@@ -63,6 +63,5 @@ stdenv.mkDerivation {
 
   meta = {
     description = "Some additional CUPS drivers including Canon drivers";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

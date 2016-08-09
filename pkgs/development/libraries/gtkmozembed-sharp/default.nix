@@ -14,8 +14,4 @@ stdenv.mkDerivation {
   ];
 
   inherit monoDLLFixer;
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

@@ -81,17 +81,21 @@ let
       # Copy ld manually since it isn't detected correctly
       cp -pv ${pkgs.glibc.out}/lib/ld*.so.? $out/lib
 
-      # Copy all of the needed libraries
-      find $out/bin $out/lib -type f | while read BIN; do
-        echo "Copying libs for executable $BIN"
+      # Copy all of the needed libraries for the binaries
+      for BIN in $(find $out/{bin,sbin} -type f); do
+        echo "Copying libs for bin $BIN"
         LDD="$(ldd $BIN)" || continue
         LIBS="$(echo "$LDD" | awk '{print $3}' | sed '/^$/d')"
         for LIB in $LIBS; do
-          TGT="$out/lib/$(basename $LIB)"
-          if [ ! -f "$TGT" ]; then
-            SRC="$(readlink -e $LIB)"
-            cp -pdv "$SRC" "$TGT"
-          fi
+          [ ! -f "$out/lib/$(basename $LIB)" ] && cp -pdv $LIB $out/lib
+          while [ "$(readlink $LIB)" != "" ]; do
+            LINK="$(readlink $LIB)"
+            if [ "${LINK:0:1}" != "/" ]; then
+              LINK="$(dirname $LIB)/$LINK"
+            fi
+            LIB="$LINK"
+            [ ! -f "$out/lib/$(basename $LIB)" ] && cp -pdv $LIB $out/lib
+          done
         done
       done
 
@@ -100,17 +104,13 @@ let
       stripDirs "lib bin" "-s"
 
       # Run patchelf to make the programs refer to the copied libraries.
-      find $out/bin $out/lib -type f | while read i; do
-        if ! test -L $i; then
-          nuke-refs -e $out $i
-        fi
-      done
+      for i in $out/bin/* $out/lib/*; do if ! test -L $i; then nuke-refs -e $out $i; fi; done
 
-      find $out/bin -type f | while read i; do
-        if ! test -L $i; then
-          echo "patching $i..."
-          patchelf --set-interpreter $out/lib/ld*.so.? --set-rpath $out/lib $i || true
-        fi
+      for i in $out/bin/*; do
+          if ! test -L $i; then
+              echo "patching $i..."
+              patchelf --set-interpreter $out/lib/ld*.so.? --set-rpath $out/lib $i || true
+          fi
       done
 
       # Make sure that the patchelf'ed binaries still work.
@@ -138,7 +138,6 @@ let
 
   udevRules = pkgs.stdenv.mkDerivation {
     name = "udev-rules";
-    allowedReferences = [ extraUtils ];
     buildCommand = ''
       mkdir -p $out
 
@@ -161,8 +160,7 @@ let
             --replace /sbin/mdadm ${extraUtils}/bin/mdadm \
             --replace /bin/sh ${extraUtils}/bin/sh \
             --replace /usr/bin/readlink ${extraUtils}/bin/readlink \
-            --replace /usr/bin/basename ${extraUtils}/bin/basename \
-            --replace ${udev}/bin/udevadm ${extraUtils}/bin/udevadm
+            --replace /usr/bin/basename ${extraUtils}/bin/basename
       done
 
       # Work around a bug in QEMU, which doesn't implement the "READ
@@ -181,6 +179,15 @@ let
   };
 
 
+  # The binary keymap for busybox to load at boot.
+  busyboxKeymap = pkgs.runCommand "boottime-keymap"
+    { preferLocalBuild = true; }
+    ''
+      ${pkgs.kbd}/bin/loadkeys -qb "${config.i18n.consoleKeyMap}" > $out ||
+        ${pkgs.kbd}/bin/loadkeys -qbu "${config.i18n.consoleKeyMap}" > $out
+    '';
+
+
   # The init script of boot stage 1 (loading kernel modules for
   # mounting the root FS).
   bootStage1 = pkgs.substituteAll {
@@ -190,12 +197,12 @@ let
 
     isExecutable = true;
 
-    inherit udevRules extraUtils modulesClosure;
+    inherit udevRules extraUtils modulesClosure busyboxKeymap;
 
     inherit (config.boot) resumeDevice devSize runSize;
 
     inherit (config.boot.initrd) checkJournalingFS
-      preLVMCommands preDeviceCommands postDeviceCommands postMountCommands preFailCommands kernelModules;
+      preLVMCommands preDeviceCommands postDeviceCommands postMountCommands kernelModules;
 
     resumeDevices = map (sd: if sd ? device then sd.device else "/dev/disk/by-label/${sd.label}")
                     (filter (sd: (sd ? label || hasPrefix "/dev/" sd.device) && !sd.randomEncryption) config.swapDevices);
@@ -320,14 +327,6 @@ in
       description = ''
         Shell commands to be executed immediately after the stage 1
         filesystems have been mounted.
-      '';
-    };
-
-    boot.initrd.preFailCommands = mkOption {
-      default = "";
-      type = types.lines;
-      description = ''
-        Shell commands to be executed before the failure prompt is shown.
       '';
     };
 

@@ -29,6 +29,5 @@ stdenv.mkDerivation rec {
     homepage = http://terse.tk/ponysay/;
     license = stdenv.lib.licenses.gpl3;
     maintainers = with stdenv.lib.maintainers; [ bodil ];
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

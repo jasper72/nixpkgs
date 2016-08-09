@@ -31,23 +31,9 @@ sub isInPathsToLink {
 
 my %symlinks;
 
-# Add all pathsToLink and all parent directories.
-#
-# For "/a/b/c" that will include
-# [ "", "/a", "/a/b", "/a/b/c" ]
-#
-# That ensures the whole directory tree needed by pathsToLink is
-# created as directories and not symlinks.
-$symlinks{""} = ["", 0];
 for my $p (@pathsToLink) {
-    my @parts = split '/', $p;
-
-    my $cur = "";
-    for my $x (@parts) {
-        $cur = $cur . "/$x";
-        $cur = "" if $cur eq "/";
-        $symlinks{$cur} = ["", 0];
-    }
+    $p = "" if $p eq "/";
+    $symlinks{$p} = ["", 0];
 }
 
 sub findFiles;

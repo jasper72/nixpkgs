@@ -28,9 +28,8 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     homepage = "https://github.com/felipec/git-remote-hg";
-    description = "Semi-official Mercurial bridge from Git project, once installed, it allows you to clone, fetch and push to and from Mercurial repositories as if they were Git ones";
+    description = "semi-official Mercurial bridge from Git project, once installed, it allows you to clone, fetch and push to and from Mercurial repositories as if they were Git ones";
     license = licenses.gpl2;
     maintainers = [ maintainers.garbas ];
-    platforms = platforms.unix;
   };
 }

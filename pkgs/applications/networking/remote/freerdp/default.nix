@@ -61,6 +61,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.freerdp.com/;
 
     license = stdenv.lib.licenses.free;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

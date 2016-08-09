@@ -15,6 +15,5 @@ stdenv.mkDerivation rec {
     description = "KDE Meta Object Compiler";
     license = licenses.bsd2;
     maintainers = [ maintainers.sander maintainers.urkud ];
-    platforms = platforms.unix;
   };
 }

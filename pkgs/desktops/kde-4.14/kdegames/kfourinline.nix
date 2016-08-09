@@ -2,6 +2,6 @@
 kde {
   buildInputs = [ kdelibs libkdegames ];
   meta = {
-    description = "A board game for two players based on the Connect-Four game";
+    description = "a board game for two players based on the Connect-Four game";
   };
 }

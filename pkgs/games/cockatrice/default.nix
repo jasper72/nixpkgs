@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
         description = "A cross-platform virtual tabletop for multiplayer card games";
         license = stdenv.lib.licenses.gpl2;
         maintainers = with stdenv.lib.maintainers; [ spencerjanssen ];
-      platforms = with stdenv.lib.platforms; linux;
     };
 }

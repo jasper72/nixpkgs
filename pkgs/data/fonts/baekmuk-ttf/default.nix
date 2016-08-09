@@ -24,7 +24,6 @@ stdenv.mkDerivation rec {
     description = "Korean font";
     homepage = "http://kldp.net/projects/baekmuk/";
     license = "BSD-like";
-    platforms = stdenv.lib.platforms.linux;
   };
 }
 

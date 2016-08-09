@@ -1,26 +1,21 @@
-{ stdenv, fetchFromGitHub, pkgconfig, gtk, cmake, pixman, libpthreadstubs, gtkmm, libXau
-, libXdmcp, lcms2, libiptcdata, libcanberra, fftw, expat, pcre, libsigcxx 
+{ stdenv, fetchurl, pkgconfig, gtk, cmake, pixman, libpthreadstubs, gtkmm, libXau
+, libXdmcp, lcms2, libiptcdata, libcanberra, fftw, expat
 , mercurial  # Not really needed for anything, but it fails if it does not find 'hg'
 }:
 
 stdenv.mkDerivation rec {
-  name = "rawtherapee-4.2";
+  name = "rawtherapee-4.0.10";
   
-  src = fetchFromGitHub {
-    owner = "Beep6581";
-    repo = "RawTherapee";
-    rev = "4.2";
-    sha256 = "1v4px239vlmk9l8wbzlvlyni4ns12icxmgfz21m86jkd10pj5dgr";
+  src = fetchurl {
+    url = http://rawtherapee.googlecode.com/files/rawtherapee-4.0.10.tar.xz;
+    sha256 = "1ibsdm2kqpw796rcdihnnp67vx0wm1d1bnlzq269r9p01w5s102g";
   };
   
   buildInputs = [ pkgconfig gtk cmake pixman libpthreadstubs gtkmm libXau libXdmcp
-    lcms2 libiptcdata mercurial libcanberra fftw expat pcre libsigcxx ];
+    lcms2 libiptcdata mercurial libcanberra fftw expat ];
 
-  patchPhase = ''
-    patch -p1 < ${./sigc++_fix.patch}
-  '';
-
-  NIX_CFLAGS_COMPILE = "-std=gnu++11 -Wno-deprecated-declarations -Wno-unused-result";
+  # Disable the use of the RAWZOR propietary libraries
+  cmakeFlags = [ "-DWITH_RAWZOR=OFF" ];
 
   enableParallelBuilding = true;
 
@@ -28,7 +23,7 @@ stdenv.mkDerivation rec {
     description = "RAW converter and digital photo processing software";
     homepage = http://www.rawtherapee.com/;
     license = stdenv.lib.licenses.gpl3Plus;
-    maintainers = with stdenv.lib.maintainers; [viric jcumming mahe];
+    maintainers = with stdenv.lib.maintainers; [viric jcumming];
     platforms = with stdenv.lib.platforms; linux;
   };
 }

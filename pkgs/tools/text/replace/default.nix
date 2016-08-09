@@ -26,6 +26,5 @@ stdenv.mkDerivation {
   meta = {
     homepage = http://replace.richardlloyd.org.uk/;
     description = "A tool to replace verbatim strings";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

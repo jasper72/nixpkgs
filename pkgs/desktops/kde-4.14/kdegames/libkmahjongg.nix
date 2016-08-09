@@ -2,6 +2,6 @@
 kde {
   buildInputs = [ kdelibs libkdegames ];
   meta = {
-    description = "A library for KMahjongg game";
+    description = "a library for KMahjongg game";
   };
 }

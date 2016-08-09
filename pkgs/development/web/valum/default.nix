@@ -23,7 +23,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     homepage = https://github.com/valum-framework/valum;
     description = "Web micro-framework written in Vala";
-    platforms = platforms.linux;
+    plaforms = platforms.linux;
     maintainers = [ maintainers.lethalman ];
   };
 }

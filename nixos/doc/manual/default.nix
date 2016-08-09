@@ -1,27 +1,27 @@
 { pkgs, options, version, revision, extraSources ? [] }:
 
 with pkgs;
+with pkgs.lib;
 
 let
-  lib = pkgs.lib;
 
   # Remove invisible and internal options.
-  optionsList = lib.filter (opt: opt.visible && !opt.internal) (lib.optionAttrSetToDocList options);
+  optionsList = filter (opt: opt.visible && !opt.internal) (optionAttrSetToDocList options);
 
   # Replace functions by the string <function>
   substFunction = x:
-    if builtins.isAttrs x then lib.mapAttrs (name: substFunction) x
+    if builtins.isAttrs x then mapAttrs (name: substFunction) x
     else if builtins.isList x then map substFunction x
     else if builtins.isFunction x then "<function>"
     else x;
 
   # Clean up declaration sites to not refer to the NixOS source tree.
-  optionsList' = lib.flip map optionsList (opt: opt // {
+  optionsList' = flip map optionsList (opt: opt // {
     declarations = map stripAnyPrefixes opt.declarations;
   }
-  // lib.optionalAttrs (opt ? example) { example = substFunction opt.example; }
-  // lib.optionalAttrs (opt ? default) { default = substFunction opt.default; }
-  // lib.optionalAttrs (opt ? type) { type = substFunction opt.type; });
+  // optionalAttrs (opt ? example) { example = substFunction opt.example; }
+  // optionalAttrs (opt ? default) { default = substFunction opt.default; }
+  // optionalAttrs (opt ? type) { type = substFunction opt.type; });
 
   # We need to strip references to /nix/store/* from options,
   # including any `extraSources` if some modules came from elsewhere,
@@ -30,7 +30,7 @@ let
   # E.g. if some `options` came from modules in ${pkgs.customModules}/nix,
   # you'd need to include `extraSources = [ pkgs.customModules ]`
   prefixesToStrip = map (p: "${toString p}/") ([ ../../.. ] ++ extraSources);
-  stripAnyPrefixes = lib.flip (lib.fold lib.removePrefix) prefixesToStrip;
+  stripAnyPrefixes = flip (fold removePrefix) prefixesToStrip;
 
   # Convert the list of options into an XML file.
   optionsXML = builtins.toFile "options.xml" (builtins.toXML optionsList');
@@ -49,7 +49,7 @@ let
       -o $out ${./options-to-docbook.xsl} $optionsXML
   '';
 
-  sources = lib.sourceFilesBySuffices ./. [".xml"];
+  sources = sourceFilesBySuffices ./. [".xml"];
 
   copySources =
     ''
@@ -60,7 +60,6 @@ let
       cp ${../../modules/services/misc/taskserver/doc.xml} configuration/taskserver.xml
       cp ${../../modules/security/acme.xml} configuration/acme.xml
       cp ${../../modules/i18n/input-method/default.xml} configuration/input-methods.xml
-      cp ${../../modules/services/editors/emacs.xml} configuration/emacs.xml
       ln -s ${optionsDocBook} options-db.xml
       echo "${version}" > version
     '';
@@ -123,7 +122,7 @@ let
       <targetset>
         <targetsetinfo>
             Allows for cross-referencing olinks between the manpages
-            and manual.
+            and the HTML/PDF manuals.
         </targetsetinfo>
 
         <document targetdoc="manual">&manualtargets;</document>
@@ -144,7 +143,7 @@ in rec {
       mkdir -p $dst
 
       cp ${builtins.toFile "options.json" (builtins.unsafeDiscardStringContext (builtins.toJSON
-        (builtins.listToAttrs (map (o: { name = o.name; value = removeAttrs o ["name" "visible" "internal"]; }) optionsList'))))
+        (listToAttrs (map (o: { name = o.name; value = removeAttrs o ["name" "visible" "internal"]; }) optionsList'))))
       } $dst/options.json
 
       mkdir -p $out/nix-support
@@ -194,42 +193,25 @@ in rec {
     allowedReferences = ["out"];
   };
 
-
-  manualEpub = stdenv.mkDerivation {
-    name = "nixos-manual-epub";
+  manualPDF = stdenv.mkDerivation {
+    name = "nixos-manual-pdf";
 
     inherit sources;
 
-    buildInputs = [ libxml2 libxslt zip ];
+    buildInputs = [ libxml2 libxslt dblatex dblatex.tex ];
 
     buildCommand = ''
       ${copySources}
 
-      # Check the validity of the manual sources.
-      xmllint --noout --nonet --xinclude --noxincludenode \
-        --relaxng ${docbook5}/xml/rng/docbook/docbook.rng \
-        manual.xml
-
-      # Generate the epub manual.
       dst=$out/share/doc/nixos
-
-      xsltproc \
-        ${manualXsltprocOptions} \
-        --stringparam target.database.document "${olinkDB}/olinkdb.xml" \
-        --nonet --xinclude --output $dst/epub/ \
-        ${docbook5_xsl}/xml/xsl/docbook/epub/docbook.xsl ./manual.xml
-
-      mkdir -p $dst/epub/OEBPS/images/callouts
-      cp -r ${docbook5_xsl}/xml/xsl/docbook/images/callouts/*.gif $dst/epub/OEBPS/images/callouts
-      echo "application/epub+zip" > mimetype
-      manual="$dst/nixos-manual.epub"
-      zip -0Xq "$manual" mimetype
-      cd $dst/epub && zip -Xr9D "$manual" *
-
-      rm -rf $dst/epub
+      mkdir -p $dst
+      xmllint --xinclude manual.xml | dblatex -o $dst/manual.pdf - \
+        -P target.database.document="${olinkDB}/olinkdb.xml" \
+        -P doc.collab.show=0 \
+        -P latex.output.revhistory=0
 
       mkdir -p $out/nix-support
-      echo "doc-epub manual $manual" >> $out/nix-support/hydra-build-products
+      echo "doc-pdf manual $dst/manual.pdf" >> $out/nix-support/hydra-build-products
     '';
   };
 

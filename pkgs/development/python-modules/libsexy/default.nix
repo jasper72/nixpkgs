@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "Python libsexy bindings";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

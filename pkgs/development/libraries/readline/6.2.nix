@@ -50,7 +50,6 @@ stdenv.mkDerivation (rec {
 
     maintainers = [ ];
     branch = "6.2";
-    platforms = stdenv.lib.platforms.unix;
   };
 }
 

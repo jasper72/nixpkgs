@@ -22,6 +22,5 @@ stdenv.mkDerivation rec {
     homepage = http://noip.com/download?page=linux;
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.iand675 ];
-    platforms = platforms.linux;
   };
 }

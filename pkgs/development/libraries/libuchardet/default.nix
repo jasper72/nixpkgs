@@ -19,6 +19,5 @@ stdenv.mkDerivation rec {
     homepage    = https://www.byvoid.com/zht/project/uchardet;
     license     = licenses.mpl11;
     maintainers = with maintainers; [ cstrahan ];
-    platforms = with platforms; unix;
   };
 }

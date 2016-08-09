@@ -26,7 +26,7 @@ stdenv.mkDerivation {
     description = "A Prolog compiler and interpreter";
     license = "LGPL";
 
-    platforms = stdenv.lib.platforms.linux;
+    hydraPlatforms = stdenv.lib.platforms.linux;
     maintainers = [ stdenv.lib.maintainers.peti ];
   };
 }

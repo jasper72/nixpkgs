@@ -12,8 +12,4 @@ stdenv.mkDerivation {
   configureFlags = ["-no-tk" "-x11lib" xlibsWrapper];
   buildFlags = ["world" "bootstrap" "opt"];
   checkTarget = ["opt.opt"];
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

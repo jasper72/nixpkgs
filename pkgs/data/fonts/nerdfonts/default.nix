@@ -24,6 +24,5 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/ryanoasis/nerd-fonts";
     license = licenses.mit;
     maintainers = with maintainers; [ garbas ];
-    platforms = with platforms; unix;
   };
 }

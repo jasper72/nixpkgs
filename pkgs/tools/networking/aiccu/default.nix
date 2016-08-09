@@ -37,7 +37,6 @@ stdenv.mkDerivation rec {
     '';
     maintainers = with maintainers; [ edwtjo ];
     license = "SixXS";
-    platforms = with platforms; linux;
   };
 
 }

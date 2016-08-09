@@ -17,6 +17,5 @@ stdenv.mkDerivation {
     description = "Tabbed plugin for rxvt-unicode with many enhancements (mina86's fork)";
     homepage = "https://github.com/mina86/urxvt-tabbedex";
     maintainers = with maintainers; [ abbradar ];
-    platforms = with platforms; unix;
   };
 }

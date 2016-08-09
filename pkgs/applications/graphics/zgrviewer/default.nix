@@ -26,6 +26,5 @@ stdenv.mkDerivation rec {
     maintainers = with stdenv.lib.maintainers; [raskin];
     license = stdenv.lib.licenses.lgpl21Plus;
     description = "GraphViz graph viewer/navigator";
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

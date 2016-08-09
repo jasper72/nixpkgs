@@ -1,23 +1,18 @@
-{ stdenv, fetchsvn, autoreconfHook, zlib, popt, alsaLib, libvorbis, libtheora
-, libICE, libSM, libX11, libXext, libXfixes, libXdamage }:
+{ stdenv, fetchsvn, automake, autoconf, zlib, popt, xorg, libvorbis, libtheora }:
 
 stdenv.mkDerivation rec {
   name = "recordmydesktop-${version}";
-  version = "0.3.8.1-svn${rev}";
-  rev = "602";
+  version = "0.3.8.1-svn602";
 
   src = fetchsvn {
     url = https://recordmydesktop.svn.sourceforge.net/svnroot/recordmydesktop/trunk/recordmydesktop;
-    inherit rev;
+    rev = 602;
     sha256 = "1avirkc4ymrd575m616pi6wpgq1i0r5sb3qahps1g18sjpxks0lf";
   };
 
-  nativeBuildInputs = [ autoreconfHook ];
+  buildInputs = [ automake autoconf zlib popt xorg.libICE xorg.libSM xorg.libX11 xorg.libXext xorg.libXfixes xorg.libXdamage libvorbis libtheora ];
 
-  buildInputs = [
-    zlib popt alsaLib libICE libSM libX11 libXext
-    libXfixes libXdamage libvorbis libtheora
-  ];
+  preConfigure = ''./autogen.sh'';
 
   meta = with stdenv.lib; {
     description = "Desktop session recorder";

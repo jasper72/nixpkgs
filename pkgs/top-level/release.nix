@@ -9,7 +9,7 @@
    $ nix-build pkgs/top-level/release.nix -A coreutils.x86_64-linux
 */
 
-{ nixpkgs ? { outPath = (import ../.. {}).lib.cleanSource ../..; revCount = 1234; shortRev = "abcdef"; }
+{ nixpkgs ? { outPath = (import ./../.. {}).lib.cleanSource ../..; revCount = 1234; shortRev = "abcdef"; }
 , officialRelease ? false
 , # The platforms for which we build Nixpkgs.
   supportedSystems ? [ "x86_64-linux" "i686-linux" "x86_64-darwin" ]
@@ -49,10 +49,6 @@ let
               jobs.python3.x86_64-linux
               jobs.python3.i686-linux
               jobs.python3.x86_64-darwin
-              # Many developers use nix-repl
-              jobs.nix-repl.x86_64-linux
-              jobs.nix-repl.i686-linux
-              jobs.nix-repl.x86_64-darwin
               # Needed by travis-ci to test PRs
               jobs.nox.i686-linux
               jobs.nox.x86_64-linux
@@ -335,6 +331,11 @@ let
         xfdesktop = linux;
         xfwm4 = linux;
       };
+
+      linuxPackages_testing = { };
+      linuxPackages_grsec_testing_desktop = { };
+      linuxPackages_grsec_testing_server = { };
+      linuxPackages_grsec_testing_server_xen = { };
 
     } ));
 

@@ -12,6 +12,5 @@ stdenv.mkDerivation {
     homepage = http://rzip.samba.org/;
     description = "Compression program";
     license = stdenv.lib.licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

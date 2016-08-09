@@ -1,12 +1,11 @@
 { stdenv, fetchurl, python, pythonPackages }:
 
 stdenv.mkDerivation rec {
-  name = "dstat-${version}";
-  version = "0.7.3";
+  name = "dstat-0.7.2";
 
   src = fetchurl {
-    url = "https://github.com/dagwieers/dstat/archive/${version}.tar.gz";
-    sha256 = "16286z3y2lc9nsq8njzjkv6k2vyxrj9xiixj1k3gnsbvhlhkirj6";
+    url = "http://dag.wieers.com/home-made/dstat/${name}.tar.bz2";
+    sha256 = "1bivnciwlamnl9q6i5ygr7jhs8pp833z2bkbrffvsa60szcqda9l";
   };
 
   buildInputs = with pythonPackages; [ python-wifi wrapPython ];

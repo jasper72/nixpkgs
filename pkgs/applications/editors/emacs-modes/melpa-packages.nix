@@ -36,6 +36,10 @@ self:
     });
 
     overrides = {
+      ac-php = super.ac-php.override {
+        inherit (self.melpaPackages) popup;
+      };
+
       # upstream issue: mismatched filename
       ack-menu = markBroken super.ack-menu;
 

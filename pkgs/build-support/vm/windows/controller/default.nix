@@ -71,6 +71,8 @@ let
     };
   };
 
+  shellEscape = x: "'${replaceChars ["'"] [("'\\'" + "'")] x}'";
+
   loopForever = "while :; do ${coreutils}/bin/sleep 1; done";
 
   initScript = writeScript "init.sh" (''
@@ -130,7 +132,7 @@ let
       -o StrictHostKeyChecking=no \
       -i /ssh.key \
       -l Administrator \
-      192.168.0.1 -- ${lib.escapeShellArg command}
+      192.168.0.1 -- ${shellEscape command}
   '') + optionalString (suspendTo != null) ''
     ${coreutils}/bin/touch /xchg/suspend_now
     ${loopForever}

@@ -11,19 +11,16 @@
 let
   system-x86_64 = lib.elem stdenv.system lib.platforms.x86_64;
   packagedQt = "5.6.0";
-  # Hacky: split "1.2.3-4" into "1.2.3" and "4"
-  systemQt = (builtins.parseDrvName qtbase.version).name;
-
 in stdenv.mkDerivation rec {
   name = "telegram-desktop-${version}";
-  version = "0.9.56";
+  version = "0.9.49";
   qtVersion = lib.replaceStrings ["."] ["_"] packagedQt;
 
   src = fetchFromGitHub {
     owner = "telegramdesktop";
     repo = "tdesktop";
     rev = "v${version}";
-    sha256 = "000ngg6arfb6mif0hvin099f83q3sn7mw4vfvrikskczblw3a5lc";
+    sha256 = "1smz0d07xcpv7kv5v739b5a8wrgv5fx0wy15d3zzm3s69418a6nc";
   };
 
   tgaur = fetchgit {
@@ -63,7 +60,6 @@ in stdenv.mkDerivation rec {
     "INCLUDEPATH+=${dee}/include/dee-1.0"
     "INCLUDEPATH+=${libdbusmenu-glib}/include/libdbusmenu-glib-0.4"
     "INCLUDEPATH+=${breakpad}/include/breakpad"
-    "QT_TDESKTOP_VERSION=${systemQt}"
     "LIBS+=-lcrypto"
     "LIBS+=-lssl"
   ];
@@ -78,14 +74,14 @@ in stdenv.mkDerivation rec {
     patchPhase
     sed -i 'Telegram/Telegram.pro' \
       -e 's,CUSTOM_API_ID,,g' \
+      -e "s,/usr/local/tdesktop/Qt-[^/]*,$PWD/../qt,g" \
       -e 's,/usr,/does-not-exist,g' \
       -e '/LIBS += .*libxkbcommon.a/d' \
       -e 's,LIBS += .*libz.a,LIBS += -lz,' \
       -e 's,LIBS += .*libbreakpad_client.a,LIBS += ${breakpad}/lib/libbreakpad_client.a,' \
       -e 's, -flto,,g' \
-      -e 's, -static-libstdc++,,g'
-
-    export qmakeFlags="$qmakeFlags QT_TDESKTOP_PATH=$PWD/../qt"
+      -e 's, -static-libstdc++,,g' \
+      -e 's,${packagedQt},${qtbase.version},g'
 
     export QMAKE=$PWD/../qt/bin/qmake
     ( mkdir -p ../Libraries
@@ -94,8 +90,7 @@ in stdenv.mkDerivation rec {
         tar -xaf $i
       done
       cd qtbase-*
-      # This patch is outdated but the fixes doesn't feel very important
-      patch -p1 < ../../$sourceRoot/Telegram/Patches/qtbase_${qtVersion}.diff || true
+      patch -p1 < ../../$sourceRoot/Telegram/Patches/qtbase_${qtVersion}.diff
       for i in $qtPatches; do
         patch -p1 < $i
       done
@@ -126,17 +121,17 @@ in stdenv.mkDerivation rec {
 
     ( mkdir -p Linux/obj/codegen_style/Debug
       cd Linux/obj/codegen_style/Debug
-      $QMAKE $qmakeFlags ../../../../Telegram/build/qmake/codegen_style/codegen_style.pro
+      $QMAKE CONFIG+=debug ../../../../Telegram/build/qmake/codegen_style/codegen_style.pro
       buildPhase
     )
     ( mkdir -p Linux/obj/codegen_numbers/Debug
       cd Linux/obj/codegen_numbers/Debug
-      $QMAKE $qmakeFlags ../../../../Telegram/build/qmake/codegen_numbers/codegen_numbers.pro
+      $QMAKE CONFIG+=debug ../../../../Telegram/build/qmake/codegen_numbers/codegen_numbers.pro
       buildPhase
     )
     ( mkdir -p Linux/DebugIntermediateLang
       cd Linux/DebugIntermediateLang
-      $QMAKE $qmakeFlags ../../Telegram/MetaLang.pro
+      $QMAKE CONFIG+=debug ../../Telegram/MetaLang.pro
       buildPhase
     )
 

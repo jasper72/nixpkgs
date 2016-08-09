@@ -27,6 +27,5 @@ stdenv.mkDerivation rec {
     homepage = http://esdl.sourceforge.net/;
     description = "Erlang binding to SDL that includes a binding to OpenGL";
     license = "BSD";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -28,6 +28,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.dettus.net/dhex/;
     license = stdenv.lib.licenses.gpl2;
     maintainers = with stdenv.lib.maintainers; [qknight];
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

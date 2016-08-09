@@ -27,6 +27,5 @@ stdenv.mkDerivation rec {
     description = "A tool to convert CVS repositories to Subversion repositories";
     homepage = http://cvs2svn.tigris.org/;
     maintainers = [ lib.maintainers.makefu ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

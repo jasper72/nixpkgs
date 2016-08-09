@@ -21,8 +21,4 @@ stdenv.mkDerivation rec {
     ln -s ${qt4}/bin/moc .bin/moc-qt4
     addToSearchPath PATH .bin
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

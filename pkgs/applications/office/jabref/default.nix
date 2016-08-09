@@ -1,12 +1,11 @@
 { stdenv, fetchurl, makeWrapper, makeDesktopItem, ant, jdk, jre }:
 
 stdenv.mkDerivation rec {
-  version = "3.5";
+  version = "2.10";
   name = "jabref-${version}";
-
   src = fetchurl {
-    url = "https://github.com/JabRef/jabref/releases/download/v${version}/JabRef-${version}.jar";
-    sha256 = "19q86xc8qr6j8zd9rsc6aa3jd4kbblkr6ik1h6h7npq012019adm";
+    url = "mirror://sourceforge/jabref/${version}/JabRef-${version}-src.tar.bz2";
+    sha256 = "09b57afcfeb1730b58a887dc28f0f4c803e9c00fade1f57245ab70e2a98ce6ad";
   };
 
   desktopItem = makeDesktopItem {
@@ -19,21 +18,17 @@ stdenv.mkDerivation rec {
     exec = "jabref";
   };
 
-  buildInputs = [ makeWrapper jdk ];
+  buildInputs = [ ant jdk makeWrapper ];
 
-  phases = [ "installPhase" ];
+  buildPhase = ''ant'';
 
   installPhase = ''
     mkdir -p $out/bin $out/share/java $out/share/icons
-
     cp -r ${desktopItem}/share/applications $out/share/
-
-    jar xf $src images/icons/JabRef-icon-mac.svg
-    cp images/icons/JabRef-icon-mac.svg $out/share/icons/jabref.svg
-
-    ln -s $src $out/share/java/jabref-${version}.jar
+    cp build/lib/JabRef-${version}.jar $out/share/java/
+    cp src/images/JabRef-icon-mac.svg $out/share/icons/jabref.svg
     makeWrapper ${jre}/bin/java $out/bin/jabref \
-      --add-flags "-jar $out/share/java/jabref-${version}.jar"
+      --add-flags "-jar $out/share/java/JabRef-${version}.jar"
   '';
 
   meta = with stdenv.lib; {

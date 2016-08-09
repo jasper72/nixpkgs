@@ -3,28 +3,25 @@ GEM
   specs:
     erubis (2.7.0)
     multi_json (1.3.6)
-    rack (1.6.4)
+    rack (1.6.1)
     rack-protection (1.5.3)
       rack
-    riemann-dash (0.2.12)
+    riemann-dash (0.2.11)
       erubis (>= 2.7.0)
       multi_json (= 1.3.6)
       sass (>= 3.1.14)
       sinatra (~> 1.4.5)
       webrick (~> 1.3.1)
-    sass (3.4.22)
-    sinatra (1.4.7)
-      rack (~> 1.5)
+    sass (3.4.14)
+    sinatra (1.4.6)
+      rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
-    tilt (2.0.5)
+    tilt (2.0.1)
     webrick (1.3.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  riemann-dash (= 0.2.12)
-
-BUNDLED WITH
-   1.11.2
+  riemann-dash (= 0.2.11)

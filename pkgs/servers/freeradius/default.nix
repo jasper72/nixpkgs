@@ -79,7 +79,6 @@ stdenv.mkDerivation rec {
     description = "A modular, high performance free RADIUS suite";
     license = stdenv.lib.licenses.gpl2;
     maintainers = with maintainers; [ sheenobu ];
-    platforms = with platforms; linux;
   };
 
 }

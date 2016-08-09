@@ -187,7 +187,7 @@ in
                   script = ''
                     cd '${cpath}'
                     set +e
-                    simp_le ${escapeShellArgs cmdline}
+                    simp_le ${concatMapStringsSep " " (arg: escapeShellArg (toString arg)) cmdline}
                     EXITCODE=$?
                     set -e
                     echo "$EXITCODE" > /tmp/lastExitCode

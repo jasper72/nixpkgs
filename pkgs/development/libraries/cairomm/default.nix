@@ -35,6 +35,5 @@ stdenv.mkDerivation rec {
     homepage = http://cairographics.org/;
 
     license = with licenses; [ lgpl2Plus mpl10 ];
-    platforms = platforms.linux;
   };
 }

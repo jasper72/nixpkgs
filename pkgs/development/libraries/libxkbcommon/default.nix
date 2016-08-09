@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, yacc, flex, xkeyboard_config, libxcb, libX11 }:
+{ stdenv, fetchurl, pkgconfig, yacc, flex, xkeyboard_config, libxcb }:
 
 stdenv.mkDerivation rec {
   name = "libxkbcommon-0.6.1";
@@ -12,10 +12,9 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ pkgconfig yacc flex xkeyboard_config libxcb ];
 
-  configureFlags = [
-    "--with-xkb-config-root=${xkeyboard_config}/etc/X11/xkb"
-    "--with-x-locale-root=${libX11.out}/share/X11/locale"
-  ];
+  configureFlags = ''
+    --with-xkb-config-root=${xkeyboard_config}/etc/X11/xkb
+  '';
 
   preBuild = stdenv.lib.optionalString stdenv.isDarwin ''
     sed -i 's/,--version-script=.*$//' Makefile
@@ -26,6 +25,5 @@ stdenv.mkDerivation rec {
     homepage = http://xkbcommon.org;
     license = licenses.mit;
     maintainers = with maintainers; [ garbas ];
-    platforms = with platforms; unix;
   };
 }

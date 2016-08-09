@@ -19,11 +19,6 @@ let
   inherit lua;
   inherit (stdenv.lib) maintainers;
 
-  # helper functions for dealing with LUA_PATH and LUA_CPATH
-  getPath       = lib : type : "${lib}/lib/lua/${lua.luaversion}/?.${type};${lib}/share/lua/${lua.luaversion}/?.${type}";
-  getLuaPath    = lib : getPath lib "lua";
-  getLuaCPath   = lib : getPath lib "so";
-
   #define build lua package function
   buildLuaPackage = callPackage ../development/lua-modules/generic lua;
 
@@ -403,7 +398,6 @@ let
     preInstall = ''
       mkdir -p $out/lib/lua/${lua.luaversion}
     '';
-    NIX_CFLAGS_COMPILE = "-Wno-error -fpic";
     installFlags = [
       "USE_SYSTEM_LUA=yes"
       "LUA_VERSION_MAJ_MIN="
@@ -427,7 +421,7 @@ let
     };
 
     meta = with stdenv.lib; {
-      description = "Vicious widgets for window managers";
+      description = "vicious widgets for window managers";
       homepage    = http://git.sysphere.org/vicious/;
       license     = licenses.gpl2;
       maintainers = with maintainers; [ makefu ];

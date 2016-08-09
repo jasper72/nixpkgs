@@ -10,8 +10,4 @@ stdenv.mkDerivation {
   preBuild = ''
     export buildFlags=CC="$CC" # for darwin
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

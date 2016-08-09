@@ -19,7 +19,6 @@ stdenv.mkDerivation rec {
     description = "Command line bluetooth manager for Bluez5";
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ maintainers.dasuxullebt ];
-    platforms = platforms.unix;
   };
 
 }

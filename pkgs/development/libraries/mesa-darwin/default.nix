@@ -25,8 +25,6 @@ let
       libffi libvdpau
     ] ++ stdenv.lib.optionals stdenv.isDarwin [ OpenGL apple_sdk.sdk Xplugin ];
 
-    propagatedBuildInputs = stdenv.lib.optionals stdenv.isDarwin [ OpenGL ];
-
     postUnpack = ''
       ln -s darwin $sourceRoot/configs/current
     '';

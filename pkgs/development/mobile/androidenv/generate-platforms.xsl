@@ -36,7 +36,7 @@ let
   });
 in
 {
-    <xsl:for-each select="sdk:platform"><xsl:sort select="sdk:api-level" data-type="number"/>
+    <xsl:for-each select="sdk:platform">
   platform_<xsl:value-of select="sdk:api-level" /> = buildPlatform {
     name = "android-platform-<xsl:value-of select="sdk:version" />";
     src = fetchurl {

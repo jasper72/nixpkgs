@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   name = "xerces-c-${version}";
-  version = "3.1.4";
+  version = "3.1.3";
 
   src = fetchurl {
     url = "mirror://apache/xerces/c/3/sources/${name}.tar.gz";
-    sha256 = "1xpccqzykpd3806kd788lgkl01pk7v5lklva6q4kp9zq9jnfv3n9";
+    sha256 = "0jav1cbwcyq4miy790dd62yrypf7n0j98vdin9ny30f9nwyzgm7k";
   };
 
   meta = {

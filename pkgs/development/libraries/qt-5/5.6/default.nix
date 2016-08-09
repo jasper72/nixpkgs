@@ -1,16 +1,18 @@
 /*
 
-# Updates
+# Minor Updates
 
-Before a major version update, make a copy of this directory. (We like to
-keep the old version around for a short time after major updates.) Add a
-top-level attribute to `top-level/all-packages.nix`.
+1. Edit ./fetchsrcs.sh to point to the updated URL.
+2. Run ./fetchsrcs.sh.
+3. Build and enjoy.
 
-1. Update the URL in `maintainers/scripts/generate-qt.sh`.
-2. From the top of the Nixpkgs tree, run
-   `./maintainers/scripts/generate-qt.sh > pkgs/development/libraries/qt-5/$VERSION/srcs.nix`.
-3. Check that the new packages build correctly.
-4. Commit the changes and open a pull request.
+# Major Updates
+
+1. Make a copy of this directory. (We like to keep the old version around
+   for a short time after major updates.)
+2. Delete the tmp/ subdirectory of the copy.
+3. Follow the minor update instructions above.
+4. Package any new Qt modules, if necessary.
 
 */
 
@@ -28,7 +30,7 @@ with stdenv.lib;
 let
 
   mirror = "http://download.qt.io";
-  srcs = import ./srcs.nix { inherit (pkgs) fetchurl; inherit mirror; };
+  srcs = import ./srcs.nix { inherit mirror; inherit (pkgs) fetchurl; };
 
   qtSubmodule = args:
     let
@@ -66,6 +68,8 @@ let
         mesa = pkgs.mesa_noglu;
         harfbuzz = pkgs.harfbuzz-icu;
         cups = if stdenv.isLinux then pkgs.cups else null;
+        # GNOME dependencies are not used unless gtkStyle == true
+        inherit (pkgs.gnome) libgnomeui GConf gnome_vfs;
         bison = pkgs.bison2; # error: too few arguments to function 'int yylex(...
         inherit developerBuild decryptSslTraffic;
       };
@@ -90,11 +94,11 @@ let
       qtsensors = callPackage ./qtsensors.nix {};
       qtserialport = callPackage ./qtserialport {};
       qtsvg = callPackage ./qtsvg.nix {};
-      qttools = callPackage ./qttools {};
+      qttools = callPackage ./qttools.nix {};
       qttranslations = callPackage ./qttranslations.nix {};
       /* qtwayland = not packaged */
-      qtwebchannel = callPackage ./qtwebchannel.nix {};
-      qtwebengine = callPackage ./qtwebengine.nix {};
+      /* qtwebchannel = not packaged */
+      /* qtwebengine = not packaged */
       qtwebsockets = callPackage ./qtwebsockets.nix {};
       /* qtwinextras = not packaged */
       qtx11extras = callPackage ./qtx11extras.nix {};

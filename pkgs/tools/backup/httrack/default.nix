@@ -16,6 +16,5 @@ stdenv.mkDerivation rec {
     description = "Easy-to-use offline browser utility";
     license = stdenv.lib.licenses.gpl3;
     maintainers = with stdenv.lib.maintainers; [ the-kenny ];
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

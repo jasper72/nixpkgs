@@ -19,6 +19,5 @@ stdenv.mkDerivation rec {
     description = "Khronos OpenCL headers";
     homepage = https://www.khronos.org/registry/cl/;
     license = licenses.mit;
-    platforms = platforms.unix;
   };
 }

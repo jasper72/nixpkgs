@@ -1,21 +1,18 @@
-{ stdenv, fetchFromGitHub , liblo, libxml2, libjack2, libsndfile, wxGTK, libsigcxx
-  ,libsamplerate, rubberband, pkgconfig, autoconf, automake, libtool, gettext, ncurses, which
+{ stdenv, fetchurl, liblo, libxml2, libjack2, libsndfile, wxGTK, libsigcxx
+,libsamplerate, rubberband, pkgconfig, ncurses
 }:
 
 stdenv.mkDerivation rec {
-  name = "sooperlooper-git-${version}";
-  version = "19-07-2016";
-
-  src = fetchFromGitHub {
-    owner = "essej";
-    repo = "sooperlooper";
-    rev = "3bdfe184cd59b51c757b8048536abc1146fb0de4";
-    sha256 = "0qz25h4idv79m97ici2kzx72fwzks3lysyksk3p3rx72lsijhf3g";
+  name = "sooperlooper-${version}";
+  version = "1.7.3";
+  src = fetchurl {
+    url = "http://essej.net/sooperlooper/${name}.tar.gz";
+    sha256 = "0n2gdxw1fx8nxxnpzf4sj0kp6k6zi1yq59cbz6qqzcnsnpnvszbs";
   };
 
   buildInputs = [
-    liblo libxml2 libjack2 libsndfile wxGTK libsigcxx
-    libsamplerate rubberband pkgconfig autoconf automake libtool gettext ncurses which
+   liblo libxml2 libjack2 libsndfile wxGTK libsigcxx
+   libsamplerate rubberband pkgconfig ncurses
   ];
 
   meta = {

@@ -17,6 +17,6 @@ stdenv.mkDerivation rec {
     homepage = https://www.libsdl.org/projects/SDL_net;
     license = licenses.zlib;
     maintainers = [ maintainers.MP2E ];
-    platforms = platforms.linux;
+    platforms = platforms.all;
   };
 }

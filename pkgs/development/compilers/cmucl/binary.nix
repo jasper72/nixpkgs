@@ -38,6 +38,5 @@ stdenv.mkDerivation {
     license = stdenv.lib.licenses.free;		# public domain
     homepage = http://www.cons.org/cmucl/;
     maintainers = [stdenv.lib.maintainers.tohl];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

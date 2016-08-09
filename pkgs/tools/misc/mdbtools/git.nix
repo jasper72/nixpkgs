@@ -27,6 +27,5 @@ stdenv.mkDerivation {
 
   meta = {
     description = ".mdb (MS Access) format tools";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

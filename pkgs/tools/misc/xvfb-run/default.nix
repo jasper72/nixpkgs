@@ -20,8 +20,4 @@ stdenv.mkDerivation {
       --set FONTCONFIG_FILE "${fontsConf}" \
       --prefix PATH : ${stdenv.lib.makeBinPath [ getopt xorgserver xauth which utillinux gawk coreutils ]}
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

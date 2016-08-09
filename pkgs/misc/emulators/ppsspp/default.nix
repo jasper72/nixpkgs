@@ -22,8 +22,6 @@ stdenv.mkDerivation rec{
   buildInputs = [ zlib libpng pkgconfig qt4 qmake4Hook ]
                 ++ (if withGamepads then [ SDL ] else [ ]);
 
-  qmakeFlags = [ "PPSSPPQt.pro" ];
-
   preConfigure = "cd Qt";
   installPhase = "mkdir -p $out/bin && cp ppsspp $out/bin";
 

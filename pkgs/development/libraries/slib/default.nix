@@ -57,6 +57,5 @@ stdenv.mkDerivation rec {
     homepage = http://people.csail.mit.edu/jaffer/SLIB;
 
     maintainers = [ ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

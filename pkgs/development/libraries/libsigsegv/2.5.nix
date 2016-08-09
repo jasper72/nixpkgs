@@ -12,7 +12,6 @@ stdenv.mkDerivation rec {
     homepage = http://libsigsegv.sf.net;
     description = "A library for handling page faults in user mode";
     branch = "2.5";
-    platforms = stdenv.lib.platforms.linux;
   };
 
   doCheck = true;

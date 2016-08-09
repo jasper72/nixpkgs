@@ -18,11 +18,6 @@ stdenv.mkDerivation {
     systemd
   ];
 
-  patchPhase = ''
-    substituteInPlace Makefile \
-      --replace "libsystemd-login" "libsystemd"
-  '';
-
   installPhase = ''
     make install prefix=$out bindir=$out/bin docdir=$out/share/doc \
       mandir=$out/share/man INSTALL="install -c" INSTALLDATA="install -c -m 644"

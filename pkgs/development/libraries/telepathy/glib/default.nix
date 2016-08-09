@@ -21,6 +21,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     homepage = http://telepathy.freedesktop.org;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

@@ -1,7 +1,7 @@
 # This module defines a global environment configuration and
 # a common configuration for all shells.
 
-{ config, lib, utils, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -135,13 +135,13 @@ in
 
     environment.shells = mkOption {
       default = [];
-      example = literalExample "[ pkgs.bashInteractive pkgs.zsh ]";
+      example = [ "/run/current-system/sw/bin/zsh" ];
       description = ''
         A list of permissible login shells for user accounts.
         No need to mention <literal>/bin/sh</literal>
         here, it is placed into this list implicitly.
       '';
-      type = types.listOf (types.either types.shellPackage types.path);
+      type = types.listOf types.path;
     };
 
   };
@@ -158,7 +158,7 @@ in
 
     environment.etc."shells".text =
       ''
-        ${concatStringsSep "\n" (map utils.toShellPath cfg.shells)}
+        ${concatStringsSep "\n" cfg.shells}
         /bin/sh
       '';
 

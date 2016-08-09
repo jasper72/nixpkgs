@@ -40,6 +40,5 @@ stdenv.mkDerivation rec {
     homepage = http://supertuxkart.sourceforge.net/;
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = with stdenv.lib.maintainers; [ c0dehero fuuzetsu ];
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

@@ -1,6 +1,6 @@
-{ pkgs, fetchFromGitHub, stdenv, gtk3, udev, desktop_file_utils
-, shared_mime_info, intltool, pkgconfig, wrapGAppsHook, ffmpegthumbnailer
-, jmtpfs, ifuse, lsof, udisks, hicolor_icon_theme, adwaita-icon-theme }:
+{ pkgs, fetchFromGitHub, stdenv, gtk3, udev, desktop_file_utils, shared_mime_info
+, intltool, pkgconfig, wrapGAppsHook, ffmpegthumbnailer, jmtpfs, ifuse, lsof, udisks
+, hicolor_icon_theme, adwaita-icon-theme }:
 
 stdenv.mkDerivation rec {
   name = "spacefm-${version}";
@@ -15,21 +15,14 @@ stdenv.mkDerivation rec {
 
   configureFlags = [
     "--with-bash-path=${pkgs.bash}/bin/bash"
+    "--with-preferable-sudo=${pkgs.sudo}/bin/sudo"
   ];
 
   preConfigure = ''
     configureFlags="$configureFlags --sysconfdir=$out/etc"
   '';
 
-  postInstall = ''
-    rm -f $out/etc/spacefm/spacefm.conf
-    ln -s /etc/spacefm/spacefm.conf $out/etc/spacefm/spacefm.conf 
-  '';
-
-  buildInputs = [
-    gtk3 udev desktop_file_utils shared_mime_info intltool pkgconfig
-    wrapGAppsHook ffmpegthumbnailer jmtpfs ifuse lsof udisks
-  ];
+  buildInputs = [ gtk3 udev desktop_file_utils shared_mime_info intltool pkgconfig wrapGAppsHook ffmpegthumbnailer jmtpfs ifuse lsof udisks ];
 
   meta = with stdenv.lib;  {
     description = "A multi-panel tabbed file manager";
@@ -40,7 +33,7 @@ stdenv.mkDerivation rec {
     '';
     homepage = http://ignorantguru.github.io/spacefm/;
     platforms = platforms.linux;
-    license = licenses.gpl3Plus;
+    license = licenses.gpl3;
     maintainers = with maintainers; [ jagajaga obadz ];
   };
 }

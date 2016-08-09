@@ -14,7 +14,7 @@ stdenv.mkDerivation rec {
     cmakeFlagsArray=($cmakeFlagsArray -DLIBCXX_CXX_ABI_INCLUDE_PATHS="$NIX_BUILD_TOP/libcxxabi-${version}.src/include")
   '';
 
-  patches = lib.optional stdenv.isDarwin ./darwin.patch;
+  patches = [ ./darwin.patch ];
 
   buildInputs = [ cmake libcxxabi ] ++ lib.optional stdenv.isDarwin fixDarwinDylibNames;
 

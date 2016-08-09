@@ -27,7 +27,6 @@ stdenv.mkDerivation rec{
       other systems supported by the SDL library.
     '';
     maintainers = [ maintainers.AndersonTorres ];
-    license = licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.linux;
-  };
+    license = licenses.gpl2Plus;    
+  };    
 }

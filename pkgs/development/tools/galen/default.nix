@@ -1,25 +1,26 @@
-{ stdenv, fetchurl, jre8, unzip }:
+{ stdenv, fetchurl, jdk, unzip }:
 
 stdenv.mkDerivation rec {
   pname = "galen";
-  version = "2.3.0";
+  version = "2.2.4";
   name = "${pname}-${version}";
 
-  inherit jre8;
+  inherit jdk;
 
   src = fetchurl {
     url = "https://github.com/galenframework/galen/releases/download/galen-${version}/galen-bin-${version}.zip";
-    sha256 = "10z7vh3jiq7kbzzp3j0354swkr4xxz9qimi5c5bddbiy671k6cra";
+    sha256 = "0qx6pza6aw880ph76wbypcgy983pln8k4ad2indagb5qhiz4zw1d";
   };
 
   buildInputs = [ unzip ];
+  phases = [ "unpackPhase" "buildPhase" "installPhase" ];
 
   buildPhase = ''
   mkdir -p $out/bin
   '';
 
   installPhase = ''
-  cat galen | sed -e "s,java,$jre8/bin/java," > $out/bin/galen
+  cat galen | sed -e "s,java,$jdk/bin/java," > $out/bin/galen
   chmod +x $out/bin/galen
   cp galen.jar $out/bin
   '';

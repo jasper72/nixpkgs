@@ -1,10 +1,10 @@
 {stdenv, fetchurl, gfortran, openblas}:
 
 stdenv.mkDerivation rec {
-  name = "JAGS-4.1.0";
+  name = "JAGS-3.4.0";
   src = fetchurl {
     url = "mirror://sourceforge/mcmc-jags/${name}.tar.gz";
-    sha256 = "08pmrnbwibc0brgn5cx860jcl0s2xaw4amw7g45649r1bcdz7v25";
+    sha256 = "0ayqsz9kkmbss7mxlwr34ch2z1vsb65lryjzqpprab1ccyiaksib";
   };
   buildInputs = [gfortran openblas];
   configureFlags = [ "--with-blas=-lopenblas" "--with-lapack=-lopenblas" ];
@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     license     = "GPL2";
     homepage    = http://www-ice.iarc.fr/~martyn/software/jags/;
     maintainers = [stdenv.lib.maintainers.andres];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

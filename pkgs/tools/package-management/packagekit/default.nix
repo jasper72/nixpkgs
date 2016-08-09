@@ -1,54 +1,57 @@
-{ stdenv, fetchFromGitHub, intltool, glib, pkgconfig, polkit, python, sqlite, systemd
-, gobjectIntrospection, vala, gtk_doc, autoreconfHook, autoconf-archive
-, nix, boost
-, enableCommandNotFound ? false
-, enableBashCompletion ? false, bashCompletion ? null }:
-
-with stdenv.lib;
+{ stdenv, fetchurl, intltool, glib, pkgconfig, polkit, python, sqlite }:
 
 stdenv.mkDerivation rec {
-  name = "packagekit-2016-06-03";
+  name = "packagekit-${version}";
+  version = "1.1.1";
 
-  src = fetchFromGitHub {
-    owner = "hughsie";
-    repo = "PackageKit";
-    rev = "99fd83bbb26badf43c6a17a9f0c6dc054c7484c8";
-    sha256 = "0y42vl6r1wh57sbjfkn4khjs78q54wshf4p0v4nly9s7hydxpi6a";
+  src = fetchurl {
+    sha256 = "1i6an483vmm6y39szr2alq5vf6kfxhk3j5ca79qrshcj9jjlhcs8";
+    url = "http://www.freedesktop.org/software/PackageKit/releases/PackageKit-${version}.tar.xz";
   };
 
-  buildInputs = [ glib polkit systemd python gobjectIntrospection vala ]
-                  ++ optional enableBashCompletion bashCompletion;
-  propagatedBuildInputs = [ sqlite nix boost ];
-  nativeBuildInputs = [ intltool pkgconfig autoreconfHook autoconf-archive gtk_doc ];
-
-  preAutoreconf = ''
-    gtkdocize
-    intltoolize
-  '';
+  buildInputs = [ glib polkit python ];
+  propagatedBuildInputs = [ sqlite ];
+  nativeBuildInputs = [ intltool pkgconfig ];
 
   configureFlags = [
-    "--enable-systemd"
-    "--enable-nix"
-    "--disable-dummy"
+    "--disable-static"
+    "--disable-python3"
+    "--disable-networkmanager"
+    "--disable-connman"
+    "--disable-systemd"
+    "--disable-bash-completion"
+    "--disable-gstreamer-plugin"
+    "--disable-gtk-module"
+    "--disable-command-not-found"
     "--disable-cron"
-    "--disable-introspection"
-    "--disable-offline-update"
-    "--localstatedir=/var"
-    "--sysconfdir=/etc"
-    "--with-dbus-sys=$(out)/etc/dbus-1/system.d"
-    "--with-systemdsystemunitdir=$(out)/lib/systemd/system/"
-  ]
-  ++ optional (!enableBashCompletion) "--disable-bash-completion"
-  ++ optional (!enableCommandNotFound) "--disable-command-not-found";
+    "--disable-daemon-tests"
+    "--disable-alpm"
+    "--disable-aptcc"
+    "--enable-dummy"
+    "--disable-entropy"
+    "--disable-hif"
+    "--disable-pisi"
+    "--disable-poldek"
+    "--disable-portage"
+    "--disable-ports"
+    "--disable-katja"
+    "--disable-urpmi"
+    "--disable-yum"
+    "--disable-zypp"
+  ];
 
   enableParallelBuilding = true;
 
-  installFlags = [
-    "sysconfdir=\${out}/etc"
-    "localstatedir=\${TMPDIR}"
-  ];
+  preInstall = ''
+    # Don't install anything to e.g. $out/var/cache:
+    for dir in src data; do
+      substituteInPlace $dir/Makefile \
+        --replace " install-data-hook" "" \
+        --replace " install-databaseDATA" ""
+    done
+  '';
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "System to facilitate installing and updating packages";
     longDescription = ''
       PackageKit is a system designed to make installing and updating software
@@ -63,6 +66,6 @@ stdenv.mkDerivation rec {
     homepage = http://www.packagekit.org/;
     license = licenses.gpl2Plus;
     platforms = platforms.linux;
-    maintainers = with maintainers; [ nckx matthewbauer ];
+    maintainers = with maintainers; [ nckx ];
   };
 }

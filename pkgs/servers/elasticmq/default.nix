@@ -35,6 +35,5 @@ stdenv.mkDerivation rec {
         Default.scala included in the distribution as a template.
       '';
     license = stdenv.lib.licenses.asl20;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

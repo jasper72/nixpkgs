@@ -76,9 +76,7 @@ in stdenv.mkDerivation rec {
 
   # For some reason librdf_redland sometimes refers to rasqal.h instead 
   # of rasqal/rasqal.h
-  # curl upgrade to 7.50.0 (#17152) changes the libcurl headers slightly and
-  # therefore requires the -fpermissive flag until this package gets updated
-  NIX_CFLAGS_COMPILE="-I${librdf_rasqal}/include/rasqal -fpermissive";
+  NIX_CFLAGS_COMPILE="-I${librdf_rasqal}/include/rasqal";
 
   # If we call 'configure', 'make' will then call configure again without parameters.
   # It's their system.
@@ -126,8 +124,6 @@ in stdenv.mkDerivation rec {
     sed -e /CppunitTest_sd_tiledrendering/d -i sd/Module_sd.mk
     # one more fragile test?
     sed -e '/CPPUNIT_TEST(testTdf96536);/d' -i sw/qa/extras/uiwriter/uiwriter.cxx
-    # rendering-dependent test
-    sed -e '/CPPUNIT_ASSERT_EQUAL(11148L, pOleObj->GetLogicRect().getWidth());/d ' -i sc/qa/unit/subsequent_filters-test.cxx
   '';
 
   makeFlags = "SHELL=${bash}/bin/bash";
@@ -255,6 +251,5 @@ in stdenv.mkDerivation rec {
     license = licenses.lgpl3;
     maintainers = with maintainers; [ viric raskin ];
     platforms = platforms.linux;
-    hydraPlatforms = [];
   };
 }

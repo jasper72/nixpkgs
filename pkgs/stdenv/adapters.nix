@@ -70,6 +70,7 @@ rec {
             getCrossDrv = drv: drv.crossDrv or drv;
             nativeBuildInputsDrvs = map getNativeDrv nativeBuildInputs;
             buildInputsDrvs = map getCrossDrv buildInputs;
+            buildInputsDrvsAsBuildInputs = map getNativeDrv buildInputs;
             propagatedBuildInputsDrvs = map getCrossDrv propagatedBuildInputs;
             propagatedNativeBuildInputsDrvs = map getNativeDrv propagatedNativeBuildInputs;
 
@@ -238,4 +239,11 @@ rec {
         NIX_CFLAGS_LINK = toString (args.NIX_CFLAGS_LINK or "") + " -fuse-ld=gold";
       });
     };
+
+  dropCxx = drv: drv.override {
+    stdenv = if pkgs.stdenv.isDarwin
+      then pkgs.allStdenvs.stdenvDarwinNaked
+      else pkgs.stdenv;
+  };
+
 }

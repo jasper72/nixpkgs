@@ -28,6 +28,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.cl.cam.ac.uk/~mgk25/otpw.html;
     description = "A one-time password login package";
     license = stdenv.lib.licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

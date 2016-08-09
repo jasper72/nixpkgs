@@ -12,6 +12,5 @@ stdenv.mkDerivation {
     description = "Berkeley YACC";
     homepage = http://dickey.his.com/byacc/byacc.html;
     license = stdenv.lib.licenses.publicDomain;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

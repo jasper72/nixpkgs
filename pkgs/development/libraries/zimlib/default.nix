@@ -17,6 +17,5 @@ stdenv.mkDerivation {
     homepage =  http://www.openzim.org/wiki/Zimlib;
     license = stdenv.lib.licenses.gpl2;
     maintainers = with stdenv.lib.maintainers; [ robbinch ];
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

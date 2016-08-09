@@ -16,6 +16,5 @@ stdenv.mkDerivation rec {
     description = "C++ Jabber library using Qt framework";
     homepage = "https://qutim.org/jreen/";
     license = stdenv.lib.licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

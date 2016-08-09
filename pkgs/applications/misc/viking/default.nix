@@ -43,6 +43,5 @@ stdenv.mkDerivation rec {
     homepage = http://viking.sourceforge.net/;
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ pSub ];
-    platforms = with platforms; linux;
   };
 }

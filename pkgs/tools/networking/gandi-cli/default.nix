@@ -5,10 +5,10 @@ with pythonPackages;
 buildPythonPackage rec {
   namePrefix = "";
   name = "gandi-cli-${version}";
-  version = "0.19";
+  version = "0.18";
 
   src = fetchFromGitHub {
-    sha256 = "0xbf97p75zl6sjxqcgmaa4p5rax2h6ixn8srwdr4rsx2zz9dpwgp";
+    sha256 = "045gnz345nfbi1g7j3gcyzrxrx3hcidaxzr05cb49rcr8nmqh1s3";
     rev = version;
     repo = "gandi.cli";
     owner = "Gandi";

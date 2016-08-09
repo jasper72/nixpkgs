@@ -20,8 +20,4 @@ stdenv.mkDerivation rec {
   '';
 
   buildInputs = [ python exiv2 scons boost ];
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

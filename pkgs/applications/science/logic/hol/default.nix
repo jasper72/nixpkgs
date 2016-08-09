@@ -82,6 +82,5 @@ stdenv.mkDerivation {
     homepage = "http://hol.sourceforge.net/";
     license = licenses.bsd3;
     maintainers = with maintainers; [ mudri ];
-    platforms = with platforms; linux;
   };
 }

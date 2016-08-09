@@ -31,6 +31,5 @@ stdenv.mkDerivation rec {
     homepage = http://logging.apache.org/log4cxx/index.html;
     description = "A logging framework for C++ patterned after Apache log4j";
     license = stdenv.lib.licenses.asl20;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

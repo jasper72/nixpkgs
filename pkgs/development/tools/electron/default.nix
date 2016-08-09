@@ -1,16 +1,16 @@
-{ stdenv, lib, libXScrnSaver, makeWrapper, fetchurl, unzip, atomEnv }:
+{ stdenv, lib, callPackage, fetchurl, unzip, atomEnv }:
 
 stdenv.mkDerivation rec {
   name = "electron-${version}";
-  version = "1.2.2";
+  version = "0.36.2";
 
   src = fetchurl {
-    url = "https://github.com/electron/electron/releases/download/v${version}/electron-v${version}-linux-x64.zip";
-    sha256 = "0jqzs1297f6w7s4j9pd7wyyqbidb0c61yjz47raafslg6nljgp1c";
+    url = "https://github.com/atom/electron/releases/download/v${version}/electron-v${version}-linux-x64.zip";
+    sha256 = "01d78j8dfrdygm1r141681b3bfz1f1xqg9vddz7j52z1mlfv9f1d";
     name = "${name}.zip";
   };
 
-  buildInputs = [ unzip makeWrapper ];
+  buildInputs = [ unzip ];
 
   buildCommand = ''
     mkdir -p $out/lib/electron $out/bin
@@ -23,14 +23,11 @@ stdenv.mkDerivation rec {
       --set-interpreter "$(cat $NIX_CC/nix-support/dynamic-linker)" \
       --set-rpath "${atomEnv.libPath}:$out/lib/electron" \
       $out/lib/electron/electron
-
-    wrapProgram $out/lib/electron/electron \
-      --prefix LD_PRELOAD : ${stdenv.lib.makeLibraryPath [ libXScrnSaver ]}/libXss.so.1
   '';
 
   meta = with stdenv.lib; {
     description = "Cross platform desktop application shell";
-    homepage = https://github.com/electron/electron;
+    homepage = https://github.com/atom/electron;
     license = licenses.mit;
     maintainers = [ maintainers.travisbhartwell ];
     platforms = [ "x86_64-linux" ];

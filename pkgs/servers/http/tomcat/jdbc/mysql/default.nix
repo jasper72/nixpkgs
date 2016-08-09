@@ -6,8 +6,4 @@ stdenv.mkDerivation {
   buildInputs = [ mysql_jdbc ];
   
   inherit mysql_jdbc;
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

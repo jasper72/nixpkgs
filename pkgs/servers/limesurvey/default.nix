@@ -37,6 +37,5 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2;
     homepage = https://www.limesurvey.org;
     maintainers = with maintainers; [offline];
-    platforms = with platforms; unix;
   };
 }

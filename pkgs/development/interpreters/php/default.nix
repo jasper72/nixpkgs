@@ -2,7 +2,7 @@
 , mysql, libxml2, readline, zlib, curl, postgresql, gettext
 , openssl, pkgconfig, sqlite, config, libjpeg, libpng, freetype
 , libxslt, libmcrypt, bzip2, icu, openldap, cyrus_sasl, libmhash, freetds
-, uwimap, pam, gmp, apacheHttpd, libiconv }:
+, uwimap, pam, gmp, apacheHttpd }:
 
 let
 
@@ -21,9 +21,7 @@ let
 
       buildInputs = [ flex bison pkgconfig ];
 
-      configureFlags = [
-        "EXTENSION_DIR=$(out)/lib/php/extensions"
-      ] ++ lib.optional stdenv.isDarwin "--with-iconv=${libiconv}";
+      configureFlags = ["EXTENSION_DIR=$(out)/lib/php/extensions"];
 
       flags = {
 
@@ -51,9 +49,9 @@ let
             "LDAP_DIR=${openldap.dev}"
             "LDAP_INCDIR=${openldap.dev}/include"
             "LDAP_LIBDIR=${openldap.out}/lib"
-            (lib.optional stdenv.isLinux "--with-ldap-sasl=${cyrus_sasl.dev}")
+            "--with-ldap-sasl=${cyrus_sasl.dev}"
             ];
-          buildInputs = [openldap openssl] ++ lib.optional stdenv.isLinux cyrus_sasl;
+          buildInputs = [openldap cyrus_sasl openssl];
         };
 
         mhash = {
@@ -220,14 +218,14 @@ let
       };
 
       cfg = {
-        imapSupport = config.php.imap or (!stdenv.isDarwin);
+        imapSupport = config.php.imap or true;
         ldapSupport = config.php.ldap or true;
         mhashSupport = config.php.mhash or true;
         mysqlSupport = (!php7) && (config.php.mysql or true);
         mysqliSupport = config.php.mysqli or true;
         pdo_mysqlSupport = config.php.pdo_mysql or true;
         libxml2Support = config.php.libxml2 or true;
-        apxs2Support = config.php.apxs2 or (!stdenv.isDarwin);
+        apxs2Support = config.php.apxs2 or true;
         bcmathSupport = config.php.bcmath or true;
         socketsSupport = config.php.sockets or true;
         curlSupport = config.php.curl or true;
@@ -283,34 +281,29 @@ let
       meta = with stdenv.lib; {
         description = "An HTML-embedded scripting language";
         homepage = http://www.php.net/;
-        license = licenses.php301;
+        license = stdenv.lib.licenses.php301;
         maintainers = with maintainers; [ globin ];
-        platforms = platforms.all;
       };
 
       patches = if !php7 then [ ./fix-paths.patch ] else [ ./fix-paths-php7.patch ];
-
-      postPatch = lib.optional stdenv.isDarwin ''
-        substituteInPlace configure --replace "-lstdc++" "-lc++"
-      '';
 
     });
 
 in {
 
   php55 = generic {
-    version = "5.5.38";
-    sha256 = "0f1y76whg6yx9a18mh97f8yq8lb64ri1f0zfr9la9374nbmq2g27";
+    version = "5.5.36";
+    sha256 = "1fvipg3p8m61kym2ir589vi1l6zm0r95rd97z5s6sq6ylgxfv114";
   };
 
   php56 = generic {
-    version = "5.6.24";
-    sha256 = "1iiqmjgxr10ci69f33fzyhplp06km6ybgqmxr1g142pdqdz628xz";
+    version = "5.6.22";
+    sha256 = "1il8kwg3pak06i4fz09br7vjsxvwfgxcd95zyaf6kyjjrj08mnlh";
   };
 
   php70 = generic {
-    version = "7.0.9";
-    sha256 = "0yrv5ijw6bgc0ahplczwhl5nm6l5mnd1i2n5023z7wkmb25rdrif";
+    version = "7.0.7";
+    sha256 = "06ixiaqqndvancqy5xmnzpscd77z2ixv3yrsdq0r8avqqhjjjks7";
   };
 
 }

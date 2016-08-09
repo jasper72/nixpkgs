@@ -7,8 +7,4 @@ stdenv.mkDerivation {
     md5 = "167fd4e0eea4f49def01984ec203289b";
   };
   builder = ./builder.sh;
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

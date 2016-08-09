@@ -1,5 +1,5 @@
-{ stdenv, fetchFromGitHub, cmake, gettext, libmsgpack, libtermkey
-, libtool, libuv, luajit, luaPackages, man, ncurses, perl, pkgconfig
+{ stdenv, fetchFromGitHub, cmake, gettext, glib, libmsgpack, libtermkey
+, libtool, libuv, lua, luajit, luaPackages, man, ncurses, perl, pkgconfig
 , unibilium, makeWrapper, vimUtils, xsel
 
 , withPython ? true, pythonPackages, extraPythonPackages ? []
@@ -72,16 +72,23 @@ let
     enableParallelBuilding = true;
 
     buildInputs = [
+      glib
       libtermkey
       libuv
+      # For some reason, `luajit` has to be listed after `lua`. See
+      # https://github.com/NixOS/nixpkgs/issues/14442
+      lua
+      luajit
       libmsgpack
       ncurses
       neovimLibvterm
       unibilium
-      luajit
-      luaPackages.lua
-    ] ++ optional withJemalloc jemalloc
-      ++ lualibs;
+
+      luaPackages.lpeg
+      luaPackages.mpack
+      luaPackages.luabitop
+
+    ] ++ optional withJemalloc jemalloc;
 
     nativeBuildInputs = [
       cmake
@@ -90,13 +97,11 @@ let
       pkgconfig
     ];
 
-    LUA_PATH = stdenv.lib.concatStringsSep ";" (map luaPackages.getLuaPath lualibs);
-    LUA_CPATH = stdenv.lib.concatStringsSep ";" (map luaPackages.getLuaCPath lualibs);
+    LUA_CPATH = "${luaPackages.lpeg}/lib/lua/${lua.luaversion}/?.so;${luaPackages.mpack}/lib/lua/${lua.luaversion}/?.so;${luaPackages.luabitop}/lib/lua/${lua.luaversion}/?.so";
 
-    lualibs = [ luaPackages.mpack luaPackages.lpeg luaPackages.luabitop ];
-
-    cmakeFlags = [
-      "-DLUA_PRG=${luaPackages.lua}/bin/lua"
+    configureFlags = [
+      "-DCMAKE_BUILD_TYPE=RelWithDebInfo"
+      "-DENABLE_JEMALLOC=ON"
     ];
 
     preConfigure = ''

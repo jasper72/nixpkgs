@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
              ++ stdenv.lib.optional enablePython python;
 
   meta = {
-    homepage = https://gitlab.com/cryptsetup/cryptsetup/;
+    homepage = http://code.google.com/p/cryptsetup/;
     description = "LUKS for dm-crypt";
     license = stdenv.lib.licenses.gpl2;
     maintainers = with stdenv.lib.maintainers; [ viric chaoflow ];

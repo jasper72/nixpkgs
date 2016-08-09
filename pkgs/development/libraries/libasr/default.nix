@@ -16,6 +16,5 @@ stdenv.mkDerivation rec {
     description = "Free, simple and portable asynchronous resolver library";
     license = licenses.isc;
     maintainers = [ maintainers.koral ];
-    platforms = platforms.unix;
   };
 }

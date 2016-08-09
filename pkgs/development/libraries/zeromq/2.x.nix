@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     branch = "2";
     homepage = "http://www.zeromq.org";
     description = "The Intelligent Transport Layer";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

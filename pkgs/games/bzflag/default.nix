@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     description = "Multiplayer 3D Tank game";
     homepage = http://bzflag.org/;
     license = stdenv.lib.licenses.lgpl21Plus;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

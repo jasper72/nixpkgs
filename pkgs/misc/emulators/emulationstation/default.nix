@@ -24,6 +24,5 @@ stdenv.mkDerivation rec {
     homepage = "http://emulationstation.org";
     maintainers = [ stdenv.lib.maintainers.edwtjo ];
     license = stdenv.lib.licenses.mit;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

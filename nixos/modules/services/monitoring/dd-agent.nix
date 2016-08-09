@@ -72,7 +72,6 @@ let
   postgresqlConfig = pkgs.writeText "postgres.yaml" cfg.postgresqlConfig;
   nginxConfig = pkgs.writeText "nginx.yaml" cfg.nginxConfig;
   mongoConfig = pkgs.writeText "mongo.yaml" cfg.mongoConfig;
-  jmxConfig = pkgs.writeText "jmx.yaml" cfg.jmxConfig;
   
   etcfiles =
     [ { source = ddConf;
@@ -95,10 +94,6 @@ let
     (optional (cfg.mongoConfig != null)
       { source = mongoConfig;
         target = "dd-agent/conf.d/mongo.yaml";
-      }) ++
-    (optional (cfg.jmxConfig != null)
-      { source = jmxConfig;
-        target = "dd-agent/conf.d/jmx.yaml";
       });
 
 in {
@@ -146,13 +141,6 @@ in {
       default = null;
       type = types.uniq (types.nullOr types.string);
     };
-
-    jmxConfig = mkOption {
-      description = "JMX integration configuration";
-      default = null;
-      type = types.uniq (types.nullOr types.string);
-    };
-
   };
 
   config = mkIf cfg.enable {
@@ -179,7 +167,7 @@ in {
         Restart = "always";
         RestartSec = 2;
       };
-      restartTriggers = [ pkgs.dd-agent ddConf diskConfig networkConfig postgresqlConfig nginxConfig mongoConfig jmxConfig ];
+      restartTriggers = [ pkgs.dd-agent ddConf diskConfig networkConfig postgresqlConfig nginxConfig mongoConfig ];
     };
 
     systemd.services.dogstatsd = {
@@ -195,21 +183,7 @@ in {
         Restart = "always";
         RestartSec = 2;
       };
-      restartTriggers = [ pkgs.dd-agent ddConf diskConfig networkConfig postgresqlConfig nginxConfig mongoConfig jmxConfig ];
-    };
-
-    systemd.services.dd-jmxfetch = lib.mkIf (cfg.jmxConfig != null) {
-      description = "Datadog JMX Fetcher";
-      path = [ pkgs."dd-agent" pkgs.python pkgs.sysstat pkgs.procps pkgs.jdk ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        ExecStart = "${pkgs.dd-agent}/bin/dd-jmxfetch";
-        User = "datadog";
-        Group = "datadog";
-        Restart = "always";
-        RestartSec = 2;
-      };
-      restartTriggers = [ pkgs.dd-agent ddConf diskConfig networkConfig postgresqlConfig nginxConfig mongoConfig jmxConfig ];
+      restartTriggers = [ pkgs.dd-agent ddConf diskConfig networkConfig postgresqlConfig nginxConfig mongoConfig ];
     };
 
     environment.etc = etcfiles;

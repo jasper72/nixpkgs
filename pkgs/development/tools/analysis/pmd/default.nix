@@ -19,7 +19,6 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Scans Java source code and looks for potential problems";
     homepage = http://pmd.sourceforge.net/;
-    platforms = stdenv.lib.platforms.unix;
   };
 }
 

@@ -8,8 +8,4 @@ stdenv.mkDerivation {
   };
 
   buildInputs = [xlibsWrapper];
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

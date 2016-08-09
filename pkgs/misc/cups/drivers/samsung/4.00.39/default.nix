@@ -15,9 +15,7 @@
 
 # Do not bump lightly! Visit <http://www.bchemnet.com/suldr/supported.html>
 # to see what will break when upgrading. Consider a new versioned attribute.
-let
-  cups' = cups.out;
-in stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   name = "samsung-UnifiedLinuxDriver-${version}";
   version = "4.00.39";
 
@@ -26,10 +24,9 @@ in stdenv.mkDerivation rec {
     sha256 = "144b4xggbzjfq7ga5nza7nra2cf6qn63z5ls7ba1jybkx1vm369k";
   };
 
-  buildInputs = [ cups' gcc ghostscript glibc patchelf ];
+  buildInputs = [ cups gcc ghostscript glibc patchelf ];
 
-  inherit gcc ghostscript glibc;
-  cups = cups';
+  inherit cups gcc ghostscript glibc;
 
   builder = ./builder.sh;
 

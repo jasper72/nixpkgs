@@ -23,6 +23,5 @@ stdenv.mkDerivation {
     license = stdenv.lib.licenses.lgpl2Plus;
     homepage = https://ccrma.stanford.edu/~jos/resample/Free_Resampling_Software.html;
     maintainers = [ stdenv.lib.maintainers.sander ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

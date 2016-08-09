@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
   enableParallelBuild = true;
 
   meta = {
-    description = "Advanced disassembly library";
+    description = "advanced disassembly library";
     homepage    = "http://www.capstone-engine.org";
     license     = stdenv.lib.licenses.bsd3;
     platforms   = stdenv.lib.platforms.linux;

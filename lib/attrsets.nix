@@ -457,6 +457,7 @@ rec {
 
   /*** deprecated stuff ***/
 
+  deepSeqAttrs = throw "removed 2016-02-29 because unused and broken";
   zipWithNames = zipAttrsWithNames;
   zip = builtins.trace
     "lib.zip is deprecated, use lib.zipAttrsWith instead" zipAttrsWith;

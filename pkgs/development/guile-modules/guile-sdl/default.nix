@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ guile ];
 
   buildInputs = [
-    SDL.dev SDL_image SDL_ttf SDL_mixer
+    SDL SDL_image SDL_ttf SDL_mixer
   ];
 
   GUILE_AUTO_COMPILE = 0;

@@ -24,8 +24,4 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     cp glxinfo glxgears $out/bin/
   ";
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

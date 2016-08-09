@@ -12,7 +12,7 @@ stdenv.mkDerivation {
   inherit name;
 
   src = fetchurl {
-    url = "https://mercurial-scm.org/release/${name}.tar.gz";
+    url = "http://mercurial.selenic.com/release/${name}.tar.gz";
     sha256 = "1zdz42znd6i7c3nf31j0k6frcs68qyniyvcad8k2a1hlarlv2y6b";
   };
 
@@ -69,6 +69,5 @@ stdenv.mkDerivation {
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.eelco ];
     updateWalker = true;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

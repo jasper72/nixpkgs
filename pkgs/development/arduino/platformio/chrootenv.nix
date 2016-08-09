@@ -22,12 +22,11 @@ buildFHSUserEnv {
       python27Packages.platformio
     ]);
 
-  meta = with stdenv.lib; {
-    description = "An open source ecosystem for IoT development";
-    homepage = http://platformio.org;
-    maintainers = with maintainers; [ mog ];
-    license = licenses.asl20;
-    platforms = with platforms; linux;
+   meta = with stdenv.lib; {
+     description = "An open source ecosystem for IoT development";
+     homepage = http://platformio.org;
+     maintainers = with maintainers; [ mog ];
+     license = licenses.asl20;
   };
 
   runScript = "platformio";

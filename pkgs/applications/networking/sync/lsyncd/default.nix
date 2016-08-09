@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/axkibe/lsyncd;
     description = "A utility that synchronizes local directories with remote targets";
     license = licenses.gpl2;
-    platforms = platforms.linux;
+    platforms = platforms.unix;
     maintainers = with maintainers; [ bobvanderlinden ];
   };
 }

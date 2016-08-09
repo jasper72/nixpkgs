@@ -54,15 +54,17 @@ in stdenv.mkDerivation rec {
 
     GIT_SSL_CAINFO = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 
-    makeFlags = [ "deps" ];
+    preBuild = ''
+      patchShebangs .
+    '';
 
-    phases = [ "unpackPhase" "configurePhase" "buildPhase" "installPhase" ];
+    makeFlags = [ "deps" ];
 
     installPhase = ''
       for i in deps/*; do
         ( cd $i
           git reset --hard
-          git clean -ffdx
+          git clean -fdx
           git describe --always --tags > .rev
           rm -rf .git
         )
@@ -74,7 +76,7 @@ in stdenv.mkDerivation rec {
 
     outputHashMode = "recursive";
     outputHashAlgo = "sha256";
-    outputHash = "08s1j0xa65xkrqw810wzgssngs67sz722jsvj7p02v4ra8jcl31f";
+    outputHash = "0jrxd3v6p35wjrpw0jbb6m8nrm2lffhfgdcqmzcvsvjzji7nlkzx";
   };
 
   configureFlags =

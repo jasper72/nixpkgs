@@ -16,6 +16,5 @@ stdenv.mkDerivation {
   meta = {
     description = "Converts a .TiVo file (produced by TiVoToGo) to a normal MPEG file";
     homepage = http://tivodecode.sourceforge.net;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

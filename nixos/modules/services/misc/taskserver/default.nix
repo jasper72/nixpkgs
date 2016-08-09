@@ -152,6 +152,8 @@ let
     };
   };
 
+  mkShellStr = val: "'${replaceStrings ["'"] ["'\\''"] val}'";
+
   certtool = "${pkgs.gnutls.bin}/bin/certtool";
 
   nixos-taskserver = pkgs.buildPythonPackage {

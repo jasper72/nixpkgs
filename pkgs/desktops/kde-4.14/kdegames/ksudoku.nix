@@ -2,6 +2,6 @@
 kde {
   buildInputs = [ kdelibs libkdegames ];
   meta = {
-    description = "A logic-based symbol placement puzzle";
+    description = "a logic-based symbol placement puzzle";
   };
 }

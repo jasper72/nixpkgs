@@ -1,31 +1,21 @@
 { lib, fetchurl, stdenv, zlib, lzo, libtasn1, nettle, pkgconfig, lzip
 , guileBindings, guile, perl, gmp, autogen, libidn, p11_kit, unbound, libiconv
-, tpmSupport ? false, trousers, nettools, bash
+, tpmSupport ? false, trousers
 
 # Version dependent args
 , version, src, patches ? [], postPatch ? "", nativeBuildInputs ? []
 , ...}:
 
 assert guileBindings -> guile != null;
-let
-  # XXX: Gnulib's `test-select' fails on FreeBSD:
-  # http://hydra.nixos.org/build/2962084/nixlog/1/raw .
-  doCheck = !stdenv.isFreeBSD && !stdenv.isDarwin && lib.versionAtLeast version "3.4";
-in
+
 stdenv.mkDerivation {
   name = "gnutls-${version}";
 
-  inherit src patches;
+  inherit src patches postPatch;
 
   outputs = [ "dev" "out" "bin" "man" "docdev" ];
   outputInfo = "docdev";
 
-  postPatch = lib.optionalString (lib.versionAtLeast version "3.4") ''
-    sed '2iecho "name constraints tests skipped due to datefudge problems"\nexit 0' \
-      -i tests/cert-tests/name-constraints
-  '' + postPatch;
-
-  preConfigure = "patchShebangs .";
   configureFlags =
     lib.optional stdenv.isLinux "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
   ++ [
@@ -36,12 +26,10 @@ stdenv.mkDerivation {
 
   # Build of the Guile bindings is not parallel-safe.  See
   # <http://git.savannah.gnu.org/cgit/gnutls.git/commit/?id=330995a920037b6030ec0282b51dde3f8b493cad>
-  # for the actual fix.  Also an apparent race in the generation of
-  # systemkey-args.h.
-  enableParallelBuilding = false;
+  # for the actual fix.
+  enableParallelBuilding = !guileBindings;
 
   buildInputs = [ lzo lzip nettle libtasn1 libidn p11_kit zlib gmp autogen ]
-    ++ lib.optional doCheck nettools
     ++ lib.optional (stdenv.isFreeBSD || stdenv.isDarwin) libiconv
     ++ lib.optional (tpmSupport && stdenv.isLinux) trousers
     ++ [ unbound ]
@@ -49,7 +37,9 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ perl pkgconfig ] ++ nativeBuildInputs;
 
-  inherit doCheck;
+  # XXX: Gnulib's `test-select' fails on FreeBSD:
+  # http://hydra.nixos.org/build/2962084/nixlog/1/raw .
+  doCheck = (!stdenv.isFreeBSD && !stdenv.isDarwin);
 
   # Fixup broken libtool and pkgconfig files
   preFixup = lib.optionalString (!stdenv.isDarwin) ''

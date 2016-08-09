@@ -17,7 +17,7 @@ rec {
   '') ["minInit" "addInputs" "doUnpack" "defEnsureDir"];
 
   meta = {
-    description = "The moderntimeline extensions for moderncv";
+    description = "the moderntimeline extensions for moderncv";
     # Actually, arch-independent..
     hydraPlatforms = [];
   };

@@ -25,6 +25,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/andersbakken/rtags;
 
     license = stdenv.lib.licenses.gpl3;
-    platforms = stdenv.lib.platforms.allBut [ "i686-linux" ];
   };
 }

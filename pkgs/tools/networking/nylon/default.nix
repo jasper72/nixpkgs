@@ -24,6 +24,6 @@ stdenv.mkDerivation {
     description = "Proxy server, supporting SOCKS 4 and 5, as well as a mirror mode";
     license = licenses.bsdOriginal;
     maintainers = with maintainers; [ edwtjo viric ];
-    platforms = platforms.linux;
+    platform = platforms.linux;
   };
 }

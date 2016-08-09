@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     description = "A library of lightweight, self-contained mathematics and statistics components";
     maintainers = with stdenv.lib.maintainers; [ copumpkin ];
     license     = stdenv.lib.licenses.asl20;
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

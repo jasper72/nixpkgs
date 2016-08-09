@@ -24,6 +24,5 @@ stdenv.mkDerivation {
     homepage = http://public.perforce.com/wiki/Jam;
     license = stdenv.lib.licenses.free;
     description = "Just Another Make";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

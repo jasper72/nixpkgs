@@ -19,6 +19,5 @@ stdenv.mkDerivation rec {
       them.'';
     homepage = http://code.google.com/p/libkate;
     maintainers = [ stdenv.lib.maintainers.urkud ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

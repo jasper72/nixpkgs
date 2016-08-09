@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     description = "A utility to access SCSI device parameters";
     license = licenses.bsd3;
     maintainers = with maintainers; [ nckx ];
-    platforms = with platforms; linux;
   };
 }

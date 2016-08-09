@@ -24,6 +24,5 @@ stdenv.mkDerivation {
     homepage = http://fakenes.sourceforge.net/;
     license = stdenv.lib.licenses.gpl2Plus;
     description = "Portable Open Source NES Emulator";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

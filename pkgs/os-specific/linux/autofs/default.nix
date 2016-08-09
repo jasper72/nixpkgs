@@ -37,6 +37,5 @@ in stdenv.mkDerivation {
     homepage = http://www.linux-consulting.com/Amd_AutoFS/autofs.html;
     license = stdenv.lib.licenses.gpl2;
     executables = [ "automount" ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

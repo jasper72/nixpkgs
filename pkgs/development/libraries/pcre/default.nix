@@ -41,7 +41,7 @@ in stdenv.mkDerivation rec {
     moveToOutput bin/pcre-config "$dev"
   ''
     + optionalString (variant != null) ''
-    ln -sf -t "$out/lib/" '${pcre.out}'/lib/libpcre{,posix}.{so.*.*.*,*dylib}
+    ln -sf -t "$out/lib/" '${pcre.out}'/lib/libpcre{,posix}.so.*.*.*
   '';
 
   crossAttrs = optionalAttrs (stdenv.cross.libc == "msvcrt") {

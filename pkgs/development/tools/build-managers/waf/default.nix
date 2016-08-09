@@ -2,11 +2,11 @@
 
 stdenv.mkDerivation rec {
   name = "waf-${version}";
-  version = "1.9.0";
+  version = "1.8.19";
 
   src = fetchurl {
     url = "https://waf.io/waf-${version}.tar.bz2";
-    sha256 = "1sjpqzm2fzm8pxi3fwfinpsbw4z9040qkrzbg3lxik7ppsbjhn58";
+    sha256 = "e5df90556d1f70aca82bb5c5f46aa68d2377bae16b0db044eaa0559df8668c6f";
   };
 
   buildInputs = [ python2 ];
@@ -21,11 +21,11 @@ stdenv.mkDerivation rec {
     install waf $out
   '';
 
-  meta = with stdenv.lib; {
+  meta = {
     description = "Meta build system";
     homepage    = "https://waf.io/";
-    license     = licenses.bsd3;
-    platforms   = platforms.all;
-    maintainers = with maintainers; [ vrthra ];
+    license     = lib.licenses.bsd3;
+    platforms   = lib.platforms.all;
+    maintainers = with lib.maintainers; [ ];
   };
 }

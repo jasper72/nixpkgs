@@ -11,11 +11,11 @@ let
   ]);
 in
 stdenv.mkDerivation rec {
-  name = "dnsmasq-2.76";
+  name = "dnsmasq-2.75";
 
   src = fetchurl {
     url = "http://www.thekelleys.org.uk/dnsmasq/${name}.tar.xz";
-    sha256 = "15lzih6671gh9knzpl8mxchiml7z5lfqzr7jm2r0rjhrxs6nk4jb";
+    sha256 = "1wa1d4if9q6k3hklv8xi06a59k3aqb7pik8rhi2l53i99hflw334";
   };
 
   preBuild = ''
@@ -30,7 +30,7 @@ stdenv.mkDerivation rec {
   ];
 
   postBuild = optionalString stdenv.isLinux ''
-    make -C contrib/lease-tools
+    make -C contrib/wrt
   '';
 
   # XXX: Does the systemd service definition really belong here when our NixOS
@@ -39,9 +39,8 @@ stdenv.mkDerivation rec {
     install -Dm644 trust-anchors.conf $out/share/dnsmasq/trust-anchors.conf
   '' + optionalString stdenv.isLinux ''
     install -Dm644 dbus/dnsmasq.conf $out/etc/dbus-1/system.d/dnsmasq.conf
-    install -Dm755 contrib/lease-tools/dhcp_lease_time $out/bin/dhcp_lease_time
-    install -Dm755 contrib/lease-tools/dhcp_release $out/bin/dhcp_release
-    install -Dm755 contrib/lease-tools/dhcp_release6 $out/bin/dhcp_release6
+    install -Dm755 contrib/wrt/dhcp_lease_time $out/bin/dhcp_lease_time
+    install -Dm755 contrib/wrt/dhcp_release $out/bin/dhcp_release
 
     mkdir -p $out/share/dbus-1/system-services
     cat <<END > $out/share/dbus-1/system-services/uk.org.thekelleys.dnsmasq.service
@@ -62,6 +61,6 @@ stdenv.mkDerivation rec {
     homepage = http://www.thekelleys.org.uk/dnsmasq/doc.html;
     license = licenses.gpl2;
     platforms = with platforms; linux ++ darwin;
-    maintainers = with maintainers; [ eelco fpletz ];
+    maintainers = with maintainers; [ eelco ];
   };
 }

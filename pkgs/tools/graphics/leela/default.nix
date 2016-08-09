@@ -19,6 +19,5 @@ stdenv.mkDerivation {
     homepage = https://github.com/TrilbyWhite/Leela;
     license = stdenv.lib.licenses.gpl3;
     maintainers = [ stdenv.lib.maintainers.puffnfresh ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

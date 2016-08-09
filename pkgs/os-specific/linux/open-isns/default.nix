@@ -21,6 +21,5 @@ stdenv.mkDerivation rec {
     description = "iSNS server and client for Linux";
     license = stdenv.lib.licenses.lgpl21;
     homepage = https://github.com/gonzoleeman/open-isns;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -1,4 +1,4 @@
-{ stdenv, fetchurl, pkgconfig, intltool, xorg, gtk, libxfce4util, xfconf
+{ stdenv, fetchurl, pkgconfig, intltool, gtk, libxfce4util, xfconf
 , libglade, libstartup_notification, hicolor_icon_theme
 , withGtk3 ? false, gtk3
 }:
@@ -18,14 +18,10 @@ stdenv.mkDerivation rec {
 
   outputs = [ "dev" "out" "docdev" ];
 
-  nativeBuildInputs = [ pkgconfig intltool ];
-
   buildInputs =
-    [ gtk libxfce4util xfconf libglade
+    [ pkgconfig intltool gtk libxfce4util xfconf libglade
       libstartup_notification hicolor_icon_theme
     ] ++ optional withGtk3 gtk3;
-
-  propagatedBuildInputs = [ xorg.libICE xorg.libSM ];
 
   #TODO: glade?
   configureFlags = optional withGtk3 "--enable-gtk3";

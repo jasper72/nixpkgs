@@ -19,6 +19,5 @@ stdenv.mkDerivation rec {
     homepage = http://spruce.sourceforge.net/gmime/;
     description = "A C/C++ library for manipulating MIME messages";
     maintainers = [ stdenv.lib.maintainers.chaoflow ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

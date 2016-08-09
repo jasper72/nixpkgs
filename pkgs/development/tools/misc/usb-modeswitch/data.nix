@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
   buildInputs = [ pkgconfig libusb1 usb-modeswitch ];
 
   meta = {
-    description = "Device database and the rules file for 'multi-mode' USB devices";
+    description = "device database and the rules file for 'multi-mode' USB devices";
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.marcweber ];
     platforms = stdenv.lib.platforms.linux;

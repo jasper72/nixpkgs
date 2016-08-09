@@ -18,6 +18,5 @@ stdenv.mkDerivation rec {
     homepage = "http://www.gtk-server.org/";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = [stdenv.lib.maintainers.tohl];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

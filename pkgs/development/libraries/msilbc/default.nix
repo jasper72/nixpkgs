@@ -14,8 +14,4 @@ stdenv.mkDerivation rec {
 
   buildInputs = [pkgconfig];
   configureFlags = "ILBC_LIBS=ilbc ILBC_CFLAGS=-I${ilbc}/include";
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

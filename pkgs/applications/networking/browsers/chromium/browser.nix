@@ -7,19 +7,13 @@ mkChromiumDerivation (base: rec {
   packageName = "chromium";
   buildTargets = [ "mksnapshot" "chrome_sandbox" "chrome" ];
 
-  outputs = ["out" "sandbox"];
-
-  sandboxExecutableName = "__chromium-suid-sandbox";
-
   installPhase = ''
     mkdir -p "$libExecPath"
     cp -v "$buildPath/"*.pak "$buildPath/"*.bin "$libExecPath/"
     cp -v "$buildPath/icudtl.dat" "$libExecPath/"
     cp -vLR "$buildPath/locales" "$buildPath/resources" "$libExecPath/"
     cp -v "$buildPath/chrome" "$libExecPath/$packageName"
-
-    mkdir -p "$sandbox/bin"
-    cp -v "$buildPath/chrome_sandbox" "$sandbox/bin/${sandboxExecutableName}"
+    cp -v "$buildPath/chrome_sandbox" "$libExecPath/chrome-sandbox"
 
     mkdir -vp "$out/share/man/man1"
     cp -v "$buildPath/chrome.1" "$out/share/man/man1/$packageName.1"
@@ -34,8 +28,6 @@ mkChromiumDerivation (base: rec {
       cp -v "$icon_file" "$logo_output_path/$packageName.png"
     done
   '';
-
-  passthru = { inherit sandboxExecutableName; };
 
   meta = {
     description = "An open source web browser from Google";

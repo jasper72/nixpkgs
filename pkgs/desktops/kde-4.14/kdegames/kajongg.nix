@@ -8,6 +8,6 @@ kde rec {
   postInstall = "wrapPythonPrograms";
 
   meta = {
-    description = "An ancient Chinese board game for 4 players";
+    description = "an ancient Chinese board game for 4 players";
   };
 }

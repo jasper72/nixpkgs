@@ -60,6 +60,5 @@ composableDerivation.composableDerivation {} {
     license = licenses.gpl2;
     description = "A software MIDI renderer";
     maintainers = [ maintainers.marcweber ];
-    platforms = platforms.linux;
   };
 }

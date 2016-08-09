@@ -37,6 +37,5 @@ stdenv.mkDerivation rec {
     '';
     license = licenses.mpl20;
     maintainers = with maintainers; [ MP2E AndersonTorres ];
-    platforms = with platforms; linux;
   };
 }

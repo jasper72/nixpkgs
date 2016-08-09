@@ -11,11 +11,9 @@ stdenv.mkDerivation rec {
     ncurses
   ];
   makeFlags = "PREFIX=$(out)";
-  buildFlags = [ "CFLAGS=-fgnu89-inline" ];
-
   meta = with lib; {
-    description = "Ncurses based hex editor with a vim-like interface";
-    homepage = http://bviplus.sourceforge.net;
+    description = "ncurses based hex editor with a vim-like interface";
+    homepage = "http://bviplus.sourceforge.net";
     license = licenses.gpl3;
     platforms = platforms.linux;
     maintainers = with maintainers; [ cstrahan ];

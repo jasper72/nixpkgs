@@ -27,6 +27,5 @@ stdenv.mkDerivation rec {
     homepage = http://xiph.org/ao/;
     license = stdenv.lib.licenses.gpl2;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

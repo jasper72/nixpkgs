@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
     license     = licenses.gpl3;
     homepage    = http://bio-bwa.sourceforge.net/;
     maintainers = with maintainers; [ luispedro ];
-    platforms = [ "x86_64-linux" ];
   };
 }

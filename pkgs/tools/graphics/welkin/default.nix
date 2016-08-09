@@ -31,6 +31,5 @@ stdenv.mkDerivation rec {
     ];
     hydraPlatforms = [];
     license = stdenv.lib.licenses.free;
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

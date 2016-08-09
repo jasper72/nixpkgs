@@ -15,8 +15,4 @@ stdenv.mkDerivation {
 
   buildInputs = [ pkgconfig intltool ];
   propagatedBuildInputs = [ libX11 gtk3 ];
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

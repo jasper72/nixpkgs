@@ -12,6 +12,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     homepage = http://linuxbrit.co.uk/giblib/;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

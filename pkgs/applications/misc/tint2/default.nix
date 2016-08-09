@@ -1,27 +1,27 @@
-{ stdenv, fetchFromGitLab, pkgconfig, cmake, gettext, cairo, pango, pcre
-, glib , imlib2, gtk, libXinerama , libXrender, libXcomposite, libXdamage
-, libX11 , libXrandr, librsvg, libpthreadstubs , libXdmcp
-, libstartup_notification , hicolor_icon_theme, wrapGAppsHook
+{ stdenv, fetchFromGitLab, pkgconfig, cmake, gettext, pango, cairo, glib
+, pcre , imlib2, libXinerama , libXrender, libXcomposite, libXdamage, libX11
+, libXrandr, gtk, libpthreadstubs , libXdmcp, librsvg
+, libstartup_notification, hicolor_icon_theme, wrapGAppsHook
 }:
 
 stdenv.mkDerivation rec {
   name = "tint2-${version}";
-  version = "0.12.12";
+  version = "0.12.11";
 
   src = fetchFromGitLab {
     owner = "o9000";
     repo = "tint2";
     rev = version;
-    sha256 = "0zgcdancsna95sjxslack9lh8f6qnj8d5wm02891mshn2jhgins3";
+    sha256 = "0gfxbxslc8h95q7cq84a69yd7qdhyks978l3rmk48jhwwixdp0hr";
   };
 
   enableParallelBuilding = true;
 
   nativeBuildInputs = [ pkgconfig cmake gettext wrapGAppsHook ];
 
-  buildInputs = [ cairo pango pcre glib imlib2 gtk libXinerama libXrender
-    libXcomposite libXdamage libX11 libXrandr librsvg libpthreadstubs
-    libXdmcp libstartup_notification hicolor_icon_theme ];
+  buildInputs = [ pango cairo glib pcre imlib2 libXinerama libXrender
+    libXcomposite libXdamage libX11 libXrandr gtk libpthreadstubs libXdmcp
+    librsvg libstartup_notification hicolor_icon_theme ];
 
   preConfigure = ''
     substituteInPlace CMakeLists.txt --replace /etc $out/etc

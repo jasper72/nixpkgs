@@ -34,6 +34,5 @@ stdenv.mkDerivation rec {
     homepage = http://optipng.sourceforge.net/;
     description = "A PNG optimizer";
     license = licenses.zlib;
-    platforms = platforms.unix;
   };
 }

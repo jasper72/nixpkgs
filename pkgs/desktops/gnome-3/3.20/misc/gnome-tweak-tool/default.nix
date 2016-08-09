@@ -1,11 +1,9 @@
-{ stdenv, intltool, fetchurl, atk
+{ stdenv, intltool, fetchurl, python, pygobject3, atk
 , pkgconfig, gtk3, glib, libsoup
-, bash, makeWrapper, itstool, libxml2, python2Packages
-, gnome3, librsvg, gdk_pixbuf, file, libnotify, gobjectIntrospection, wrapGAppsHook }:
+, bash, makeWrapper, itstool, libxml2, python3Packages
+, gnome3, librsvg, gdk_pixbuf, file, libnotify }:
 
-let
-  python = python2Packages.python.withPackages ( ps: with ps; [ pygobject3 ] );
-in stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   inherit (import ./src.nix fetchurl) name src;
 
   doCheck = true;
@@ -17,15 +15,17 @@ in stdenv.mkDerivation rec {
   buildInputs = [ pkgconfig gtk3 glib intltool itstool libxml2
                   gnome3.gsettings_desktop_schemas makeWrapper file
                   gdk_pixbuf gnome3.defaultIconTheme librsvg
-                  libnotify gnome3.gnome_shell
+                  python pygobject3 libnotify gnome3.gnome_shell
                   libsoup gnome3.gnome_settings_daemon gnome3.nautilus
-                  gnome3.gnome_desktop wrapGAppsHook ];
+                  gnome3.gnome_desktop ];
 
-  propagatedBuildInputs = [ python gobjectIntrospection ];
-
-  PYTHONPATH = "$out/${python.python.sitePackages}";
-
-  wrapPrefixVariables = [ "PYTHONPATH" ];
+  preFixup = ''
+    wrapProgram "$out/bin/gnome-tweak-tool" \
+      --set GDK_PIXBUF_MODULE_FILE "$GDK_PIXBUF_MODULE_FILE" \
+      --suffix XDG_DATA_DIRS : "${gtk3}/share:${gnome3.gnome_themes_standard}/share:$out/share:$XDG_ICON_DIRS:$GSETTINGS_SCHEMAS_PATH" \
+      --prefix GI_TYPELIB_PATH : "$GI_TYPELIB_PATH" \
+      --prefix PYTHONPATH : "$PYTHONPATH:$(toPythonPath $out)"
+  '';
 
   patches = [
     ./find_gsettings.patch

@@ -21,8 +21,7 @@ stdenv.mkDerivation rec {
 
     export BOOST_INCLUDEDIR=${boost.dev}/include
     export BOOST_LIBRARYDIR=${boost.out}/lib
-    export CMAKE_INCLUDE_PATH=${openssl.dev}/include
-    export CMAKE_LIBRARY_PATH=${openssl.out}/lib
+    export OPENSSL_ROOT_DIR=${openssl.dev}
 
     substituteInPlace cpp/cmake/FindValgrind.cmake \
       --replace "/usr/local" "${valgrind}"

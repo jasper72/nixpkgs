@@ -271,7 +271,7 @@ stdenv.mkDerivation rec {
     '';
     homepage = "http://www.methods.co.nz/asciidoc/";
     license = licenses.gpl2Plus;
-    platforms = platforms.unix;
+    hydraPlatforms = platforms.linux;
     maintainers = [ maintainers.bjornfor ];
   };
 }

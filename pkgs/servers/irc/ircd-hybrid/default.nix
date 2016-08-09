@@ -17,6 +17,5 @@ stdenv.mkDerivation {
 
   meta = {
     description = "An IPv6-capable IRC server";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

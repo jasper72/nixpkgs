@@ -25,7 +25,6 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Program to run certain classic graphical point-and-click adventure games (such as Monkey Island)";
     homepage = http://www.scummvm.org/;
-    platforms = stdenv.lib.platforms.linux;
   };
 }
 

@@ -19,7 +19,6 @@ in stdenv.mkDerivation {
 
     license = stdenv.lib.licenses.gpl1;
     maintainers = [ stdenv.lib.maintainers.Adjective-Object ];
-    platforms = stdenv.lib.platforms.linux;
   };
 
   makeFlags="PREFIX=$(out) conf_dir=$(out)/etc/ansifilter/";

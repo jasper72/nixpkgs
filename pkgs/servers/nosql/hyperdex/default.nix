@@ -50,6 +50,5 @@ stdenv.mkDerivation rec {
     description = "A scalable, searchable key-value store";
     homepage = http://hyperdex.org;
     license = licenses.bsd3;
-    platforms = platforms.linux;
   };
 }

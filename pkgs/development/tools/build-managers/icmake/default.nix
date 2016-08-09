@@ -1,11 +1,11 @@
-{ stdenv, fetchFromGitHub, gcc }:
+{ stdenv, fetchFromGitHub, gcc5 }:
 
 stdenv.mkDerivation rec {
   name = "icmake-${version}";
-  version = "9.00.00";
+  version = "8.01.00";
 
   src = fetchFromGitHub {
-    sha256 = "028rxx4ygy0z48m30m5pdach7kcp41swchhs8i15wag1mppllcy2";
+    sha256 = "1vgjywbc4w1agkakfndr2qf0z0ncxisihdv8sz9ipry9f170np39";
     rev = version;
     repo = "icmake";
     owner = "fbb-git";
@@ -13,7 +13,7 @@ stdenv.mkDerivation rec {
 
   sourceRoot = "icmake-${version}-src/icmake";
 
-  buildInputs = [ gcc ];
+  buildInputs = [ gcc5 ];
 
   preConfigure = ''
     patchShebangs ./

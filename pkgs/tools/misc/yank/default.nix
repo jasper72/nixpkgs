@@ -30,7 +30,6 @@ stdenv.mkDerivation rec {
     license = licenses.mit;
     version = "0.7.0";
     maintainers = [ maintainers.dochang ];
-    platforms = platforms.unix;
   };
 
 }

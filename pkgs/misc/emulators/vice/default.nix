@@ -40,6 +40,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.viceteam.org;
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = [ stdenv.lib.maintainers.sander ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

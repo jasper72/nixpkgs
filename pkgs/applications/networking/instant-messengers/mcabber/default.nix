@@ -22,6 +22,5 @@ stdenv.mkDerivation rec {
     description = "Small Jabber console client";
     license = licenses.gpl2;
     maintainers = with maintainers; [ pSub ];
-    platforms = with platforms; linux;
   };
 }

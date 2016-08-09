@@ -35,6 +35,5 @@ stdenv.mkDerivation {
     ";
     homepage = http://sourceforge.net/projects/materm;
     license = "GPL";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

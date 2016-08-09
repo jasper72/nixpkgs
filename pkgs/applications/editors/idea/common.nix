@@ -1,7 +1,7 @@
 { stdenv, fetchurl, makeDesktopItem, makeWrapper, patchelf, p7zip
-, coreutils, gnugrep, which, git, python, unzip }:
+, coreutils, gnugrep, which, git, python, unzip, jdk }:
 
-{ name, product, version, build, src, wmClass, jdk, meta } @ attrs:
+{ name, product, version, build, src, wmClass, meta } @ attrs:
 
 with stdenv.lib;
 

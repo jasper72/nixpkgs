@@ -20,6 +20,5 @@ buildRustPackage rec {
     homepage = https://github.com/nrc/rustfmt;
     license = with licenses; [ mit asl20 ];
     maintainers = [ maintainers.globin ];
-    platforms = platforms.all;
   };
 }

@@ -21,6 +21,5 @@ stdenv.mkDerivation {
     description = "Displays EXIF data from JPEG files";
     license = stdenv.lib.licenses.free;
     maintainers = with stdenv.lib.maintainers; [viric];
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

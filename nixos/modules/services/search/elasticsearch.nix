@@ -157,14 +157,11 @@ in {
 
     environment.systemPackages = [ cfg.package ];
 
-    users = {
-      groups.elasticsearch.gid = config.ids.gids.elasticsearch;
-      users.elasticsearch = {
-        uid = config.ids.uids.elasticsearch;
-        description = "Elasticsearch daemon user";
-        home = cfg.dataDir;
-        group = "elasticsearch";
-      };
+    users.extraUsers = singleton {
+      name = "elasticsearch";
+      uid = config.ids.uids.elasticsearch;
+      description = "Elasticsearch daemon user";
+      home = cfg.dataDir;
     };
   };
 }

@@ -1,12 +1,6 @@
-{ stdenv, fetchFromGitHub, makeDesktopItem, coreutils, which, pkgconfig
-, ffmpeg, mesa, freetype, libxml2, python34
-, enableNvidiaCgToolkit ? false, nvidia_cg_toolkit ? null
-, alsaLib ? null, libv4l ? null
-, udev ? null, libX11 ? null, libXext ? null, libXxf86vm ? null
-, libXdmcp ? null, SDL ? null, libpulseaudio ? null
-}:
-
-with stdenv.lib;
+{ stdenv, fetchgit, makeDesktopItem, pkgconfig, ffmpeg, mesa, nvidia_cg_toolkit
+, freetype, libxml2, libv4l, coreutils, python34, which, udev, alsaLib
+, libX11, libXext, libXxf86vm, libXdmcp, SDL, libpulseaudio ? null }:
 
 let
   desktopItem = makeDesktopItem {
@@ -15,28 +9,25 @@ let
     icon = "retroarch";
     comment = "Multi-Engine Platform";
     desktopName = "RetroArch";
-    genericName = "Libretro Frontend";
+    genericName = "Libretro Frontend";    
     categories = "Game;Emulator;";
     #keywords = "multi;engine;emulator;xmb;";
   };
+  
 in
 
 stdenv.mkDerivation rec {
   name = "retroarch-bare-${version}";
-  version = "1.3.4";
+  version = "2015-11-20";
 
-  src = fetchFromGitHub {
-    owner = "libretro";
-    repo = "RetroArch";
-    sha256 = "0ccp17580w0884baxj5kcynlm03jgd7i62dprz1ajxbi2s7b3mi3";
-    rev = "v${version}";
+  src = fetchgit {
+    url = https://github.com/libretro/RetroArch.git;
+    rev = "09dda14549fc13231311fd522a07a75e923889aa";
+    sha256 = "0yrisl61iaa70ahswzgb505bvm5cxq8ndnv2bw7gqrlm5qrh54qy";
   };
 
-  buildInputs = [ pkgconfig ffmpeg mesa freetype libxml2 coreutils python34 which SDL ]
-                ++ optional enableNvidiaCgToolkit nvidia_cg_toolkit
-                ++ optionals stdenv.isLinux [ udev alsaLib libX11 libXext libXxf86vm libXdmcp libv4l libpulseaudio ];
-
-  configureScript = "sh configure";
+  buildInputs = [ pkgconfig ffmpeg mesa nvidia_cg_toolkit freetype libxml2 libv4l coreutils
+                  python34 which udev alsaLib libX11 libXext libXxf86vm libXdmcp SDL libpulseaudio ];
 
   patchPhase = ''
     export GLOBAL_CONFIG_DIR=$out/etc
@@ -53,11 +44,11 @@ stdenv.mkDerivation rec {
 
   enableParallelBuilding = true;
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = http://libretro.org/;
     description = "Multi-platform emulator frontend for libretro cores";
     license = licenses.gpl3;
-    platforms = platforms.all;
-    maintainers = with maintainers; [ MP2E edwtjo matthewbauer ];
+    platforms = stdenv.lib.platforms.linux;
+    maintainers = with maintainers; [ MP2E edwtjo ];
   };
 }

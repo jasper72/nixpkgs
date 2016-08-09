@@ -63,11 +63,6 @@ in
       }
     '';
 
-    systemd.services.lighttpd.preStart = ''
-      mkdir -p /var/cache/cgit
-      chown lighttpd:lighttpd /var/cache/cgit
-    '';
-
   };
 
 }

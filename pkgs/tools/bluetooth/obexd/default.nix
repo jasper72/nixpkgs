@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     homepage = http://www.bluez.org/;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

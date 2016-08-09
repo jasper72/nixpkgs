@@ -1,43 +1,67 @@
-{ stdenv, fetchFromGitHub, cmake, pkgconfig, makeWrapper
-, boost, xercesc
+{ stdenv, fetchurl, unzip, cmake, pkgconfig, makeWrapper
+, hunspell, minizip, boost, xercesc
 , qtbase, qttools, qtwebkit, qtxmlpatterns
-, python3, python3Packages
 }:
+
+let
+  version = "0.7.4";
+
+in
 
 stdenv.mkDerivation rec {
   name = "sigil-${version}";
-  version = "0.9.6";
 
-  src = fetchFromGitHub {
-    sha256 = "0hihd5f3avpdvxwp5j80qdg74zbw7p20y6j9q8cw7wd0bak58h9c";
-    rev = version;
-    repo = "Sigil";
-    owner = "Sigil-Ebook";
+  src = fetchurl {
+    url = "https://sigil.googlecode.com/files/Sigil-${version}-Code.zip";
+    sha256 = "68c7ca15ea8611921af0c435369563f55c6afd2ef1fb0945cf6c4a47429b0fb5";
   };
 
-  pythonPath = with python3Packages; [ lxml ];
-
-  propagatedBuildInputs = with python3Packages; [ lxml ];
-
   buildInputs = [
-    cmake pkgconfig
-    boost xercesc qtbase qttools qtwebkit qtxmlpatterns
-    python3 python3Packages.lxml makeWrapper
+    unzip cmake pkgconfig
+    hunspell minizip boost xercesc qtbase qttools qtwebkit qtxmlpatterns
   ];
 
-  preFixup = ''
-    wrapProgram "$out/bin/sigil" \
-       --prefix PYTHONPATH : $PYTHONPATH:$(toPythonPath ${python3Packages.lxml})
+  # XXX: the compiler seems to treat the .h file inappropriately:
+  #
+  #    COMMAND ${CMAKE_CXX_COMPILER} ${compile_flags} \
+  #            ${CMAKE_CURRENT_SOURCE_DIR}/${header_name}.h \
+  #           -o ${header_name}.h.gch
+  #
+  #  but using -c or -x c++-header seems to work:
+  #
+  #    COMMAND ${CMAKE_CXX_COMPILER} ${compile_flags} \
+  #            -c ${CMAKE_CURRENT_SOURCE_DIR}/${header_name}.h \
+  #            -o ${header_name}.h.gch
+  #
+  #    COMMAND ${CMAKE_CXX_COMPILER} ${compile_flags} \
+  #            -x c++-header ${CMAKE_CURRENT_SOURCE_DIR}/${header_name}.h \
+  #            -o ${header_name}.h.gch
+  #
+  # Might be related to:
+  #
+  #   http://permalink.gmane.org/gmane.comp.gcc.bugs/361195
+  buildCommand = ''
+    mkdir -pv $out
+    mkdir -pv ${name}/src ${name}/build ${name}/run
+    cd ${name}/src
+    unzip -n ${src}
+    sed -i \
+        -e 's|\(COMMAND\) \([^ ]\+\) \([^ ]\+\) \(.*\)|\1 \2 \3 -c \4|' \
+        cmake_extras/CustomPCH.cmake
+    cd ../build
+    cmake -G "Unix Makefiles" \
+        -DCMAKE_INSTALL_PREFIX=$out \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_SKIP_BUILD_RPATH=ON \
+        ../src
+    make
+    make install
   '';
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "Free, open source, multi-platform ebook (ePub) editor";
-    homepage = https://github.com/Sigil-Ebook/Sigil/;
+    homepage = https://code.google.com/p/sigil/;
     license = stdenv.lib.licenses.gpl3;
     inherit version;
-    maintainers = with stdenv.lib.maintainers; [ ramkromberg ];
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

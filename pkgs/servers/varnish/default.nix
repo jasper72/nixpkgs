@@ -13,8 +13,6 @@ stdenv.mkDerivation rec {
   buildInputs = [ pcre libxslt groff ncurses pkgconfig readline python
     pythonPackages.docutils];
 
-  buildFlags = "localstatedir=/var/spool";
-
   meta = {
     description = "Web application accelerator also known as a caching HTTP reverse proxy";
     homepage = "https://www.varnish-cache.org";

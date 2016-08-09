@@ -6,6 +6,6 @@ kde {
   preConfigure = "export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:${gcc}:${gcc.cc}";
 
   meta = {
-    description = "Various KDE development utilities";
+    description = "various KDE development utilities";
   };
 }

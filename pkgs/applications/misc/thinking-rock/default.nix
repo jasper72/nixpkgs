@@ -36,6 +36,5 @@ stdenv.mkDerivation {
     description = "Task management system";
     homepage = http://www.thinkingrock.com.au/;
     license = "CDDL"; # Common Development and Distribution License
-    platforms = stdenv.lib.platforms.unix;
   };
 }

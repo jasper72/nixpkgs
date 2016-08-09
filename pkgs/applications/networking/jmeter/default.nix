@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
     license = stdenv.lib.licenses.asl20;
     maintainers = [ stdenv.lib.maintainers.garbas ];
     priority = 1;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

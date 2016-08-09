@@ -2,6 +2,6 @@
 kde {
   buildInputs = [ kdelibs libkdegames ];
   meta = {
-    description = "A miniature golf game";
+    description = "a miniature golf game";
   };
 }

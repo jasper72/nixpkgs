@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
     homepage = "http://code.google.com/p/accounts-sso/";
     license = licenses.lgpl21;
     maintainers = with maintainers; [ nckx ];
-    platforms = with platforms; linux;
   };
 }

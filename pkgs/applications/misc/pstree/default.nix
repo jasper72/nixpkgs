@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     description = "Show the set of running processes as a tree";
     license = "GPL";
     maintainers = [ stdenv.lib.maintainers.mornfall ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

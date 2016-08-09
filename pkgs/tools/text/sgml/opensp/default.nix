@@ -36,6 +36,5 @@ stdenv.mkDerivation {
     description = "A suite of SGML/XML processing tools";
     license = stdenv.lib.licenses.mit;
     homepage = http://openjade.sourceforge.net/;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

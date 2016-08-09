@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     description = "OpenCL ICD Loader";
     homepage    = https://forge.imag.fr/projects/ocl-icd/;
     license     = licenses.bsd2;
-    platforms = platforms.linux;
   };
 }

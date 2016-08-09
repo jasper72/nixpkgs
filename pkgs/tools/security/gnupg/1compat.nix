@@ -17,8 +17,4 @@ stdenv.mkDerivation {
     ${coreutils}/bin/ln -s gpg2 $out/bin/gpg
     ${coreutils}/bin/ln -s gpgv2 $out/bin/gpgv
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

@@ -25,6 +25,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.snort.org;
     maintainers = with stdenv.lib.maintainers; [ aycanirican ];
     license = stdenv.lib.licenses.gpl2;
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

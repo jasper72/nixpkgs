@@ -1,4 +1,4 @@
-{ stdenv, lib, fetchurl, glibc, musl
+{ stdenv, fetchurl, musl
 , enableStatic ? false
 , enableMinimal ? false
 , useMusl ? false
@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
 
     CONFIG_LFS y
 
-    ${lib.optionalString enableStatic ''
+    ${stdenv.lib.optionalString enableStatic ''
       CONFIG_STATIC y
     ''}
 
@@ -56,32 +56,22 @@ stdenv.mkDerivation rec {
     CONFIG_FEATURE_MOUNT_CIFS n
     CONFIG_FEATURE_MOUNT_HELPERS y
 
-    # Set paths for console fonts.
-    CONFIG_DEFAULT_SETFONT_DIR "/etc/kbd"
-
     ${extraConfig}
     $extraCrossConfig
     EOF
 
     make oldconfig
-
-    runHook postConfigure
-  '';
-
-  postConfigure = lib.optionalString useMusl ''
+  '' + stdenv.lib.optionalString useMusl ''
     makeFlagsArray+=("CC=gcc -isystem ${musl}/include -B${musl}/lib -L${musl}/lib")
   '';
-
-  buildInputs = lib.optionals (enableStatic && !useMusl) [ glibc glibc.static ];
 
   crossAttrs = {
     extraCrossConfig = ''
       CONFIG_CROSS_COMPILER_PREFIX "${stdenv.cross.config}-"
-    '';
-
-    postConfigure = stdenv.lib.optionalString useMusl ''
-      makeFlagsArray+=("CC=$crossConfig-gcc -isystem ${musl.crossDrv}/include -B${musl.crossDrv}/lib -L${musl.crossDrv}/lib")
-    '';
+    '' +
+      (if stdenv.cross.platform.kernelMajor == "2.4" then ''
+        CONFIG_IONICE n
+      '' else "");
   };
 
   enableParallelBuilding = true;

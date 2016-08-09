@@ -10,7 +10,7 @@ stdenv.mkDerivation  rec {
   };
 
   meta = with stdenv.lib; {
-    description = "A small XML library";
+    description = "a small XML library";
     homepage = http://www.minixml.org;
     license = licenses.lgpl2;
     platforms = platforms.linux;

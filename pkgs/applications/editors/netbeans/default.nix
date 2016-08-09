@@ -46,6 +46,5 @@ stdenv.mkDerivation {
   meta = {
     description = "An integrated development environment for Java, C, C++ and PHP";
     maintainers = [ stdenv.lib.maintainers.sander ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

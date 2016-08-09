@@ -16,6 +16,8 @@
 }@args:
 
 let
+
+  shellEscape = x: "'${lib.replaceChars ["'"] [("'\\'" + "'")] x}'";
   importedGemset = import gemset;
   filteredGemset = (lib.filterAttrs (name: attrs:
     if (builtins.hasAttr "groups" attrs)
@@ -56,8 +58,8 @@ let
         "${confFiles}/Gemfile" \
         "$out/${ruby.gemPath}" \
         "${bundler}/${ruby.gemPath}" \
-        ${lib.escapeShellArg envPaths} \
-        ${lib.escapeShellArg groups}
+        ${shellEscape (toString envPaths)} \
+        ${shellEscape (toString groups)}
     '' + lib.optionalString (postBuild != null) postBuild;
     passthru = rec {
       inherit ruby bundler meta gems;

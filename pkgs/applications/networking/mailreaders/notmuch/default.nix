@@ -5,12 +5,10 @@
 }:
 
 stdenv.mkDerivation rec {
-  version = "0.22";
-  name = "notmuch-${version}";
+  name = "notmuch-0.22";
 
   passthru = {
     pythonSourceRoot = "${name}/bindings/python";
-    inherit version;
   };
 
   src = fetchurl {

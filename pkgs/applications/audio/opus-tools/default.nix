@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.opus-codec.org/;
     license = stdenv.lib.licenses.bsd2;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

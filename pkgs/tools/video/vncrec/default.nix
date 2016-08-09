@@ -24,6 +24,5 @@ stdenv.mkDerivation rec {
   meta = {
     description = "VNC recorder";
     homepage = http://ronja.twibright.com/utils/vncrec/;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

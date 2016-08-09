@@ -18,6 +18,5 @@ stdenv.mkDerivation rec {
   meta = {
     homepage = http://farsight.freedesktop.org/wiki/;
     description = "Audio/Video Communications Framework";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

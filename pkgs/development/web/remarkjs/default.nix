@@ -62,6 +62,5 @@ in stdenv.mkDerivation rec {
     maintainers = [ stdenv.lib.maintainers.rickynils ];
     platforms = stdenv.lib.platforms.linux;
     license = stdenv.lib.licenses.mit;
-    broken = true;
   };
 }

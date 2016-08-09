@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
     homepage = "http://openbox.org/wiki/ObConf";
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.lhvwb ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -16,6 +16,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "SDL multi-channel audio mixer library";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

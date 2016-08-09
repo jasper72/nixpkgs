@@ -21,6 +21,5 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/rsyslog/libfastjson";
     license = licenses.mit;
     maintainers = with maintainers; [ nequissimus ];
-    platforms = with platforms; unix;
   };
 }

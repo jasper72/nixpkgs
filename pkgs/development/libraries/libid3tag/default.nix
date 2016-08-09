@@ -27,6 +27,5 @@ stdenv.mkDerivation rec {
     homepage = http://mad.sourceforge.net/;
     license = licenses.gpl2;
     maintainers = [ maintainers.fuuzetsu ];
-    platforms = platforms.unix;
   };
 }

@@ -29,6 +29,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.chiark.greenend.org.uk/~sgtatham/halibut/;
     license = licenses.mit;
     maintainers = with maintainers; [ pSub ];
-    platforms = with platforms; unix;
   };
 }

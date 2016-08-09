@@ -29,6 +29,5 @@ stdenv.mkDerivation rec {
     homepage = http://shimmerproject.org/our-projects/greybird/;
     license = with stdenv.lib.licenses; [ gpl2Plus cc-by-nc-sa-30 ];
     maintainers = [ stdenv.lib.maintainers.romildo ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

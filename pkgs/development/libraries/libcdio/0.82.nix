@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
     '';
     license = stdenv.lib.licenses.gpl2Plus;
     homepage = http://www.gnu.org/software/libcdio/;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

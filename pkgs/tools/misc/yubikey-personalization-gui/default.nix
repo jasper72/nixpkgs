@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
 
   meta = with stdenv.lib; {
     homepage = https://developers.yubico.com/yubikey-personalization-gui;
-    description = "A QT based cross-platform utility designed to facilitate reconfiguration of the Yubikey";
+    description = "a QT based cross-platform utility designed to facilitate reconfiguration of the Yubikey";
     license = licenses.bsd2;
     platforms = platforms.unix;
     maintainers = with maintainers; [ wkennington ];

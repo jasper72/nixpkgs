@@ -38,6 +38,5 @@ stdenv.mkDerivation rec {
     description = "A static analysis tool to find bugs in Java programs automatically";
     homepage = http://findbugs.sourceforge.net/;
     maintainers = with maintainers; [ pSub ];
-    platforms = with platforms; unix;
   };
 }

@@ -18,6 +18,5 @@ stdenv.mkDerivation rec {
   meta = {
     description = "Bazaar plugins";
     homepage = http://wiki.bazaar.canonical.com/BzrTools;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

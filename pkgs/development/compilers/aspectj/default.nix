@@ -15,6 +15,5 @@ stdenv.mkDerivation {
   meta = {
     homepage = http://www.eclipse.org/aspectj/;
     description = "A seamless aspect-oriented extension to the Java programming language";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

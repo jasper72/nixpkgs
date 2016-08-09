@@ -48,7 +48,6 @@ stdenv.mkDerivation {
                 + lib.concatStrings (lib.intersperse ", " (map (x: ""+x.name) plugins))
                 + ")";
 
-    platforms = stdenv.lib.platforms.linux;
   };
 
 }

@@ -18,8 +18,6 @@ stdenv.mkDerivation rec {
 
   buildInputs = [ qt4 qmake4Hook pkgconfig graphviz ];
 
-  qmakeFlags = [ "guitone.pro" ];
-
   meta = {
     description = "Qt4 based GUI for monotone";
     homepage = http://guitone.thomaskeller.biz;

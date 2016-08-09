@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "SDL sound library";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

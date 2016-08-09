@@ -36,6 +36,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "IRC transport module for XMPP";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

@@ -25,6 +25,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/saintdev/libmkv;
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.wmertens ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

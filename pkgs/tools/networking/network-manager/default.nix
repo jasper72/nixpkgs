@@ -1,18 +1,16 @@
-{ stdenv, fetchurl, intltool, pkgconfig, dbus_glib
-, systemd, libgudev, libnl, libuuid, polkit, gnutls, ppp, dhcp, iptables
-, libgcrypt, dnsmasq, bluez5, readline
+{ stdenv, fetchurl, intltool, wirelesstools, pkgconfig, dbus_glib, xz
+, systemd, libgudev, libnl, libuuid, polkit, gnutls, ppp, dhcp, dhcpcd, iptables
+, libgcrypt, dnsmasq, avahi, bind, perl, bluez5, substituteAll, readline
 , gobjectIntrospection, modemmanager, openresolv, libndp, newt, libsoup
 , ethtool, gnused, coreutils, file, inetutils }:
 
 stdenv.mkDerivation rec {
-  name    = "network-manager-${version}";
-  pname   = "NetworkManager";
-  major   = "1.2";
-  version = "${major}.2";
+  name = "network-manager-${version}";
+  version = "1.0.12";
 
   src = fetchurl {
-    url    = "mirror://gnome/sources/${pname}/${major}/${pname}-${version}.tar.xz";
-    sha256 = "41d8082e027f58bb5fa4181f93742606ab99c659794a18e2823eff22df0eecd9";
+    url = "mirror://gnome/sources/NetworkManager/1.0/NetworkManager-${version}.tar.xz";
+    sha256 = "17jan0g5jzp8mrpklyacwdgnnw016m1c5pc4az5im6qhc260yirs";
   };
 
   preConfigure = ''
@@ -27,6 +25,7 @@ stdenv.mkDerivation rec {
       --replace /usr/sbin/ethtool ${ethtool}/sbin/ethtool \
       --replace /bin/sed ${gnused}/bin/sed
     # to enable link-local connections
+    substituteInPlace src/devices/nm-device.c --replace '("avahi-autoipd", NULL, NULL)' '("avahi-autoipd", &"${avahi}/sbin/avahi-autoipd", NULL)'
     configureFlags="$configureFlags --with-udev-dir=$out/lib/udev"
   '';
 
@@ -38,6 +37,7 @@ stdenv.mkDerivation rec {
     "--with-dhclient=${dhcp}/bin/dhclient"
     "--with-dnsmasq=${dnsmasq}/bin/dnsmasq"
     # Upstream prefers dhclient, so don't add dhcpcd to the closure
+    #"--with-dhcpcd=${dhcpcd}/sbin/dhcpcd"
     "--with-dhcpcd=no"
     "--with-pppd=${ppp}/bin/pppd"
     "--with-iptables=${iptables}/bin/iptables"
@@ -54,37 +54,41 @@ stdenv.mkDerivation rec {
     "--with-libsoup=yes"
   ];
 
-  buildInputs = [ systemd libgudev libnl libuuid polkit ppp libndp
-                  bluez5 dnsmasq gobjectIntrospection modemmanager readline newt libsoup ];
+  buildInputs = [ wirelesstools systemd libgudev libnl libuuid polkit ppp libndp
+                  xz bluez5 dnsmasq gobjectIntrospection modemmanager readline newt libsoup ];
 
   propagatedBuildInputs = [ dbus_glib gnutls libgcrypt ];
 
   nativeBuildInputs = [ intltool pkgconfig ];
 
-  preInstall = ''
-    installFlagsArray=( "sysconfdir=$out/etc" "localstatedir=$out/var" "runstatedir=$out/var/run" )
-  '';
+  patches = [ ./nm-platform.patch ];
 
-  postInstall = ''
-    mkdir -p $out/lib/NetworkManager
+  preInstall =
+    ''
+      installFlagsArray=( "sysconfdir=$out/etc" "localstatedir=$out/var" )
+    '';
 
-    # FIXME: Workaround until NixOS' dbus+systemd supports at_console policy
-    substituteInPlace $out/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf --replace 'at_console="true"' 'group="networkmanager"'
+  postInstall =
+    ''
+      mkdir -p $out/lib/NetworkManager
 
-    # rename to network-manager to be in style
-    mv $out/etc/systemd/system/NetworkManager.service $out/etc/systemd/system/network-manager.service 
+      # FIXME: Workaround until NixOS' dbus+systemd supports at_console policy
+      substituteInPlace $out/etc/dbus-1/system.d/org.freedesktop.NetworkManager.conf --replace 'at_console="true"' 'group="networkmanager"'
 
-    # systemd in NixOS doesn't use `systemctl enable`, so we need to establish
-    # aliases ourselves.
-    ln -s $out/etc/systemd/system/NetworkManager-dispatcher.service $out/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
-    ln -s $out/etc/systemd/system/network-manager.service $out/etc/systemd/system/dbus-org.freedesktop.NetworkManager.service
-  '';
+      # rename to network-manager to be in style
+      mv $out/etc/systemd/system/NetworkManager.service $out/etc/systemd/system/network-manager.service 
+
+      # systemd in NixOS doesn't use `systemctl enable`, so we need to establish
+      # aliases ourselves.
+      ln -s $out/etc/systemd/system/NetworkManager-dispatcher.service $out/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service
+      ln -s $out/etc/systemd/system/network-manager.service $out/etc/systemd/system/dbus-org.freedesktop.NetworkManager.service
+    '';
 
   meta = with stdenv.lib; {
-    homepage    = http://projects.gnome.org/NetworkManager/;
+    homepage = http://projects.gnome.org/NetworkManager/;
     description = "Network configuration and management tool";
-    license     = licenses.gpl2Plus;
-    maintainers = with maintainers; [ phreedom urkud rickynils domenkozar obadz ];
-    platforms   = platforms.linux;
+    license = licenses.gpl2Plus;
+    maintainers = with maintainers; [ phreedom urkud rickynils domenkozar ];
+    platforms = platforms.linux;
   };
 }

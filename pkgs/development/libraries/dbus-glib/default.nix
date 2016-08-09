@@ -30,6 +30,5 @@ stdenv.mkDerivation rec {
     license = with stdenv.lib.licenses; [ afl21 gpl2 ];
     description = "Obsolete glib bindings for D-Bus lightweight IPC mechanism";
     maintainers = [ stdenv.lib.maintainers.urkud ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

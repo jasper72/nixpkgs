@@ -83,7 +83,6 @@ stdenv.mkDerivation rec {
     sed -i 's,#!/usr/bin/env python,#!${python}/bin/python,' build/gyp_v8
     sed -i 's,/bin/echo,${coreutils}/bin/echo,' build/standalone.gypi
     sed -i '/CR_CLANG_REVISION/ d' build/standalone.gypi
-    sed -i 's/-Wno-format-pedantic//g' build/standalone.gypi
   '';
 
   configurePhase = ''
@@ -104,8 +103,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ which ];
   buildInputs = [ readline python icu patchelf ];
-
-  NIX_CFLAGS_COMPILE = "-Wno-error=strict-overflow";
 
   buildFlags = [
     "LINK=g++"
@@ -138,7 +135,7 @@ stdenv.mkDerivation rec {
 
   meta = with lib; {
     description = "Google's open source JavaScript engine";
-    maintainers = with maintainers; [ cstrahan proglodyte ];
+    maintainers = with maintainers; [ cstrahan ];
     platforms = platforms.linux;
     license = licenses.bsd3;
   };

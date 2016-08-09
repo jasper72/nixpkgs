@@ -19,6 +19,5 @@ stdenv.mkDerivation {
     homepage = http://www.scsh.net/;
     license = licenses.bsd3;
     maintainers = with maintainers; [ joachifm ];
-    platforms = with platforms; unix;
   };
 }

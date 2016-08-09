@@ -22,8 +22,4 @@ stdenv.mkDerivation {
     done
   '';
   patches = [ ./no-FAQ.patch ];
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

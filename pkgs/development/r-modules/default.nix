@@ -8,7 +8,6 @@ let
   buildRPackage = pkgs.callPackage ./generic-builder.nix {
     inherit R;
     inherit (pkgs.darwin.apple_sdk.frameworks) Cocoa Foundation;
-    inherit (pkgs) gettext gfortran;
   };
 
   # Generates package templates given per-repository settings
@@ -1138,7 +1137,18 @@ let
     "choroplethr" # depends on broken package acs
     "acs" # broken build
     "spray" # depends on broken package partitions
-    "CNVrd2" # broken build
+    "simmr" # depends on broken package rjags
+    "morse" # depends on broken package rjags
+    "gemtc" # depends on broken package rjags
+    "EasyMARK" # depends on broken package rjags
+    "PVAClone" # depends on broken package rjags
+    "sharx" # depends on broken package rjags
+    "dcmle" # depends on broken package rjags
+    "dclone" # depends on broken package rjags
+    "CNVrd2" # depends on broken package rjags
+    "bayescount" # depends on broken package rjags
+    "BANOVA" # depends on broken package rjags
+    "rjags" # broken build
     "proteoQC" # depends on broken package rTANDEM
     "PGA" # depends on broken package rTANDEM
     "MBESS" # depends on broken package OpenMx
@@ -1201,11 +1211,13 @@ let
     "ARTool" # depends on broken package nlopt
     "AssetPricing" # broken build
     "AtelieR" # broken build
-    "auRoc" # depends on broken package MBESS
+    "auRoc" # depends on broken package rjags
     "AutoModel" # depends on broken package car
     "bamdit" # broken build
+    "BANOVA" # broken build
     "bapred" # depends on broken package lme4
     "bartMachine" # depends on broken package nlopt
+    "bayescount" # broken build
     "bayesDem" # depends on broken package nlopt
     "bayesLife" # depends on broken package nlopt
     "BayesMed" # broken build
@@ -1271,6 +1283,7 @@ let
     "covmat" # depends on broken package VIM
     "cplexAPI" # build is broken
     "cquad" # depends on broken package car
+    "crmPack" # depends on broken package rjags
     "CrypticIBDcheck" # depends on broken package nlopt
     "ctsem" # depends on broken package OpenMx
     "cudaBayesreg" # build is broken
@@ -1280,7 +1293,7 @@ let
     "datafsm" # depends on broken package caret
     "dbConnect" # broken build
     "DBKGrad" # depends on broken package rpanel
-    #"dcmle" # broken build
+    "dcmle" # broken build
     "ddst" # broken build
     "Deducer" # depends on broken package nlopt
     "DeducerExtras" # depends on broken package nlopt
@@ -1305,6 +1318,7 @@ let
     "drsmooth" # depends on broken package nlopt
     "dynlm" # depends on broken package nlopt
     "easyanova" # depends on broken package nlopt
+    "EasyMARK" # broken build
     "ecd" # depends on broken package polynom
     "edge" # depends on broken package nlopt
     "eeptools" # depends on broken package nlopt
@@ -1356,6 +1370,7 @@ let
     "gcmr" # depends on broken package nlopt
     "GDAtools" # depends on broken package nlopt
     "gdtools" # broken build
+    "gemtc" # broken build
     "GENE_E" # depends on broken package rhdf5
     "GENESIS" # broken build
     "genridge" # depends on broken package nlopt
@@ -1484,6 +1499,7 @@ let
     "mlVAR" # depends on broken package nlopt
     "MM" # broken build
     "mongolite" # build is broken
+    "morse" # broken build
     "mosaic" # depends on broken package nlopt
     "mpoly" # broken build
     "mRMRe" # broken build
@@ -1561,6 +1577,7 @@ let
     "PSAboot" # depends on broken package nlopt
     "ptw" # depends on broken nloptr
     "PurBayes" # broken build
+    "PVAClone" # broken build
     "pvca" # depends on broken package nlopt
     "PythonInR" # broken build
     "QFRM" # broken build
@@ -1647,6 +1664,7 @@ let
     "Rgnuplot" # broken build
     "rhdf5" # build is broken
     "rjade" # depends on broken package V8
+    "rjags" # broken build
     "rJPSGCS" # build is broken
     "rLindo" # build is broken
     "RLRsim" # depends on broken package lme4
@@ -1706,8 +1724,10 @@ let
     "seqHMM" # depends on broken package nloptr
     "seqTools" # build is broken
     "SharpeR" # broken build
+    "sharx" # broken build
     "shinyTANDEM" # depends on broken package rTANDEM
     "SIBER" # broken build
+    "simmr" # broken build
     "simPop" # depends on broken package VIM
     "simr" # depends on broken package lme4
     "SJava" # broken build

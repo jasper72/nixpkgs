@@ -15,8 +15,5 @@ stdenv.mkDerivation {
       --replace "${systemd}" "$out"
     sed "/^includedir=/cincludedir=$dev/include" -i "$dev"/lib/pkgconfig/*.pc
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }
+

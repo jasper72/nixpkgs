@@ -47,6 +47,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.gnu.org/software/ed/;
 
     maintainers = [ ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

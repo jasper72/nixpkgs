@@ -1,22 +1,30 @@
 { stdenv, fetchurl, qt, cmake }:
 
 stdenv.mkDerivation rec {
-  name = "speedcrunch-${version}";
-  version = "0.11";
+  name = "speedcrunch-0.11-alpha";
 
   src = fetchurl {
-    url = "https://bitbucket.org/heldercorreia/speedcrunch/get/${version}.tar.gz";
-    sha256 = "0phba14z9jmbmax99klbxnffwzv3awlzyhpcwr1c9lmyqnbcsnkd";
+    url = "http://speedcrunch.googlecode.com/files/${name}.tar.gz";
+    sha256 = "c6d6328e0c018cd8b98a0e86fb6c49fedbab5dcc831b47fbbc1537730ff80882";
   };
+
+  patches = [./speedcrunch-0.11-alpha-dso_linking.patch];
 
   buildInputs = [cmake qt];
 
   dontUseCmakeBuildDir = true;
 
-  cmakeDir = "src";
+  cmakeDir = "../src";
+
+  preConfigure = ''
+    mkdir -p build
+    cd build
+  '';
+
+  buildFlags = "VERBOSE=1";
 
   meta = with stdenv.lib; {
-    homepage    = http://speedcrunch.org;
+    homepage    = "http://speedcrunch.digitalfanatics.org";
     license     = licenses.gpl2Plus;
     description = "A fast power user calculator";
     longDescription = ''
@@ -25,8 +33,6 @@ stdenv.mkDerivation rec {
       precisions, unlimited variable storage, intelligent automatic completion
       full keyboard-friendly and more than 15 built-in math function.
     '';
-    maintainers = with maintainers; [ gebner ];
-    platforms = platforms.all;
   };
 
 }

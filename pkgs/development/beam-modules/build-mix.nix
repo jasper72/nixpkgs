@@ -1,4 +1,4 @@
-{ stdenv, writeText, elixir, erlang, hexRegistrySnapshot, hex, lib }:
+{ stdenv, writeText, elixir, erlang, hexRegistrySnapshot, hex }:
 
 { name
 , version
@@ -8,19 +8,12 @@
 , beamDeps ? []
 , postPatch ? ""
 , compilePorts ? false
-, installPhase ? null
-, buildPhase ? null
-, configurePhase ? null
 , meta ? {}
-, enableDebugInfo ? false
 , ... }@attrs:
 
 with stdenv.lib;
 
 let
-
-  debugInfoFlag = lib.optionalString (enableDebugInfo || elixir.debugInfo) "--debug-info";
-
   shell = drv: stdenv.mkDerivation {
           name = "interactive-shell-${drv.name}";
           buildInputs = [ drv ];
@@ -45,31 +38,25 @@ let
     inherit buildInputs;
     propagatedBuildInputs = [ hexRegistrySnapshot hex elixir ] ++ beamDeps;
 
-    configurePhase = if configurePhase == null
-    then ''
+    configurePhase = ''
       runHook preConfigure
       ${erlang}/bin/escript ${bootstrapper}
       runHook postConfigure
-    ''
-    else configurePhase ;
+    '';
 
-
-    buildPhase = if buildPhase == null
-    then ''
+    buildPhase = ''
         runHook preBuild
 
         export HEX_OFFLINE=1
         export HEX_HOME=`pwd`
         export MIX_ENV=prod
 
-        MIX_ENV=prod mix compile ${debugInfoFlag} --no-deps-check
+        MIX_ENV=prod mix compile --debug-info --no-deps-check
 
         runHook postBuild
-    ''
-    else buildPhase;
+    '';
 
-    installPhase = if installPhase == null
-    then ''
+    installPhase = ''
         runHook preInstall
 
         MIXENV=prod
@@ -87,8 +74,7 @@ let
         done
 
         runHook postInstall
-    ''
-    else installPhase;
+    '';
 
     passthru = {
       packageName = name;

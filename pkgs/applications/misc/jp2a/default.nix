@@ -17,6 +17,5 @@ stdenv.mkDerivation rec {
     homepage = https://csl.name/jp2a/;
     description = "A small utility that converts JPG images to ASCII";
     license = licenses.gpl2;
-    platforms = platforms.unix;
   };
 }

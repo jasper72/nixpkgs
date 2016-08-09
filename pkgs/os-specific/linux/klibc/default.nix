@@ -44,8 +44,4 @@ stdenv.mkDerivation rec {
       ln -sv $file $out/lib/klibc/include
     done
   '';
-
-  meta = {
-    platforms = [ "x86_64-linux" ];
-  };
 }

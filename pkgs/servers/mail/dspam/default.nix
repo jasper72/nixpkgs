@@ -102,7 +102,7 @@ in stdenv.mkDerivation rec {
     homepage = http://dspam.nuclearelephant.com/;
     description = "Community Driven Antispam Filter";
     license = licenses.agpl3;
-    platforms = platforms.linux;
+    platforms = platforms.unix;
     maintainers = with maintainers; [ abbradar ];
   };
 }

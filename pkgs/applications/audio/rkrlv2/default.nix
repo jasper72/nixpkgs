@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/ssj71/rkrlv2;
     license = stdenv.lib.licenses.gpl3;
     maintainers = [ stdenv.lib.maintainers.joelmo ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -1,23 +1,16 @@
 { stdenv, fetchurl, fetchpatch, cmake, pkgconfig, python
-, libX11, libXpm, libXft, libXext, zlib, lzma, gsl }:
+, libX11, libXpm, libXft, libXext, zlib, lzma }:
 
 stdenv.mkDerivation rec {
   name = "root-${version}";
-  version = "6.04.18";
+  version = "6.04.16";
 
   src = fetchurl {
     url = "https://root.cern.ch/download/root_v${version}.source.tar.gz";
-    sha256 = "00f3v3l8nimfkcxpn9qpyh3h23na0mi4wkds2y5gwqh8wh3jryq9";
+    sha256 = "0f58dg83aqhggkxmimsfkd1qyni2vhmykq4qa89cz6jr9p73i1vm";
   };
 
-  buildInputs = [ cmake pkgconfig python libX11 libXpm libXft libXext zlib lzma gsl ];
-
-  patches = [
-    (fetchpatch {
-      url = "https://github.com/root-mirror/root/commit/ee9964210c56e7c1868618a4434c5340fef38fe4.patch";
-      sha256 = "186i7ni75yvjydy6lpmaplqxfb5z2019bgpbhff1n6zn2qlrff2r";
-    })
-  ];
+  buildInputs = [ cmake pkgconfig python libX11 libXpm libXft libXext zlib lzma ];
 
   preConfigure = ''
     patchShebangs build/unix/
@@ -29,8 +22,6 @@ stdenv.mkDerivation rec {
     "-DCMAKE_INSTALL_INCLUDEDIR=include"
   ]
   ++ stdenv.lib.optional (stdenv.cc.libc != null) "-DC_INCLUDE_DIRS=${stdenv.cc.libc}/include";
-
-  enableParallelBuilding = true;
 
   meta = {
     homepage = "https://root.cern.ch/";

@@ -16,6 +16,5 @@ stdenv.mkDerivation rec {
     homepage = "http://www.unidata.ucar.edu/software/netcdf/";
     license = stdenv.lib.licenses.free;
     maintainers = stdenv.lib.maintainers.bzizou;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

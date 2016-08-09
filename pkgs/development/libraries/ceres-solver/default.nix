@@ -47,6 +47,5 @@ stdenv.mkDerivation {
     homepage = "http://ceres-solver.org";
     maintainers = with stdenv.lib.maintainers; [ giogadi ];
     inherit version;
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

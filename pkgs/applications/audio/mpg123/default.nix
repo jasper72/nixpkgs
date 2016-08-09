@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     homepage = http://mpg123.org;
     license = stdenv.lib.licenses.lgpl21;
     maintainers = [ stdenv.lib.maintainers.ftrvxmtrx ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

@@ -1,42 +1,38 @@
 { stdenv, fetchFromGitHub, makeWrapper, automake, autoconf, libtool,
   pkgconfig, file, intltool, libxml2, json_glib , sqlite, itstool,
-  vala, gnome3, wrapGAppsHook
+  vala, gnome3
 }:
 
 stdenv.mkDerivation rec {
   name = "font-manager-${version}";
-  version = "2016-06-04";
+  version = "git-2016-03-02";
 
   src = fetchFromGitHub {
     owner  = "FontManager";
     repo   = "master";
-    rev    = "07b47c153494f19ced291c84437349253c5bde4d";
-    sha256 = "13pjmvx31fr8fqhl5qwawhawfl7as9c50qshzzig8n5g7vb5v1i0";
+    rev    = "743fb83558c86bfbbec898106072f84422c175d6";
+    sha256 = "1sakss6irfr3d8k39x1rf72fmnpq47akhyrv3g45a3l6v6xfqp3k";
     };
 
-  nativeBuildInputs = [
+  enableParallelBuilding = true;
+
+  buildInputs = [
     makeWrapper
     pkgconfig
     automake autoconf libtool
     file
     intltool
-    vala
-    gnome3.yelp_tools
-    wrapGAppsHook
-  ];
-
-  buildInputs = [
     libxml2
     json_glib
     sqlite
     itstool
+    vala
     gnome3.gtk
     gnome3.gucharmap
     gnome3.libgee
     gnome3.file-roller
+    gnome3.yelp_tools
   ];
-
-  enableParallelBuilding = true;
 
   preConfigure = ''
     NOCONFIGURE=true ./autogen.sh
@@ -45,6 +41,13 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = "--disable-pycompile";
+
+  preFixup = ''
+    for prog in "$out/bin/"* "$out/libexec/font-manager/"*; do
+      wrapProgram "$prog" \
+        --prefix XDG_DATA_DIRS : "$out/share:$GSETTINGS_SCHEMAS_PATH"
+    done
+  '';
 
   meta = {
     homepage = https://fontmanager.github.io/;
@@ -59,8 +62,8 @@ stdenv.mkDerivation rec {
       Font Manager is NOT a professional-grade font management solution.
     '';
     license = stdenv.lib.licenses.gpl3;
+    maintainers = [ stdenv.lib.maintainers.romildo ];
     repositories.git = https://github.com/FontManager/master;
     platforms = stdenv.lib.platforms.unix;
-    maintainers = [ stdenv.lib.maintainers.romildo ];
   };
 }

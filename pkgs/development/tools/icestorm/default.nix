@@ -27,6 +27,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.clifford.at/icestorm/;
     license = stdenv.lib.licenses.isc;
     maintainers = [ stdenv.lib.maintainers.shell ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -16,6 +16,5 @@ stdenv.mkDerivation rec {
     homepage = http://ncompress.sourceforge.net/;
     license = stdenv.lib.licenses.publicDomain;
     description = "A fast, simple LZW file compressor";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

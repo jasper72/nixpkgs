@@ -1,8 +1,6 @@
 { stdenv, callPackage, fetchurl, makeWrapper
 , alsaLib, libX11, libXcursor, libXinerama, libXrandr, libXi, mesa_noglu
-, factorio-utils
 , releaseType
-, mods ? []
 , username ? "" , password ? ""
 }:
 
@@ -10,7 +8,7 @@ assert releaseType == "alpha" || releaseType == "headless";
 
 with stdenv.lib;
 let
-  version = "0.13.13";
+  version = "0.12.33";
   isHeadless = releaseType == "headless";
 
   arch = if stdenv.system == "x86_64-linux" then {
@@ -25,14 +23,14 @@ let
 
   fetch = rec {
     url = "https://www.factorio.com/get-download/${version}/${releaseType}/${arch.inUrl}";
-    name = "factorio_${releaseType}_${arch.inTar}-${version}.tar.gz";
+    name = "factorio_${releaseType}_${arch.inTar}-${version}.tar.gz"; # TODO take this from 302 redirection somehow? fetchurl doesn't help.
     x64 = {
-      headless = fetchurl        { inherit name url; sha256 = "1ip0h2kh16s07nk6xqpm0i0yb0x32zn306414j15gqg3j0j0mzpn"; };
-      alpha = authenticatedFetch { inherit      url; sha256 = "1hvj51cggp6cbxyndbl4z07kadzxxk3diiqkkv0jm9s0nrwvq9zr"; };
+      headless = fetchurl        { inherit name url; sha256 = "073bwkpw2bwhbr3m8k3imlns89x5035xl4b7yq1c6npm4m7qcdnp"; };
+      alpha = authenticatedFetch { inherit      url; sha256 = "0dmq0kvzz885gcvj57h22icqhx0nvyfav4dvwsvpi15833208ca3"; };
     };
     i386 = {
       headless = abort "Factorio 32-bit headless binaries are not available for download.";
-      alpha = authenticatedFetch { inherit      url; sha256 = "14dwlakn7z8jziy0hgm3nskr7chp7753z1dakxlymz9h5653cx8b"; };
+      alpha = authenticatedFetch { inherit      url; sha256 = "1yxv6kr89iavpfsg21fx3q12m97ls0m9h3x33m4xnqp8px55851v"; };
     };
   };
 
@@ -40,8 +38,6 @@ let
     use-system-read-write-data-directories=false
     [path]
     read-data=$out/share/factorio/data/
-    [other]
-    check_updates=false
   '';
 
   updateConfigSh = ''
@@ -56,16 +52,14 @@ let
     fi
   '';
 
-  modDir = factorio-utils.mkModDirDrv mods;
-
   base = {
     name = "factorio-${releaseType}-${version}";
 
     src = fetch.${arch.inTar}.${releaseType};
 
-    preferLocalBuild = true;
     dontBuild = true;
 
+    # TODO detangle headless/normal mode wrapping, libs, etc.  test all urls 32/64/headless/gfx
     installPhase = ''
       mkdir -p $out/{bin,share/factorio}
       cp -a data $out/share/factorio
@@ -74,6 +68,8 @@ let
         --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
         $out/bin/factorio
     '';
+
+    preferLocalBuild = true;
 
     meta = {
       description = "A game in which you build and maintain factories";
@@ -114,23 +110,7 @@ let
       wrapProgram $out/bin/factorio                                \
         --prefix LD_LIBRARY_PATH : /run/opengl-driver/lib:$libPath \
         --run "$out/share/factorio/update-config.sh"               \
-        --add-flags "-c \$HOME/.factorio/config.cfg ${optionalString (mods != []) "--mod-directory=${modDir}"}"
-
-        # TODO Currently, every time a mod is changed/added/removed using the
-        # modlist, a new derivation will take up the entire footprint of the
-        # client. The only way to avoid this is to remove the mods arg from the
-        # package function. The modsDir derivation will have to be built
-        # separately and have the user specify it in the .factorio config or
-        # right along side it using a symlink into the store I think i will
-        # just remove mods for the client derivation entirely. this is much
-        # cleaner and more useful for headless mode.
-
-        # TODO: trying to toggle off a mod will result in read-only-fs-error.
-        # not much we can do about that except warn the user somewhere. In
-        # fact, no exit will be clean, since this error will happen on close
-        # regardless. just prints an ugly stacktrace but seems to be otherwise
-        # harmless, unless maybe the user forgets and tries to use the mod
-        # manager.
+        --add-flags "-c \$HOME/.factorio/config.cfg"
 
       install -m0644 <(cat << EOF
       ${configBaseCfg}

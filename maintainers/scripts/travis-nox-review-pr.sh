@@ -1,69 +1,57 @@
 #! /usr/bin/env bash
 set -e
 
-while test -n "$1"; do
+export NIX_CURL_FLAGS=-sS
 
-    # tell Travis to use folding
-    echo -en "travis_fold:start:$1\r"
+if [[ $1 == nix ]]; then
+    echo "=== Installing Nix..."
+    # Install Nix
+    bash <(curl -sS https://nixos.org/nix/install)
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
 
-    case $1 in
+    # Make sure we can use hydra's binary cache
+    sudo mkdir /etc/nix
+    sudo sh -c 'echo "build-max-jobs = 4" > /etc/nix/nix.conf'
 
-        nixpkgs-verify)
-            echo "=== Verifying that nixpkgs evaluates..."
+    # Nix builds in /tmp and we need exec support
+    sudo mount
+    sudo mount -o remount,exec /run
 
-            nix-env --file $TRAVIS_BUILD_DIR --query --available --json > /dev/null
-            ;;
+    # Verify evaluation
+    echo "=== Verifying that nixpkgs evaluates..."
+    nix-env -f. -qa --json >/dev/null
+elif [[ $1 == nox ]]; then
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
+    echo "=== Installing nox..."
+    nix-build -A nox '<nixpkgs>' --show-trace
+elif [[ $1 == build ]]; then
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
 
-        nixos-options)
-            echo "=== Checking NixOS options"
+    if [[ $TRAVIS_OS_NAME == "osx" ]]; then
+        echo "Skipping NixOS things on darwin"
+    else
+        echo "=== Checking NixOS options"
+        nix-build nixos/release.nix -A options --show-trace
 
-            nix-build $TRAVIS_BUILD_DIR/nixos/release.nix --attr options --show-trace
-            ;;
+        echo "=== Checking tarball creation"
+        nix-build pkgs/top-level/release.nix -A tarball --show-trace
+    fi
 
-        nixos-manual)
-            echo "=== Checking NixOS manuals"
+    if [[ $TRAVIS_PULL_REQUEST == false ]]; then
+        echo "=== Not a pull request"
+    else
+        echo "=== Checking PR"
 
-            nix-build $TRAVIS_BUILD_DIR/nixos/release.nix --attr manual --show-trace
-            ;;
-
-        nixpkgs-manual)
-            echo "=== Checking nixpkgs manuals"
-
-            nix-build $TRAVIS_BUILD_DIR/pkgs/top-level/release.nix --attr manual --show-trace
-            ;;
-
-        nixpkgs-tarball)
-            echo "=== Checking nixpkgs tarball creation"
-
-            nix-build $TRAVIS_BUILD_DIR/pkgs/top-level/release.nix --attr tarball --show-trace
-            ;;
-
-        nixpkgs-lint)
-            echo "=== Checking nixpkgs lint"
-
-            nix-shell --packages nixpkgs-lint --run "nixpkgs-lint -f $TRAVIS_BUILD_DIR"
-            ;;
-
-        pr)
-            if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-                echo "=== No pull request found"
-            else
-                echo "=== Building pull request #$TRAVIS_PULL_REQUEST"
-
-                token=""
-                if [ -n "$GITHUB_TOKEN" ]; then
-                    token="--token $GITHUB_TOKEN"
-                fi
-
-                nix-shell --packages nox git --run "nox-review pr --slug $TRAVIS_REPO_SLUG $token $TRAVIS_PULL_REQUEST"
+        if ! nix-shell -p nox --run "nox-review pr ${TRAVIS_PULL_REQUEST}"; then
+            if sudo dmesg | egrep 'Out of memory|Killed process' > /tmp/oom-log; then
+                echo "=== The build failed due to running out of memory:"
+                cat /tmp/oom-log
+                echo "=== Please disregard the result of this Travis build."
             fi
-            ;;
-
-        *)
-            echo "Skipping unknown option $1"
-            ;;
-    esac
-
-    echo -en "travis_fold:end:$1\r"
-    shift
-done
+            exit 1
+        fi
+    fi
+else
+    echo "$0: Unknown option $1" >&2
+    false
+fi

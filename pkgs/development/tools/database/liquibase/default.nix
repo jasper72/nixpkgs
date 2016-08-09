@@ -28,6 +28,5 @@ stdenv.mkDerivation rec {
     homepage = "http://www.liquibase.org/";
     license = licenses.asl20;
     maintainers = with maintainers; [ nequissimus ];
-    platforms = with platforms; unix;
   };
 }

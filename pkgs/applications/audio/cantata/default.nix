@@ -103,7 +103,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
-    homepage = https://github.com/cdrummond/cantata;
+    homepage = http://code.google.com/p/cantata/;
     description = "A graphical client for MPD";
     license = licenses.gpl3;
 

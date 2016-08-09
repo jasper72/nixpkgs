@@ -11,17 +11,16 @@ with stdenv.lib;
 stdenv.mkDerivation rec {
 
   name = "higan-${version}";
-  version = "100";
+  version = "098";
   sourceName = "higan_v${version}-source";
 
   src = fetchurl {
     urls = [ "http://download.byuu.org/${sourceName}.7z" ];
-    sha256 = "1pp20dxv6y2brb144v8kxfkkn0rcd755rivgrbvzzgn3v9dgjprp";
+    sha256 = "0qphvjfv17dbmzgb4pny2q6ln0lsgzyhalq6qyqxc3qwm4fzdjv1";
     curlOpts = "--user-agent 'Mozilla/5.0'"; # the good old user-agent trick...
   };
 
   patches = [ ./0001-change-flags.diff ];
-  postPatch = "sed '1i#include <cmath>' -i higan/fc/ppu/ppu.cpp";
 
   buildInputs =
   [ p7zip pkgconfig libX11 libXv udev mesa SDL libao openal libpulseaudio gtk gtksourceview ];

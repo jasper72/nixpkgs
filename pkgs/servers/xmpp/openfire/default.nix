@@ -22,6 +22,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "XMPP server in Java";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

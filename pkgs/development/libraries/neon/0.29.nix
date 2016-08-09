@@ -40,6 +40,5 @@ stdenv.mkDerivation rec {
   meta = {
     description = "An HTTP and WebDAV client library";
     homepage = http://www.webdav.org/neon/;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

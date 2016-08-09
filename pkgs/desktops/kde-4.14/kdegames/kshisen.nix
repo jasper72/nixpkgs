@@ -2,6 +2,6 @@
 kde {
   buildInputs = [ kdelibs libkdegames libkmahjongg ];
   meta = {
-    description = "A solitaire-like game played using the standard set of Mahjong tiles";
+    description = "a solitaire-like game played using the standard set of Mahjong tiles";
   };
 }

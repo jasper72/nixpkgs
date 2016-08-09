@@ -10,8 +10,4 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ cracklib python ];
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

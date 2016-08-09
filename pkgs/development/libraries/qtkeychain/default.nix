@@ -19,6 +19,5 @@ stdenv.mkDerivation rec {
     description = "Platform-independent Qt API for storing passwords securely";
     homepage = "https://github.com/frankosterfeld/qtkeychain";
     license = stdenv.lib.licenses.bsd3;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

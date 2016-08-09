@@ -42,6 +42,5 @@ stdenv.mkDerivation rec {
     description = "Flexible contacts synchronization program";
     license = licenses.agpl3;
     maintainers = [ maintainers.DamienCassou ];
-    platforms = platforms.unix;
   };
 }

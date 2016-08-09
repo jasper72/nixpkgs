@@ -32,6 +32,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.xfce.org/;
     description = "Basic GUI library for Xfce";
     license = stdenv.lib.licenses.lgpl2Plus;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

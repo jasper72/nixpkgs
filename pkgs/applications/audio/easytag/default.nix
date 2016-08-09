@@ -32,6 +32,5 @@ stdenv.mkDerivation rec {
     homepage = "http://projects.gnome.org/easytag/";
     license = stdenv.lib.licenses.gpl2Plus;
     maintainers = with stdenv.lib.maintainers; [ fuuzetsu ];
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

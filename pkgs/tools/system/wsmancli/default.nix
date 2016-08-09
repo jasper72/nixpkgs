@@ -1,4 +1,4 @@
-{ fetchurl, stdenv, autoconf, automake, libtool, pkgconfig, openwsman, openssl }:
+{ fetchurl, stdenv, autoconf, automake, libtool, pkgconfig, openwsman }:
 
 stdenv.mkDerivation rec {
   version = "2.6.0";
@@ -9,15 +9,9 @@ stdenv.mkDerivation rec {
     sha256 = "03ay6sa4ii8h6rr3l2qiqqml8xl6gplrlg4v2avdh9y6sihfyvvn";
   };
 
-  buildInputs = [ autoconf automake libtool pkgconfig openwsman openssl ];
+  buildInputs = [ autoconf automake libtool pkgconfig openwsman ];
 
-  preConfigure = ''
-    ./bootstrap
-
-    configureFlagsArray=(
-      LIBS="-L${openssl}/lib -lssl -lcrypto"
-    )
-  '';
+  preConfigure = "./bootstrap";
 
   meta = {
     description = "Openwsman command-line client";

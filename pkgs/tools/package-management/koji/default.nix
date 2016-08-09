@@ -17,8 +17,5 @@ stdenv.mkDerivation rec {
     rm -rf $out/nix
   '';
 
-  meta = {
-    maintainers = [ stdenv.lib.maintainers.mornfall ];
-    platforms = stdenv.lib.platforms.linux;
-  };
+  meta.maintainers = [ stdenv.lib.maintainers.mornfall ];
 }

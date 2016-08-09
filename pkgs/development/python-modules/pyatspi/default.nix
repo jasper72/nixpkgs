@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus;
     license = licenses.gpl2;
     maintainers = with maintainers; [ jgeerds ];
-    platforms = with platforms; unix;
   };
 }

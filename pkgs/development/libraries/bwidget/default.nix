@@ -26,6 +26,5 @@ stdenv.mkDerivation rec {
     homepage = "http://tcl.activestate.com/software/tcllib/";
     description = "High-level widget set for Tcl/Tk";
     license = stdenv.lib.licenses.tcltk;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -14,6 +14,5 @@ stdenv.mkDerivation {
     homepage = "http://wmsystemtray.sourceforge.net";
     license = stdenv.lib.licenses.gpl2;
     maintainers = [ stdenv.lib.maintainers.bstrik ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

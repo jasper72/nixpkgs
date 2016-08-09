@@ -41,6 +41,5 @@ in stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     description = "The Boo Programming Language";
     platforms = platforms.linux;
-    broken = true;
   };
 }

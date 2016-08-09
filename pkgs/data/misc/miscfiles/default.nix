@@ -13,6 +13,5 @@ stdenv.mkDerivation rec {
     license = licenses.gpl2Plus;
     description = "Collection of files not of crucial importance for sysadmins";
     maintainers = with maintainers; [ pSub ];
-    platforms = with platforms; unix;
   };
 }

@@ -52,6 +52,5 @@ stdenv.mkDerivation rec {
     homepage = "https://ricochet.im";
     license = licenses.bsd3;
     maintainers = [ maintainers.codsl maintainers.jgillich ];
-    platforms = platforms.linux;
   };
 }

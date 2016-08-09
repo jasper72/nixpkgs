@@ -2,7 +2,7 @@
 
 buildGoPackage rec {
   name = "vault-${version}";
-  version = "0.6.0";
+  version = "0.5.2";
   rev = "v${version}";
 
   goPackagePath = "github.com/hashicorp/vault";
@@ -11,6 +11,6 @@ buildGoPackage rec {
     inherit rev;
     owner = "hashicorp";
     repo = "vault";
-    sha256 = "0byb91nqrhl7w0rq0ilml1ybamh8w1qga47a790kggsmjhcj9ybx";
+    sha256 = "085rk5i480wdlkn2p14yxi8zgsc11595nkkda1i77c4vjkllbkdy";
   };
 }

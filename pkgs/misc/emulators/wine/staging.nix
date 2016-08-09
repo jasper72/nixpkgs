@@ -8,7 +8,8 @@ let patch = (callPackage ./sources.nix {}).staging;
 in assert (builtins.parseDrvName wineUnstable.name).version == patch.version;
 
 stdenv.lib.overrideDerivation wineUnstable (self: {
-  buildInputs = build-inputs [ "perl" "utillinux" "autoconf" libtxc_dxtn_Name ] self.buildInputs;
+  nativeBuildInputs = build-inputs [ libtxc_dxtn_Name ] self.nativeBuildInputs; 
+  buildInputs = build-inputs [ "perl" "utillinux" "autoconf" ] self.buildInputs;
 
   name = "${self.name}-staging";
 

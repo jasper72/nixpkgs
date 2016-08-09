@@ -17,6 +17,5 @@ stdenv.mkDerivation rec {
     homepage = ftp://ftp.oops.org/pub/oops/libchardet/index.html;
     license = licenses.mpl11;
     maintainers = [ maintainers.abbradar ];
-    platforms = platforms.unix;
   };
 }

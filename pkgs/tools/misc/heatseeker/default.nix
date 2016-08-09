@@ -24,6 +24,5 @@ buildRustPackage rec {
     homepage = https://github.com/rschmitt/heatseeker;
     license = stdenv.lib.licenses.mit;
     maintainers = [ maintainers.michaelpj ];
-    platforms = platforms.linux;
   };
 }

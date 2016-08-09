@@ -31,7 +31,7 @@ in
 stdenv.mkDerivation rec {
   name = "teamspeak-client-${version}";
 
-  version = "3.0.19.4";
+  version = "3.0.19.1";
 
   src = fetchurl {
     urls = [
@@ -39,8 +39,8 @@ stdenv.mkDerivation rec {
       "http://teamspeak.gameserver.gamed.de/ts3/releases/${version}/TeamSpeak3-Client-linux_${arch}-${version}.run"
     ];
     sha256 = if stdenv.is64bit
-                then "f74617d2a2f5cb78e0ead345e6ee66c93e4a251355779018fd060828e212294a"
-                else "e11467dc1732ddc21ec0d86c2853c322af7a6b8307e3e8dfebc6b4b4d7404841";
+                then "173mcvrckia0mming1v9nzi0bllr4m430y9swl9kyfsvp44f5n5h"
+                else "1iansjlbalwil0nlrlxfl70zzbx009c4rccf4va0kq097rqhgznx";
   };
 
   # grab the plugin sdk for the desktop icon
@@ -101,11 +101,7 @@ stdenv.mkDerivation rec {
   meta = {
     description = "The TeamSpeak voice communication tool";
     homepage = http://teamspeak.com/;
-    license = {
-      fullName = "Teamspeak client license";
-      url = http://sales.teamspeakusa.com/licensing.php;
-      free = false;
-    };
+    license = "http://www.teamspeak.com/?page=downloads&type=ts3_linux_client_latest";
     maintainers = [ stdenv.lib.maintainers.lhvwb ];
     platforms = stdenv.lib.platforms.linux;
   };

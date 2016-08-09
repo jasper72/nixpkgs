@@ -1,29 +1,28 @@
-{ callPackage, runCommand, lib, writeScript, stdenv, coreutils, ruby }:
-
-let buildFHSEnv = callPackage ./env.nix { }; in
-
-args@{ name, runScript ? "bash", extraBindMounts ? [], extraInstallCommands ? "", meta ? {}, passthru ? {}, ... }:
+{ runCommand, lib, writeText, writeScriptBin, stdenv, ruby } :
+{ env, runScript ? "bash", extraBindMounts ? [], extraInstallCommands ? "", meta ? {}, passthru ? {} } :
 
 let
-  env = buildFHSEnv (removeAttrs args [ "runScript" "extraBindMounts" "extraInstallCommands" "meta" "passthru" ]);
+  name = env.pname;
 
   # Sandboxing script
-  chroot-user = writeScript "chroot-user" ''
+  chroot-user = writeScriptBin "chroot-user" ''
     #! ${ruby}/bin/ruby
     ${builtins.readFile ./chroot-user.rb}
   '';
 
-  init = run: writeScript "${name}-init" ''
-    #! ${stdenv.shell}
-    for i in ${env}/* /host/*; do
-      path="/''${i##*/}"
-      [ -e "$path" ] || ${coreutils}/bin/ln -s "$i" "$path"
+  init = run: writeText "${name}-init" ''
+    source /etc/profile
+
+    # Make /tmp directory
+    mkdir -m 1777 /tmp
+
+    # Expose sockets in /tmp
+    for i in /host-tmp/.*-unix; do
+      ln -s "$i" "/tmp/$(basename "$i")"
     done
 
     [ -d "$1" ] && [ -r "$1" ] && cd "$1"
     shift
-
-    source /etc/profile
     exec ${run} "$@"
   '';
 
@@ -32,8 +31,8 @@ in runCommand name {
   passthru = passthru // {
     env = runCommand "${name}-shell-env" {
       shellHook = ''
-        ${lib.optionalString (extraBindMounts != []) ''export CHROOTENV_EXTRA_BINDS="${lib.concatStringsSep ":" extraBindMounts}:$CHROOTENV_EXTRA_BINDS"''}
-        exec ${chroot-user} ${init "bash"} "$(pwd)"
+        export CHROOTENV_EXTRA_BINDS="${lib.concatStringsSep ":" extraBindMounts}:$CHROOTENV_EXTRA_BINDS"
+        exec ${chroot-user}/bin/chroot-user ${env} bash ${init "bash"} "$(pwd)"
       '';
     } ''
       echo >&2 ""
@@ -46,8 +45,8 @@ in runCommand name {
   mkdir -p $out/bin
   cat <<EOF >$out/bin/${name}
   #! ${stdenv.shell}
-  ${lib.optionalString (extraBindMounts != []) ''export CHROOTENV_EXTRA_BINDS="${lib.concatStringsSep ":" extraBindMounts}:$CHROOTENV_EXTRA_BINDS"''}
-  exec ${chroot-user} ${init runScript} "\$(pwd)" "\$@"
+  export CHROOTENV_EXTRA_BINDS="${lib.concatStringsSep ":" extraBindMounts}:\$CHROOTENV_EXTRA_BINDS"
+  exec ${chroot-user}/bin/chroot-user ${env} bash ${init runScript} "\$(pwd)" "\$@"
   EOF
   chmod +x $out/bin/${name}
   ${extraInstallCommands}

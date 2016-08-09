@@ -2,7 +2,7 @@
 
 buildGoPackage rec {
   name = "lxd-${version}";
-  version = "2.0.2";
+  version = "2.0.0.rc4";
   rev = "lxd-${version}";
 
   goPackagePath = "github.com/lxc/lxd";
@@ -11,13 +11,17 @@ buildGoPackage rec {
     inherit rev;
     owner = "lxc";
     repo = "lxd";
-    sha256 = "1rs9g1snjymg6pjz5bj77zk5wbs0w8xmrfxzqs32w6zr1dxhf9hs";
+    sha256 = "1rpyyj6d38d9kmb47dcmy1x41fiacj384yx01yslsrj2l6qxcdjn";
   };
 
   goDeps = ./deps.json;
 
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ lxc ];
+
+  postInstall = ''
+    cp go/src/$goPackagePath/scripts/lxd-images $bin/bin
+  '';
 
   meta = with stdenv.lib; {
     description = "Daemon based on liblxc offering a REST API to manage containers";

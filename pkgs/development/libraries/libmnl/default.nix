@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
   };
 
   meta = {
-    description = "Minimalistic user-space library oriented to Netlink developers";
+    description = "minimalistic user-space library oriented to Netlink developers";
     longDescription = ''
       libmnl is a minimalistic user-space library oriented to Netlink developers.
       There are a lot of common tasks in parsing, validating, constructing of both the Netlink

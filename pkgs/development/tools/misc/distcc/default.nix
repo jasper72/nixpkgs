@@ -70,7 +70,7 @@ let
     };
 
     meta = {
-      description = "A fast, free distributed C/C++ compiler";
+      description = "a fast, free distributed C/C++ compiler";
       homepage = "http://distcc.org";
       license = "GPL";
 

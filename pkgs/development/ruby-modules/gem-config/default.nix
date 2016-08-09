@@ -153,10 +153,6 @@ in
     ];
   };
 
-  typhoeus = attrs: {
-    buildInputs = [ curl ];
-  };
-
   tzinfo = attrs: {
     dontBuild = false;
     postPatch = ''

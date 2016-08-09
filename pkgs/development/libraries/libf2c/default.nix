@@ -28,6 +28,5 @@ stdenv.mkDerivation rec {
     description = "F2c converts Fortran 77 source code to C";
     homepage = http://www.netlib.org/f2c/;
     license = stdenv.lib.licenses.mit;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

@@ -21,6 +21,5 @@ stdenv.mkDerivation rec {
     license = "BSD-style";
 
     homepage = http://pupnp.sourceforge.net/;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

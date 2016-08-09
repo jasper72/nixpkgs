@@ -24,6 +24,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/bulletphysics/bullet3;
     license = stdenv.lib.licenses.zlib;
     maintainers = with stdenv.lib.maintainers; [ aforemny ];
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

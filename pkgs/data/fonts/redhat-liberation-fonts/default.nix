@@ -37,6 +37,5 @@ stdenv.mkDerivation rec {
     maintainers = [
       maintainers.raskin
     ];
-    platforms = platforms.unix;
   };
 }

@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     homepage = http://libsigc.sourceforge.net/;
     description = "A typesafe callback system for standard C++";
     branch = "1.2";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

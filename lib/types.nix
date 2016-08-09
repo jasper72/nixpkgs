@@ -100,10 +100,6 @@ rec {
         in if isDerivation res then res else toDerivation res;
     };
 
-    shellPackage = package // {
-      check = x: (package.check x) && (hasAttr "shellPath" x);
-    };
-
     path = mkOptionType {
       name = "path";
       # Hacky: there is no ‘isPath’ primop.

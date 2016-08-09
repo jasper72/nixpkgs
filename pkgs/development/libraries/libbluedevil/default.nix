@@ -13,8 +13,4 @@ stdenv.mkDerivation rec {
   };
 
   buildInputs = [ cmake qt4 ];
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

@@ -25,6 +25,5 @@ stdenv.mkDerivation rec {
     homepage = "http://www.freedesktop.org/wiki/Software/kmscon/libtsm/";
     license = licenses.mit;
     maintainers = with maintainers; [ cstrahan ];
-    platforms = with platforms; unix;
   };
 }

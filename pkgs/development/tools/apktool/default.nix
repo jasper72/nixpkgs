@@ -33,7 +33,6 @@ stdenv.mkDerivation rec {
     homepage    = https://code.google.com/p/android-apktool/;
     license     = licenses.asl20;
     maintainers = with maintainers; [ offline ];
-    platforms = with platforms; unix;
   };
 
 }

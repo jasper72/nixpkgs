@@ -18,6 +18,5 @@ stdenv.mkDerivation rec {
     homepage = https://www.opensc-project.org/opensc/wiki/pkcs11-helper;
     license = with licenses; [ "BSD" gpl2 ];
     description = "Library that simplifies the interaction with PKCS#11 providers";
-    platforms = platforms.unix;
   };
 }

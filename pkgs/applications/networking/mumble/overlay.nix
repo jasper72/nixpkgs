@@ -21,8 +21,4 @@ in stdenv.mkDerivation {
     sed -i "s,/usr/lib,$out/lib,g" $out/bin/mumble-overlay
     sed -i '2iPATH="${binPath}:$PATH"' $out/bin/mumble-overlay
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

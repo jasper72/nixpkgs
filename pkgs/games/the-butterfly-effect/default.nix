@@ -1,22 +1,15 @@
-{ stdenv, fetchgit, qt5, box2d, which, cmake, gettext }:
+{ stdenv, fetchurl, qt4, box2d, which, cmake }:
 
 stdenv.mkDerivation rec {
   name = "tbe-${version}";
-  version = "0.9.3.1";
+  version = "0.9.2.1";
 
-  src = fetchgit {
-    url = "https://github.com/kaa-ching/tbe";
-    rev = "refs/tags/v${version}";
-    sha256 = "1ag2cp346f9bz9qy6za6q54id44d2ypvkyhvnjha14qzzapwaysj";
+  src = fetchurl {
+    url = "https://github.com/kaa-ching/tbe/archive/v${version}.tar.gz";
+    sha256 = "1cs4q9qiakfd2m1lvfsvfgf8yvhxzmc06glng5d80piwyn6ymzxg";
   };
 
-  postPatch = "sed '1i#include <vector>' -i src/model/World.h";
-
-  buildInputs = [
-    qt5.qtbase qt5.qtsvg qt5.qttranslations box2d which cmake
-    gettext
-  ];
-  enableParallelBuilding = true;
+  buildInputs = [ qt4 box2d which cmake ];
 
   installPhase = ''
     make DESTDIR=.. install

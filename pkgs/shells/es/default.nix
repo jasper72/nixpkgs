@@ -43,8 +43,4 @@ stdenv.mkDerivation {
     maintainers = [ maintainers.sjmackenzie ];
     platforms = platforms.all;
   };
-
-  passthru = {
-    shellPath = "/bin/es";
-  };
 }

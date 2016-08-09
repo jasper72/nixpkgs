@@ -31,7 +31,6 @@ stdenv.mkDerivation rec {
     description = "Library providing high-level API for X Keyboard Extension known as XKB";
     homepage = http://freedesktop.org/wiki/Software/LibXklavier;
     license = licenses.lgpl2Plus;
-    platforms = platforms.linux;
   };
 }
 

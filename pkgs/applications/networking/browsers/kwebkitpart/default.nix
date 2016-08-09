@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
   meta = with stdenv.lib; {
     platforms = platforms.linux;
     maintainers = [ maintainers.phreedom ];
-    description = "A WebKit KPart for Konqueror, Akregator and other KDE applications";
+    description = "a WebKit KPart for Konqueror, Akregator and other KDE applications";
     homepage = https://projects.kde.org/projects/extragear/base/kwebkitpart;
   };
 }

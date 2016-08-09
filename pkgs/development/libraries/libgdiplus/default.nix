@@ -27,8 +27,4 @@ stdenv.mkDerivation rec {
       libjpeg libpng libXrender libexif
     ]
     ++ stdenv.lib.optional stdenv.isDarwin Carbon;
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

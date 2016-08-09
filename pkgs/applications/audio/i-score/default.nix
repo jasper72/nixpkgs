@@ -3,7 +3,7 @@
   cln,
   cmake,
   fetchgit,
-  gcc,
+  gcc5,
   ginac,
   jamomacore,
   kde5,
@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
     cln
     cmake
     ginac
-    gcc
+    gcc5
     jamomacore
     kde5.kdnssd
     libsndfile

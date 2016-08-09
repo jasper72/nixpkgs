@@ -55,6 +55,5 @@ stdenv.mkDerivation rec {
     maintainers = [
       stdenv.lib.maintainers.avnik
     ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

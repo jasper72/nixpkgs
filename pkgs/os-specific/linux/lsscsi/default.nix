@@ -13,8 +13,4 @@ stdenv.mkDerivation {
   preConfigure = ''
     substituteInPlace Makefile.in --replace /usr "$out"
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

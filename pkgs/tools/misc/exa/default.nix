@@ -6,7 +6,7 @@ buildRustPackage rec {
   name = "exa-${version}";
   version = "2016-04-20";
 
-  depsSha256 = "0nyrdl57nhr3lxqs3gaij3mdmlrm0z52qv6mznvgw0ziwqmlq5w1";
+  depsSha256 = "1rpynsni2r3gim10xc1qkj51wpbzafwsr99y61zh41v4vh047g1k";
 
   src = fetchFromGitHub {
     owner = "ogham";

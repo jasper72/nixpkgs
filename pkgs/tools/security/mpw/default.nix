@@ -39,8 +39,4 @@ in stdenv.mkDerivation {
     mkdir -p $out/bin
     mv mpw $out/bin/mpw
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

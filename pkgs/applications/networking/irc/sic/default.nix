@@ -14,6 +14,5 @@ stdenv.mkDerivation rec {
     description = "Simple IRC client";
     homepage = http://tools.suckless.org/sic/;
     license = stdenv.lib.licenses.mit;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
 
     homepage = https://github.com/jgeboski/bitlbee-facebook;
     license = licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

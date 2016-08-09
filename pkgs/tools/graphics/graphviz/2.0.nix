@@ -30,6 +30,5 @@ stdenv.mkDerivation rec {
     description = "A program for visualising graphs";
     homepage = http://www.graphviz.org/;
     branch = "2.0";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

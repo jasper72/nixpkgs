@@ -16,8 +16,4 @@ stdenv.mkDerivation rec {
       --prefix PATH : "${ruby}/bin" \
       --prefix PATH : "${cdparanoia}/bin"
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.linux;
-  };
 }

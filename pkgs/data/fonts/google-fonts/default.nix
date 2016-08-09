@@ -12,22 +12,15 @@ stdenv.mkDerivation rec {
   phases = [ "unpackPhase" "installPhase" ];
 
   installPhase = ''
-    dest=$out/share/fonts/truetype
-    mkdir -p $dest
-    find . -name "*.ttf" -exec cp -v {} $dest \;
-    chmod -x $dest/*.ttf
+    mkdir -p $out/share/fonts/truetype
+    find . -name "*.ttf" -exec cp -v {} $out/share/fonts/truetype \;
   '';
-
-  outputHashAlgo = "sha256";
-  outputHashMode = "recursive";
-  outputHash = "0q03gg0sh2mljlbmhamnxz28d13znh9dzca84p554s7pwg6z4wca";
 
   meta = with stdenv.lib; {
     homepage = https://www.google.com/fontsl;
     description = "Font files available from Google Font";
     license = with licenses; [ asl20 ofl ufl ];
     platforms = platforms.all;
-    hydraPlatforms = [];
     maintainers = with maintainers; [ manveru ];
   };
 }

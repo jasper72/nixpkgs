@@ -2,10 +2,10 @@
 
 stdenv.mkDerivation rec {
   name = "dub-${version}";
-  version = "1.0.0";
+  version = "0.9.25";
 
   src = fetchFromGitHub {
-    sha256 = "07s52hmh9jc3i4jfx4j4a91m44qrr933pwfwczzijhybj2wmpjhh";
+    sha256 = "0cb4kx72fvk6vfqkk0mrp6fvv512xhw03dq2dn9lng0daydvdcim";
     rev = "v${version}";
     repo = "dub";
     owner = "D-Programming-Language";
@@ -29,6 +29,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = with stdenv.lib; {
+    inherit version;
     description = "Build tool for D projects";
     homepage = http://code.dlang.org/;
     license = licenses.mit;

@@ -1,29 +1,40 @@
 { stdenv, fetchurl, fetchpatch, ncurses, utmp, pam ? null }:
 
 stdenv.mkDerivation rec {
-  name = "screen-4.4.0";
+  name = "screen-4.3.1";
 
   src = fetchurl {
     url = "mirror://gnu/screen/${name}.tar.gz";
-    sha256 = "12r12xwhsg59mlprikbbmn60gh8lqhrvyar7mlxg4fwsfma2lwpg";
+    sha256 = "0qwxd4axkgvxjigz9xs0kcv6qpfkrzr2gm43w9idx0z2mvw4jh7s";
   };
 
-  configureFlags= [
-    "--enable-telnet"
-    "--enable-pam"
-    "--with-sys-screenrc=/etc/screenrc"
-    "--enable-colors256"
-  ];
+  preConfigure = ''
+    configureFlags="--enable-telnet --enable-pam --infodir=$out/share/info --mandir=$out/share/man --with-sys-screenrc=/etc/screenrc --enable-colors256"
+    sed -i -e "s|/usr/local|/non-existent|g" -e "s|/usr|/non-existent|g" configure Makefile.in */Makefile.in
+  '';
+
+  # TODO: remove when updating the version of screen. Only patches for 4.3.1
+  patches = [
+    (fetchpatch {
+      name = "CVE-2015-6806.patch";
+      stripLen = 1;
+      url = "http://git.savannah.gnu.org/cgit/screen.git/patch/?id=b7484c224738247b510ed0d268cd577076958f1b";
+      sha256 = "160zhpzi80qkvwib78jdvx4jcm2c2h59q5ap7hgnbz4xbkb3k37l";
+    })
+  ] ++ stdenv.lib.optional stdenv.isDarwin (fetchurl {
+    url = "http://savannah.gnu.org/file/screen-utmp.patch\?file_id=34815";
+    sha256 = "192dsa8hm1zw8m638avzhwhnrddgizhyrwaxgwa96zr9vwai2nvc";
+  });
 
   buildInputs = [ ncurses ] ++ stdenv.lib.optional stdenv.isLinux pam
                             ++ stdenv.lib.optional stdenv.isDarwin utmp;
 
   doCheck = true;
 
-  meta = with stdenv.lib; {
+  meta = {
     homepage = http://www.gnu.org/software/screen/;
     description = "A window manager that multiplexes a physical terminal";
-    license = licenses.gpl2Plus;
+    license = stdenv.lib.licenses.gpl2Plus;
 
     longDescription =
       '' GNU Screen is a full-screen window manager that multiplexes a physical
@@ -47,7 +58,7 @@ stdenv.mkDerivation rec {
          terminal.
       '';
 
-    platforms = platforms.unix;
-    maintainers = with maintainers; [ peti jgeerds vrthra ];
+    platforms = stdenv.lib.platforms.unix;
+    maintainers = with stdenv.lib.maintainers; [ peti jgeerds ];
   };
 }

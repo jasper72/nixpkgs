@@ -56,7 +56,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/chriskempson/base16";
     license = licenses.mit;
     maintainers = with maintainers; [ garbas ];
-    platforms = with platforms; unix;
   };
 
 }

@@ -19,6 +19,5 @@ stdenv.mkDerivation rec
     description = "YubiKey Personalization cross-platform library and tool";
     license = "bsd";
     maintainers = [ stdenv.lib.maintainers.calrama ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

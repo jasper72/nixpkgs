@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     description = "A linear logic programming language for modeling generative interactive systems";
     homepage = https://github.com/chrisamaphone/interactive-lp;
     maintainers = with maintainers; [ pSub ];
-    platforms = with platforms; linux;
   };
 }

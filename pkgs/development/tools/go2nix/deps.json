@@ -2,8 +2,10 @@
   {
     "include": "../../libs.json",
     "packages": [
-      "github.com/Masterminds/vcs",
-      "github.com/jawher/mow.cli"
+      "github.com/alecthomas/template",
+      "github.com/alecthomas/units",
+      "gopkg.in/alecthomas/kingpin.v2",
+      "github.com/Masterminds/vcs"
     ]
   }
 ]

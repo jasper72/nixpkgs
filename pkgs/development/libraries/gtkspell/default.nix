@@ -9,8 +9,4 @@ stdenv.mkDerivation {
   };
   
   buildInputs = [aspell pkgconfig gtk enchant intltool];
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

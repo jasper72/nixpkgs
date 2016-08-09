@@ -26,7 +26,7 @@ in pythonPackages.buildPythonApplication rec {
 
   meta = {
     homepage = http://cloudinit.readthedocs.org;
-    description = "Provides configuration and customization of cloud instance";
+    description = "provides configuration and customization of cloud instance";
     maintainers = [ lib.maintainers.madjar ];
     platforms = lib.platforms.all;
   };

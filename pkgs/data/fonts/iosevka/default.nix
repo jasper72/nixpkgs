@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub }:
+{ stdenv, lib, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   name = "iosevka-${version}";
@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
     cp -v iosevka-* $fontdir
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     homepage = "http://be5invis.github.io/Iosevka/";
     downloadPage = "https://github.com/be5invis/Iosevka/releases";
     description = ''

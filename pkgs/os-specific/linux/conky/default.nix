@@ -1,7 +1,7 @@
 { stdenv, fetchFromGitHub, pkgconfig, cmake
 
 # dependencies
-, glib, libXinerama
+, glib
 
 # optional features without extra dependencies
 , mpdSupport          ? true
@@ -17,7 +17,6 @@
 , ncursesSupport      ? true      , ncurses       ? null
 , x11Support          ? true      , xlibsWrapper           ? null
 , xdamageSupport      ? x11Support, libXdamage    ? null
-, doubleBufferSupport ? x11Support
 , imlib2Support       ? x11Support, imlib2        ? null
 
 , luaSupport          ? true      , lua           ? null
@@ -62,13 +61,13 @@ with stdenv.lib;
 
 stdenv.mkDerivation rec {
   name = "conky-${version}";
-  version = "1.10.3";
+  version = "1.10.1";
 
   src = fetchFromGitHub {
     owner = "brndnmtthws";
     repo = "conky";
     rev = "v${version}";
-    sha256 = "0sa2jl159jk5p2hr37adwq84m0ynva7v87qrwj1xv0kw8l4qzhjs";
+    sha256 = "0k93nqx8mxz2z84zzwpwfp7v7dwxwg1di1a2yb137lk7l157azw6";
   };
 
   postPatch = ''
@@ -87,7 +86,7 @@ stdenv.mkDerivation rec {
 
   NIX_LDFLAGS = "-lgcc_s";
 
-  buildInputs = [ pkgconfig glib cmake libXinerama ]
+  buildInputs = [ pkgconfig glib cmake ]
     ++ optionals docsSupport        [ docbook2x libxslt man less ]
     ++ optional  ncursesSupport     ncurses
     ++ optional  x11Support         xlibsWrapper
@@ -114,7 +113,6 @@ stdenv.mkDerivation rec {
     ++ optional rssSupport          "-DBUILD_RSS=ON"
     ++ optional (!x11Support)       "-DBUILD_X11=OFF"
     ++ optional xdamageSupport      "-DBUILD_XDAMAGE=ON"
-    ++ optional doubleBufferSupport "-DBUILD_XDBE=ON"
     ++ optional weatherMetarSupport "-DBUILD_WEATHER_METAR=ON"
     ++ optional weatherXoapSupport  "-DBUILD_WEATHER_XOAP=ON"
     ++ optional wirelessSupport     "-DBUILD_WLAN=ON"

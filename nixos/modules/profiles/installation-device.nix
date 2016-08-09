@@ -42,7 +42,7 @@ with lib;
 
         The "root" account has an empty password.  ${
           optionalString config.services.xserver.enable
-            "Type `systemctl start display-manager' to\nstart the graphical user interface."}
+            "Type `start display-manager' to\nstart the graphical user interface."}
       '';
 
     # Allow sshd to be started manually through "start sshd".

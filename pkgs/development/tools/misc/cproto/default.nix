@@ -17,6 +17,5 @@ stdenv.mkDerivation {
     description = "Tool to generate C function prototypes from C source code";
     homepage = http://cproto.sourceforge.net/;
     license = stdenv.lib.licenses.publicDomain;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

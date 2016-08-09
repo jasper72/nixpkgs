@@ -19,6 +19,5 @@ stdenv.mkDerivation {
     description = "Firmware for Realtek rt5677 device";
     license = licenses.unfreeRedistributableFirmware;
     maintainers = [ maintainers.zohl ];
-    platforms = platforms.linux;
   };
 }

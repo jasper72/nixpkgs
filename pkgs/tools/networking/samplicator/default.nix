@@ -13,6 +13,5 @@ stdenv.mkDerivation rec {
     description = "Send copies of (UDP) datagrams to multiple receivers";
     homepage = "http://code.google.com/p/samplicator/";
     license = stdenv.lib.licenses.gpl2Plus;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

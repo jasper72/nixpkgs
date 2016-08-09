@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
 
     license = stdenv.lib.licenses.lgpl2Plus;
 
-    platforms = stdenv.lib.platforms.unix;
+    hydraPlatforms = stdenv.lib.platforms.linux;
     maintainers = [ ];
   };
 }

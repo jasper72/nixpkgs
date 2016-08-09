@@ -2,6 +2,6 @@
 kde {
   buildInputs = [ kdelibs libkdegames ];
   meta = {
-    description = "A fun and educational puzzle game built around molecular geometry";
+    description = "a fun and educational puzzle game built around molecular geometry";
   };
 }

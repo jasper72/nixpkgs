@@ -18,8 +18,4 @@ stdenv.mkDerivation {
     mkdir -p $out/share/texmf-nix
     cp -prd * $out/share/texmf-nix
   ";
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

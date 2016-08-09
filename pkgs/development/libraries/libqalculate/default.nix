@@ -1,28 +1,22 @@
-{ stdenv, fetchurl, cln, libxml2, glib, intltool, pkgconfig, doxygen, autoreconfHook, readline }:
+{ stdenv, fetchurl, cln, libxml2, glib, intltool, pkgconfig }:
 
 stdenv.mkDerivation rec {
-  name = "libqalculate-${version}";
-  version = "0.9.8";
+  name = "libqalculate-0.9.7";
 
   src = fetchurl {
-    url = "https://github.com/Qalculate/libqalculate/archive/v${version}.tar.gz";
-    sha256 = "07rd95a0wsqs3iymr64mlljn191f8gdnjvr9d4l1spjv3s8j5wdi";
+    url = "mirror://sourceforge/qalculate/${name}.tar.gz";
+    sha256 = "0mbrc021dk0ayyglk4qyf9328cayrlz2q94lh8sh9l9r6g79fvcs";
   };
 
-  nativeBuildInputs = [ intltool pkgconfig autoreconfHook doxygen ];
-  buildInputs = [ readline ];
+  outputs = [ "out" "doc" ];
+
+  buildInputs = [ intltool pkgconfig ];
   propagatedBuildInputs = [ cln libxml2 glib ];
 
-  preBuild = ''
-    pushd docs/reference
-    doxygen Doxyfile
-    popd
-  '';
-
-  meta = with stdenv.lib; {
+  meta = {
     description = "An advanced calculator library";
-    homepage = http://qalculate.github.io;
-    maintainers = with maintainers; [ urkud gebner ];
-    platforms = platforms.all;
+    homepage = http://qalculate.sourceforge.net;
+    maintainers = [ stdenv.lib.maintainers.urkud ];
+    platforms = stdenv.lib.platforms.all;
   };
 }

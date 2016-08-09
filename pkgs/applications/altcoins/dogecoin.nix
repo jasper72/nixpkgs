@@ -43,6 +43,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.dogecoin.com/;
     license = licenses.mit;
     maintainers = with maintainers; [ edwtjo offline AndersonTorres ];
-    platforms = with platforms; linux;
   };
 }

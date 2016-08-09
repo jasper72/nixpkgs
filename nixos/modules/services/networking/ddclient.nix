@@ -7,8 +7,22 @@ let
 
   stateDir = "/var/spool/ddclient";
   ddclientUser = "ddclient";
-  ddclientFlags = "-foreground -verbose -noquiet -file /etc/ddclient.conf";
+  ddclientFlags = "-foreground -verbose -noquiet -file ${ddclientCfg}";
   ddclientPIDFile = "${stateDir}/ddclient.pid";
+  ddclientCfg = pkgs.writeText "ddclient.conf" ''
+    daemon=600
+    cache=${stateDir}/ddclient.cache
+    pid=${ddclientPIDFile}
+    use=${config.services.ddclient.use}
+    login=${config.services.ddclient.username}
+    password=${config.services.ddclient.password}
+    protocol=${config.services.ddclient.protocol}
+    server=${config.services.ddclient.server}
+    ssl=${if config.services.ddclient.ssl then "yes" else "no"}
+    wildcard=YES
+    ${config.services.ddclient.domain}
+    ${config.services.ddclient.extraConfig}
+  '';
 
 in
 
@@ -48,7 +62,7 @@ in
         default = "";
         type = str;
         description = ''
-          Password. WARNING: The password becomes world readable in the Nix store.
+          Password.
         '';
       };
 
@@ -108,30 +122,10 @@ in
       home = stateDir;
     };
 
-    environment.etc."ddclient.conf" = {
-      uid = config.ids.uids.ddclient;
-      mode = "0600";
-      text = ''
-        daemon=600
-        cache=${stateDir}/ddclient.cache
-        pid=${ddclientPIDFile}
-        use=${config.services.ddclient.use}
-        login=${config.services.ddclient.username}
-        password=${config.services.ddclient.password}
-        protocol=${config.services.ddclient.protocol}
-        server=${config.services.ddclient.server}
-        ssl=${if config.services.ddclient.ssl then "yes" else "no"}
-        wildcard=YES
-        ${config.services.ddclient.domain}
-        ${config.services.ddclient.extraConfig}
-      '';
-    };
-
     systemd.services.ddclient = {
       description = "Dynamic DNS Client";
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
-      restartTriggers = [ config.environment.etc."ddclient.conf".source ];
 
       serviceConfig = {
         # Uncomment this if too many problems occur:

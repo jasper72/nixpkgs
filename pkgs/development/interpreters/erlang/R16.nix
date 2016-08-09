@@ -1,8 +1,7 @@
 { stdenv, fetchurl, perl, gnum4, ncurses, openssl
 , gnused, gawk, makeWrapper
 , odbcSupport ? false, unixODBC ? null
-, wxSupport ? false, mesa ? null, wxGTK ? null, xorg ? null
-, enableDebugInfo ? false }:
+, wxSupport ? false, mesa ? null, wxGTK ? null, xorg ? null }:
 
 assert wxSupport -> mesa != null && wxGTK != null && xorg != null;
 assert odbcSupport -> unixODBC != null;
@@ -17,8 +16,6 @@ stdenv.mkDerivation rec {
     url = "http://www.erlang.org/download/otp_src_R${version}.tar.gz";
     sha256 = "1rvyfh22g1fir1i4xn7v2md868wcmhajwhfsq97v7kn5kd2m7khp";
   };
-
-  debugInfo = enableDebugInfo;
 
   buildInputs =
     [ perl gnum4 ncurses openssl makeWrapper

@@ -31,6 +31,5 @@ stdenv.mkDerivation rec {
     license = stdenv.lib.licenses.gpl2Plus;
     homepage = http://www.pps.jussieu.fr/~beffara/soft/rubber/;
     maintainers = [ stdenv.lib.maintainers.ttuegel ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

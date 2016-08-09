@@ -16,7 +16,11 @@ rec {
        concatStrings ["foo" "bar"]
        => "foobar"
   */
-  concatStrings = builtins.concatStringsSep "";
+  concatStrings =
+    if builtins ? concatStringsSep then
+      builtins.concatStringsSep ""
+    else
+      lib.foldl' (x: y: x + y) "";
 
   /* Map a function over a list and concatenate the resulting strings.
 
@@ -203,21 +207,13 @@ rec {
   */
   escape = list: replaceChars list (map (c: "\\${c}") list);
 
-  /* Quote string to be used safely within the Bourne shell.
+  /* Escape all characters that have special meaning in the Bourne shell.
 
      Example:
-       escapeShellArg "esc'ape\nme"
-       => "'esc'\\''ape\nme'"
+       escapeShellArg "so([<>])me"
+       => "so\\(\\[\\<\\>\\]\\)me"
   */
-  escapeShellArg = arg: "'${replaceStrings ["'"] ["'\\''"] (toString arg)}'";
-
-  /* Quote all arguments to be safely passed to the Bourne shell.
-
-     Example:
-       escapeShellArgs ["one" "two three" "four'five"]
-       => "'one' 'two three' 'four'\\''five'"
-  */
-  escapeShellArgs = concatMapStringsSep " " escapeShellArg;
+  escapeShellArg = lib.escape (stringToCharacters "\\ ';$`()|<>\t*[]");
 
   /* Obsolete - use replaceStrings instead. */
   replaceChars = builtins.replaceStrings or (
@@ -479,14 +475,4 @@ rec {
       absolutePaths = builtins.map (path: builtins.toPath (root + "/" + path)) relativePaths;
     in
       absolutePaths;
-
-  /* Read the contents of a file removing the trailing \n
-
-     Example:
-       $ echo "1.0" > ./version
-
-       fileContents ./version
-       => "1.0"
-  */
-  fileContents = file: removeSuffix "\n" (builtins.readFile file);
 }

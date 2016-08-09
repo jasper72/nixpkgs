@@ -64,7 +64,6 @@ stdenv.mkDerivation rec {
     homepage = https://developer.mozilla.org/en/SpiderMonkey;
     # TODO: MPL/GPL/LGPL tri-license.
     maintainers = [ maintainers.goibhniu ];
-    platforms = platforms.linux;
   };
 }
 

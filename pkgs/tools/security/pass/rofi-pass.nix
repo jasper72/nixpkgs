@@ -1,15 +1,15 @@
 { stdenv, fetchgit
-, pass, rofi, coreutils, utillinux, xdotool, gnugrep, pwgen, findutils, gawk
+, pass, rofi, coreutils, utillinux, xdotool, gnugrep, pwgen, findutils
 , makeWrapper }:
 
 stdenv.mkDerivation rec {
   name = "rofi-pass-${version}";
-  version = "1.3.2";
+  version = "1.3.1";
 
   src = fetchgit {
     url = "https://github.com/carnager/rofi-pass";
     rev = "refs/tags/${version}";
-    sha256 = "1xqp8s0yyjs2ca9mf8lbz8viwl9xzxf5kk1v68v9hqdgxj26wgls";
+    sha256 = "1r206fq96avhlgkf2fzf8j2a25dav0s945qv66hwvqwhxq74frrv";
   };
 
   buildInputs = [ makeWrapper ];
@@ -33,7 +33,6 @@ stdenv.mkDerivation rec {
     rofi
     utillinux
     xdotool
-    gawk
   ];
 
   fixupPhase = ''
@@ -48,6 +47,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/carnager/rofi-pass;
     maintainers = with stdenv.lib.maintainers; [ hiberno the-kenny ];
     license = stdenv.lib.licenses.gpl3;
-    platforms = with stdenv.lib.platforms; linux;
   };
 }

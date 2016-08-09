@@ -34,6 +34,6 @@ stdenv.mkDerivation rec {
   meta = {
     description = "The FAT16/FAT32 non-destructive resizer";
     homepage = http://sourceforge.net/projects/fatresize;
-    platforms = stdenv.lib.platforms.linux;
+    platform = stdenv.lib.platforms.linux;
   };
 }

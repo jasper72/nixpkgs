@@ -1,19 +1,14 @@
-{ stdenv, fetchurl, cmake, libX11, freetype, libjpeg, openal, flac, libvorbis
-, glew, libXrandr, libXrender, udev, xcbutilimage
+{ stdenv, fetchurl, cmake, libX11, freetype, libjpeg, openal, libsndfile
+, glew, libXrandr, libXrender, udev
 }:
-
-let
-  version = "2.3";
-in
-
 stdenv.mkDerivation rec {
-  name = "sfml-${version}";
+  name = "sfml-2.2";
   src = fetchurl {
-    url = "https://github.com/LaurentGomila/SFML/archive/${version}.tar.gz";
-    sha256 = "12588hfs0pfsv20x3zhq0gdmxv9m7g27i5lfz88303kpglp9yzn2";
+    url = "https://github.com/LaurentGomila/SFML/archive/2.2.tar.gz";
+    sha256 = "1xbpzkqwgbsjdda7n3c2z5m16bhppz1z9rbhmhb8r1im7s95hd2l";
   };
-  buildInputs = [ cmake libX11 freetype libjpeg openal flac libvorbis glew
-                  libXrandr libXrender udev xcbutilimage
+  buildInputs = [ cmake libX11 freetype libjpeg openal libsndfile glew
+                  libXrandr libXrender udev
                 ];
   meta = with stdenv.lib; {
     homepage = http://www.sfml-dev.org/;
@@ -25,6 +20,5 @@ stdenv.mkDerivation rec {
     '';
     license = licenses.zlib;
     maintainers = [ maintainers.astsmtl ];
-    platforms = platforms.linux;
   };
 }

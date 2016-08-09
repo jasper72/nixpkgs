@@ -24,6 +24,5 @@ stdenv.mkDerivation rec {
     description = "Next-generation syslogd with advanced networking and filtering capabilities";
     license = licenses.gpl2;
     maintainers = [ maintainers.rickynils ];
-    platforms = platforms.linux;
   };
 }

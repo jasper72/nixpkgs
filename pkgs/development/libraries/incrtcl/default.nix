@@ -25,6 +25,5 @@ stdenv.mkDerivation rec {
   meta = {
     homepage = http://incrtcl.sourceforge.net/;
     description = "Object Oriented Enhancements for Tcl/Tk";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

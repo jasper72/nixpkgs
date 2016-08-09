@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
     description = "SIP Swiss army knife";
     license = stdenv.lib.licenses.gpl2;
     maintainers = with maintainers; [ sheenobu ];
-    platforms = with platforms; unix;
   };
 
 }

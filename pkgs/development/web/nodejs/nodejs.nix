@@ -1,11 +1,7 @@
 { stdenv, fetchurl, openssl, python, zlib, libuv, v8, utillinux, http-parser
 , pkgconfig, runCommand, which, libtool
 , version
-, sha256 ? null
-, src ? fetchurl { url = "https://nodejs.org/download/release/v${version}/node-v${version}.tar.xz"; inherit sha256; }
-, preBuild ? ""
-, extraConfigFlags ? []
-, extraBuildInputs ? []
+, src
 , ...
 }:
 
@@ -13,8 +9,8 @@ assert stdenv.system != "armv5tel-linux";
 
 let
 
-  deps = {
-    inherit openssl zlib libuv;
+  deps = { 
+    inherit openssl zlib libuv; 
   } // (stdenv.lib.optionalAttrs (!stdenv.isDarwin) {
     inherit http-parser;
   });
@@ -29,11 +25,13 @@ let
 
 in stdenv.mkDerivation {
 
-  inherit version src preBuild;
+  inherit version;
+
+  inherit src;
 
   name = "nodejs-${version}";
 
-  configureFlags = concatMap sharedConfigureFlags (builtins.attrNames deps) ++ [ "--without-dtrace" ] ++ extraConfigFlags;
+  configureFlags = concatMap sharedConfigureFlags (builtins.attrNames deps) ++ [ "--without-dtrace" ];
   dontDisableStatic = true;
   prePatch = ''
     patchShebangs .
@@ -42,10 +40,9 @@ in stdenv.mkDerivation {
 
   patches = stdenv.lib.optionals stdenv.isDarwin [ ./no-xcode.patch ];
 
-  buildInputs = extraBuildInputs
-    ++ [ python which zlib libuv openssl ]
+  buildInputs = [ python which zlib libuv openssl python ]
     ++ optionals stdenv.isLinux [ utillinux http-parser ]
-    ++ optionals stdenv.isDarwin [ pkgconfig libtool ];
+    ++ optionals stdenv.isDarwin [ pkgconfig openssl libtool ];
   setupHook = ./setup-hook.sh;
 
   enableParallelBuilding = true;
@@ -56,7 +53,7 @@ in stdenv.mkDerivation {
     description = "Event-driven I/O framework for the V8 JavaScript engine";
     homepage = http://nodejs.org;
     license = licenses.mit;
-    maintainers = [ maintainers.goibhniu maintainers.havvy maintainers.gilligan maintainers.cko ];
+    maintainers = [ maintainers.goibhniu maintainers.havvy maintainers.gilligan ];
     platforms = platforms.linux ++ platforms.darwin;
   };
 }

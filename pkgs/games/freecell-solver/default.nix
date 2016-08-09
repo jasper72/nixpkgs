@@ -26,6 +26,5 @@ stdenv.mkDerivation rec{
     homepage = http://fc-solve.shlomifish.org/;
     license = licenses.mit;
     maintainers = [ maintainers.AndersonTorres ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

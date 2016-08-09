@@ -1,5 +1,5 @@
 { stdenv, writeText, erlang, rebar3, openssl, libyaml,
-  pc, buildEnv, lib }:
+  pc, buildEnv }:
 
 { name, version
 , src
@@ -8,17 +8,12 @@
 , postPatch ? ""
 , compilePorts ? false
 , installPhase ? null
-, buildPhase ? null
-, configurePhase ? null
 , meta ? {}
-, enableDebugInfo ? false
 , ... }@attrs:
 
 with stdenv.lib;
 
 let
-  debugInfoFlag = lib.optionalString (enableDebugInfo || erlang.debugInfo) "debug-info";
-
   ownPlugins = buildPlugins ++ (if compilePorts then [pc] else []);
 
   shell = drv: stdenv.mkDerivation {
@@ -51,24 +46,20 @@ let
       rm -f rebar rebar3
     '';
 
-    configurePhase = if configurePhase == null
-    then ''
+    configurePhase = ''
       runHook preConfigure
-      ${erlang}/bin/escript ${rebar3.bootstrapper} ${debugInfoFlag}
+      ${erlang}/bin/escript ${rebar3.bootstrapper}
       runHook postConfigure
-    ''
-    else configurePhase;
+    '';
 
-    buildPhase = if buildPhase == null
-    then ''
+    buildPhase = ''
       runHook preBuild
       HOME=. rebar3 compile
       ${if compilePorts then ''
         HOME=. rebar3 pc compile
       '' else ''''}
       runHook postBuild
-    ''
-    else installPhase;
+    '';
 
     installPhase = if installPhase == null
     then ''

@@ -22,6 +22,5 @@ stdenv.mkDerivation rec {
     homepage = http://www.jflex.de/;
     description = "Lexical analyzer generator for Java, written in Java";
     license = stdenv.lib.licenses.bsd3;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

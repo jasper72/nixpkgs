@@ -57,7 +57,7 @@ stdenv.mkDerivation rec {
   '';
 
   meta = {
-    description = "Rogue-like game";
+    description = "rogue-like game";
     license = stdenv.lib.licenses.unfree;
   };
 }

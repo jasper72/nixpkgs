@@ -15,8 +15,4 @@ stdenv.mkDerivation {
   '';
   dontInstall = true;
   dontPatchShebangs = true;
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

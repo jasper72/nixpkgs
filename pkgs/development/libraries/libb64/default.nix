@@ -22,6 +22,5 @@ stdenv.mkDerivation rec {
     inherit version;
     description = "ANSI C routines for fast base64 encoding/decoding";
     license = stdenv.lib.licenses.publicDomain;
-    platforms = stdenv.lib.platforms.unix;
   };
 }

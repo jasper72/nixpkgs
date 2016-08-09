@@ -25,21 +25,16 @@ in {
 
       accelProfile = mkOption {
         type = types.enum [ "flat" "adaptive" ];
-        default = "adaptive";
-        example = "flat";
+        default = "flat";
+        example = "adaptive";
         description =
           ''
-            Sets  the pointer acceleration profile to the given profile.
-            Permitted values are adaptive, flat.
-            Not all devices support this option or all profiles.
-            If a profile is unsupported, the default profile for this is used.
-            <literal>flat</literal>: Pointer motion is accelerated by a constant
-            (device-specific) factor, depending on the current speed.
-            <literal>adaptive</literal>: Pointer acceleration depends on the input speed.
-            This is the default profile for most devices.
+            Sets  the pointer acceleration profile to the given profile. Permitted values are adaptive, flat.
+            Not all devices support this option or all profiles. If a profile is unsupported, the default profile
+            for this is used. For a description on the profiles and their behavior, see the libinput documentation.
           '';
-      };
-
+      };    
+      
       accelSpeed = mkOption {
         type = types.nullOr types.string;
         default = null;
@@ -203,8 +198,6 @@ in {
 
     environment.systemPackages = [ pkgs.xorg.xf86inputlibinput ];
 
-    services.udev.packages = [ pkgs.libinput ];
-
     services.xserver.config =
       ''
         # Automatically enable the libinput driver for all touchpads.
@@ -221,7 +214,7 @@ in {
           Option "LeftHanded" "${xorgBool cfg.leftHanded}"
           Option "MiddleEmulation" "${xorgBool cfg.middleEmulation}"
           Option "NaturalScrolling" "${xorgBool cfg.naturalScrolling}"
-          ${optionalString (cfg.scrollButton != null) ''Option "ScrollButton" "${toString cfg.scrollButton}"''}
+          ${optionalString (cfg.scrollButton != null) ''Option "ScrollButton" "${cfg.scrollButton}"''}
           Option "ScrollMethod" "${cfg.scrollMethod}"
           Option "HorizontalScrolling" "${xorgBool cfg.horizontalScrolling}"
           Option "SendEventsMode" "${cfg.sendEventsMode}"
@@ -231,14 +224,6 @@ in {
           ${cfg.additionalOptions}
         EndSection
       '';
-
-    assertions = [
-      # already present in synaptics.nix
-      /* {
-        assertion = !config.services.xserver.synaptics.enable;
-        message = "Synaptics and libinput are incompatible, you cannot enable both (in services.xserver).";
-      } */
-    ];
 
   };
 

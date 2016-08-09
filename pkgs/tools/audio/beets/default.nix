@@ -6,6 +6,7 @@
 , enableBadfiles       ? true, flac ? null, mp3val ? null
 , enableConvert        ? true, ffmpeg ? null
 , enableDiscogs        ? true
+, enableEchonest       ? true
 , enableEmbyupdate     ? true
 , enableFetchart       ? true
 , enableLastfm         ? true
@@ -24,6 +25,7 @@ assert enableAcoustid    -> pythonPackages.pyacoustid     != null;
 assert enableBadfiles    -> flac != null && mp3val != null;
 assert enableConvert     -> ffmpeg != null;
 assert enableDiscogs     -> pythonPackages.discogs_client != null;
+assert enableEchonest    -> pythonPackages.pyechonest     != null;
 assert enableFetchart    -> pythonPackages.responses      != null;
 assert enableLastfm      -> pythonPackages.pylast         != null;
 assert enableMpd         -> pythonPackages.mpd            != null;
@@ -40,6 +42,7 @@ let
     chroma = enableAcoustid;
     convert = enableConvert;
     discogs = enableDiscogs;
+    echonest = enableEchonest;
     embyupdate = enableEmbyupdate;
     fetchart = enableFetchart;
     lastgenre = enableLastfm;
@@ -52,8 +55,8 @@ let
   };
 
   pluginsWithoutDeps = [
-    "beatport" "bench" "bpd" "bpm" "bucket" "cue" "duplicates" "edit" "embedart"
-    "export" "filefilter" "freedesktop" "fromfilename" "ftintitle" "fuzzy" "hook" "ihate"
+    "bench" "bpd" "bpm" "bucket" "cue" "duplicates" "edit" "embedart"
+    "filefilter" "freedesktop" "fromfilename" "ftintitle" "fuzzy" "ihate"
     "importadded" "importfeeds" "info" "inline" "ipfs" "keyfinder" "lyrics"
     "mbcollection" "mbsubmit" "mbsync" "metasync" "missing" "permissions" "play"
     "plexupdate" "random" "rewrite" "scrub" "smartplaylist" "spotify" "the"
@@ -70,14 +73,14 @@ let
 
 in buildPythonApplication rec {
   name = "beets-${version}";
-  version = "1.3.19";
+  version = "1.3.17";
   namePrefix = "";
 
   src = fetchFromGitHub {
     owner = "sampsyo";
     repo = "beets";
     rev = "v${version}";
-    sha256 = "0f2v1924ryx5xijpv1jycanl4471vcd7c5lld58lm0viyvh5k28x";
+    sha256 = "1fskxx5xxjqf4xmfjrinh7idjiq6qncb24hiyccv09l47fr1yipc";
   };
 
   propagatedBuildInputs = [
@@ -98,6 +101,7 @@ in buildPythonApplication rec {
                                    pythonPackages.requests2
     ++ optional enableConvert      ffmpeg
     ++ optional enableDiscogs      pythonPackages.discogs_client
+    ++ optional enableEchonest     pythonPackages.pyechonest
     ++ optional enableLastfm       pythonPackages.pylast
     ++ optional enableMpd          pythonPackages.mpd
     ++ optional enableThumbnails   pythonPackages.pyxdg

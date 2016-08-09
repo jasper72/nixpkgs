@@ -25,6 +25,5 @@ stdenv.mkDerivation rec {
     license = licenses.asl20;
 
     maintainers = [ maintainers.offline ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

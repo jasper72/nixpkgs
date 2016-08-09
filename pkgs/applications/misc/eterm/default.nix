@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     homepage = "http://www.eterm.org";
     license = licenses.bsd2;
     maintainers = [ maintainers.AndersonTorres ];
-    platforms = platforms.linux;
   };
 }

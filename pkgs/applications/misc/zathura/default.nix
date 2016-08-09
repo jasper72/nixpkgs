@@ -1,4 +1,4 @@
-{ callPackage, lib, pkgs, fetchurl, stdenv, useMupdf, synctexSupport ? true }:
+{ callPackage, lib, pkgs, fetchurl, stdenv, useMupdf }:
 
 rec {
   inherit stdenv;
@@ -8,7 +8,6 @@ rec {
   zathura_core = callPackage ./core {
     gtk = pkgs.gtk3;
     zathura_icon = icon;
-    inherit synctexSupport;
   };
 
   zathura_pdf_poppler = callPackage ./pdf-poppler { };

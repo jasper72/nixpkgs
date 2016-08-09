@@ -26,6 +26,5 @@ stdenv.mkDerivation rec {
     description = "FUSE-based single file backing store via Amazon S3";
     license = licenses.gpl2Plus;
     maintainers = with maintainers; [ nckx ];
-    platforms = with platforms; linux;
   };
 }

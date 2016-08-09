@@ -20,6 +20,5 @@ stdenv.mkDerivation rec {
     description = "Provides a single interface to extended file attributes";
     maintainers = [ stdenv.lib.maintainers.vrthra ];
     license = [ stdenv.lib.licenses.mit ];
-    platforms = stdenv.lib.platforms.unix;
   };
 }

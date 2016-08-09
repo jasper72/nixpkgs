@@ -31,7 +31,6 @@ stdenv.mkDerivation rec{
     license = licenses.gpl2Plus;
     homepage = http://fs-uae.net;
     maintainers = [ maintainers.AndersonTorres ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }
 # TODO: testing and Python GUI support

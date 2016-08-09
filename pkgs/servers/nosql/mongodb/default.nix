@@ -93,7 +93,7 @@ in stdenv.mkDerivation rec {
   enableParallelBuilding = true;
 
   meta = {
-    description = "A scalable, high-performance, open source NoSQL database";
+    description = "a scalable, high-performance, open source NoSQL database";
     homepage = http://www.mongodb.org;
     license = licenses.agpl3;
 

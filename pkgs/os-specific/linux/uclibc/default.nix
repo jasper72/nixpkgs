@@ -105,6 +105,5 @@ stdenv.mkDerivation {
     homepage = http://www.uclibc.org/;
     description = "A small implementation of the C library";
     license = stdenv.lib.licenses.lgpl2;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

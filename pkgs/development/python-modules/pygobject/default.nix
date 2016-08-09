@@ -33,6 +33,5 @@ stdenv.mkDerivation rec {
   meta = {
     homepage = http://live.gnome.org/PyGObject;
     description = "Python bindings for Glib";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

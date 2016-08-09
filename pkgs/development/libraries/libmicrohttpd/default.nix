@@ -1,25 +1,29 @@
-{ stdenv, fetchurl, libgcrypt, curl, gnutls, pkgconfig }:
+{ lib, stdenv, fetchurl, libgcrypt }:
 
 stdenv.mkDerivation rec {
-  name = "libmicrohttpd-0.9.50";
+  name = "libmicrohttpd-0.9.44";
 
   src = fetchurl {
     url = "mirror://gnu/libmicrohttpd/${name}.tar.gz";
-    sha256 = "1mzbqr6sqisppz88mh73bbh5sw57g8l87qvhcjdx5pmbd183idni";
+    sha256 = "07j1p21rvbrrfpxngk8xswzkmjkh94bp1971xfjh1p0ja709qwzj";
   };
 
   outputs = [ "dev" "out" "docdev" ];
-  buildInputs = [ libgcrypt curl gnutls pkgconfig ];
 
-  preCheck = ''
+  buildInputs = [ libgcrypt ];
+
+  preCheck =
     # Since `localhost' can't be resolved in a chroot, work around it.
-    sed -ie 's/localhost/127.0.0.1/g' src/test*/*.[ch]
-  '';
+    '' for i in "src/test"*"/"*.[ch]
+       do
+         sed -i "$i" -es/localhost/127.0.0.1/g
+       done
+    '';
 
   # Disabled because the tests can time-out.
   doCheck = false;
 
-  meta = with stdenv.lib; {
+  meta = {
     description = "Embeddable HTTP server library";
 
     longDescription = ''
@@ -27,11 +31,10 @@ stdenv.mkDerivation rec {
       it easy to run an HTTP server as part of another application.
     '';
 
-    license = licenses.lgpl2Plus;
+    license = lib.licenses.lgpl2Plus;
 
     homepage = http://www.gnu.org/software/libmicrohttpd/;
 
-    maintainers = [ maintainers.eelco maintainers.vrthra ];
-    platforms = platforms.linux;
+    maintainers = [ lib.maintainers.eelco ];
   };
 }

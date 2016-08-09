@@ -29,8 +29,4 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     cp exe/* $out/bin
   '';
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

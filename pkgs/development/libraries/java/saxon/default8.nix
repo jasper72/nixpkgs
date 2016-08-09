@@ -19,8 +19,4 @@ exec ${jre}/bin/java -jar $out/saxon8.jar \"\\$@\"
 EOF
     chmod a+x $out/bin/saxon8
   ";
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

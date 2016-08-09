@@ -23,6 +23,5 @@ stdenv.mkDerivation rec {
 
   meta = {
     homepage = http://reality.sgiweb.org/davea/dwarf.html;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

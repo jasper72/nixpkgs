@@ -205,13 +205,6 @@ in {
         EndSection
       '';
 
-    assertions = [
-      {
-        assertion = !config.services.xserver.libinput.enable;
-        message = "Synaptics and libinput are incompatible, you cannot enable both (in services.xserver).";
-      }
-    ];
-
   };
 
 }

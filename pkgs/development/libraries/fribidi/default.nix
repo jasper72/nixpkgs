@@ -13,6 +13,5 @@ stdenv.mkDerivation rec {
     homepage = http://fribidi.org/;
     description = "GNU implementation of the Unicode Bidirectional Algorithm (bidi)";
     license = licenses.gpl2;
-    platforms = platforms.unix;
   };
 }

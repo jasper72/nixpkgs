@@ -29,7 +29,6 @@ stdenv.mkDerivation rec {
     license = licenses.mit;
     maintainers = with maintainers; [ edwtjo ];
     homepage = https://github.com/graeme-hill/crossguid;
-    platforms = with platforms; linux;
   };
 
 }

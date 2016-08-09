@@ -7,7 +7,7 @@ stdenv.mkDerivation rec {
     sha256 = "0wk9jmcibd03gspnnr2qvfkw57rg94cwmi0kjpy1mgi05s6vlw1y";
     rev = "v${version}";
     repo = "bully";
-    owner = "HorayNarea";
+    owner = "Lrs121";
   };
   buildInputs = [ openssl libpcap ];
 
@@ -26,6 +26,5 @@ stdenv.mkDerivation rec {
     homepage = https://github.com/Lrs121/bully;
     maintainers = [ stdenv.lib.maintainers.edwtjo ];
     license = stdenv.lib.licenses.gpl3;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

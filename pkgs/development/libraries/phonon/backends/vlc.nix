@@ -1,14 +1,13 @@
 { stdenv, lib, fetchurl, cmake, phonon, pkgconfig, vlc
-, extra-cmake-modules, qtbase ? null, qtx11extras ? null, qt4 ? null
-, withQt5 ? false
-, debug ? false
-}:
+, extra-cmake-modules ? null, qtbase ? null, qtx11extras ? null, qt4 ? null
+, debug ? false }:
 
 with lib;
 
 let
   v = "0.9.0";
   pname = "phonon-backend-vlc";
+  withQt5 = extra-cmake-modules != null;
 in
 
 assert withQt5 -> qtbase != null;

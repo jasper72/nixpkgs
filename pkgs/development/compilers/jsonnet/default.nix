@@ -5,7 +5,7 @@ let version = "0.8.7"; in
 stdenv.mkDerivation {
   name = "jsonnet-${version}";
 
-  src = fetchFromGitHub {
+  srcs = fetchFromGitHub {
     rev = "v${version}";
     owner = "google";
     repo = "jsonnet";

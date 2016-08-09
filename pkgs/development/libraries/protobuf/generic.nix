@@ -35,7 +35,6 @@ stdenv.mkDerivation rec {
     license = "mBSD";
 
     homepage = https://developers.google.com/protocol-buffers/;
-    platforms = stdenv.lib.platforms.unix;
   };
 
   passthru.version = version;

@@ -16,16 +16,15 @@ stdenv.mkDerivation {
     makeFlagsArray=( BINDIR=$out/bin XAPPLOADDIR=$out/etc/X11/app-defaults)
   '';
 
-  meta = with stdenv.lib; {
-    description = "Filesystem visualization utility";
-    longDescription = ''
-      XCruiser, formerly known as XCruise, is a filesystem visualization utility.
-      It constructs a virtually 3-D formed universe from a directory
-      tree and allows you to "cruise" within a visualized filesystem.
-    '';
-    homepage = http://xcruiser.sourceforge.net/;
-    license = licenses.gpl2;
-    maintainers = with maintainers; [ ehmry ];
-    platforms = with platforms; linux;
-  };
+  meta = with stdenv.lib;
+    { description = "Filesystem visualization utility";
+      longDescription = ''
+        XCruiser, formerly known as XCruise, is a filesystem visualization utility.
+        It constructs a virtually 3-D formed universe from a directory
+        tree and allows you to "cruise" within a visualized filesystem.
+      '';
+      homepage = http://xcruiser.sourceforge.net/;
+      license = licenses.gpl2;
+      maintainers = with maintainers; [ ehmry ];
+    };
 }

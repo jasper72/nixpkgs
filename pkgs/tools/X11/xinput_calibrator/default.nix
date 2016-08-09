@@ -17,6 +17,5 @@ stdenv.mkDerivation rec {
     description = "A generic touchscreen calibration program for X.Org";
     license = stdenv.lib.licenses.mit;
     maintainers = [ stdenv.lib.maintainers.flosse ];
-    platforms = stdenv.lib.platforms.linux;
   };
 }

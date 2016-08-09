@@ -22,6 +22,5 @@ stdenv.mkDerivation {
   meta = {
     homepage = http://www.bergo.eng.br/eboard/;
     description = "Chess interface for Unix-like systems";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

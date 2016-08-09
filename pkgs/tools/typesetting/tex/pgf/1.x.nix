@@ -17,6 +17,5 @@ stdenv.mkDerivation {
 
   meta = {
     branch = "1";
-    platforms = stdenv.lib.platforms.unix;
   };
 }

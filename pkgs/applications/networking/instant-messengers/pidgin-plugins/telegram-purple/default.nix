@@ -34,6 +34,5 @@ stdenv.mkDerivation rec {
     description = "Telegram for Pidgin / libpurple";
     license = stdenv.lib.licenses.gpl2;
     maintainers = stdenv.lib.maintainers.jagajaga;
-    platforms = stdenv.lib.platforms.linux;
   };
 }

@@ -36,8 +36,4 @@ stdenv.mkDerivation rec {
   sourceRoot = "${name}/xmlroff/";
 
   patches = [./xmlroff.patch];
-
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }

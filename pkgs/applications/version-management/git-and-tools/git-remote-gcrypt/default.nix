@@ -27,6 +27,5 @@ stdenv.mkDerivation {
     description = "GNU Privacy Guard-encrypted git remote";
     license = stdenv.lib.licenses.gpl3;
     maintainers = with stdenv.lib.maintainers; [ ellis ];
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

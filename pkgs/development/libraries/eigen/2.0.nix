@@ -20,6 +20,5 @@ stdenv.mkDerivation {
     homepage = http://eigen.tuxfamily.org ;
     maintainers = with stdenv.lib.maintainers; [ sander urkud raskin ];
     branch = "2";
-    platforms = with stdenv.lib.platforms; unix;
   };
 }

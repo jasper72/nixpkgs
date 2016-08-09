@@ -53,7 +53,7 @@ stdenv.mkDerivation rec {
   meta = with lib; {
     homepage = http://www.gnuplot.info/;
     description = "A portable command-line driven graphing utility for many platforms";
-    platforms = platforms.linux ++ platforms.darwin;
+    hydraPlatforms = platforms.linux ++ platforms.darwin;
     maintainers = with maintainers; [ lovek323 ];
   };
 }

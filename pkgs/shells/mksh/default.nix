@@ -43,8 +43,4 @@ stdenv.mkDerivation rec {
     maintainers = with maintainers; [ AndersonTorres nckx ];
     platforms = platforms.unix;
   };
-
-  passthru = {
-    shellPath = "/bin/mksh";
-  };
 }

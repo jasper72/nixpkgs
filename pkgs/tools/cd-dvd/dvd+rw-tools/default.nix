@@ -21,6 +21,5 @@ stdenv.mkDerivation {
   meta = {
     homepage = http://fy.chalmers.se/~appro/linux/DVD+RW/tools;
     description = "Tools for burning DVDs";
-    platforms = stdenv.lib.platforms.linux;
   };
 }

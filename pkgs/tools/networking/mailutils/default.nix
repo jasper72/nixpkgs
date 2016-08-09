@@ -1,6 +1,7 @@
 { fetchurl, stdenv, gettext, gdbm, libtool, pam, readline
-, ncurses, gnutls, sasl, fribidi, gss , mysql, guile, texinfo,
-  gnum4, dejagnu, nettools }:
+, ncurses, gnutls, mysql, guile, texinfo, gnum4, dejagnu, sendmailPath ? "/var/setuid-wrappers/sendmail" }:
+
+/* TODO: Add GNU SASL, GNU GSSAPI, and FreeBidi.  */
 
 stdenv.mkDerivation rec {
   name = "mailutils-2.2";
@@ -10,19 +11,17 @@ stdenv.mkDerivation rec {
     sha256 = "0szbqa12zqzldqyw97lxqax3ja2adis83i7brdfsxmrfw68iaf65";
   };
 
-  patches = [ ./path-to-cat.patch ./no-gets.patch ./scm_c_string.patch ];
+  patches = [ ./path-to-cat.patch ./no-gets.patch ];
 
-  configureFlags = [
-    "--with-gsasl"
-    "--with-gssapi=${gss}"
-  ];
+  configureFlags = "--with-path-sendmail=${sendmailPath}";
 
   buildInputs =
    [ gettext gdbm libtool pam readline ncurses
-     gnutls mysql.lib guile texinfo gnum4 sasl fribidi gss nettools ]
+     gnutls mysql.lib guile texinfo gnum4 ]
    ++ stdenv.lib.optional doCheck dejagnu;
 
-  doCheck = true;
+  # Tests fail since gcc 4.8
+  doCheck = false;
 
   meta = with stdenv.lib; {
     description = "Rich and powerful protocol-independent mail framework";
@@ -52,7 +51,7 @@ stdenv.mkDerivation rec {
       gpl3Plus /* tools */
     ];
 
-    maintainers = with maintainers; [ vrthra ];
+    maintainers = [ ];
 
     homepage = http://www.gnu.org/software/mailutils/;
 

@@ -7,7 +7,4 @@ stdenv.mkDerivation rec {
     sha256 = "1pd7qsa7vc3ybdc6h2gr4pm9inypjysf92kab945gg4qa6jp11my";
   };
 
-  meta = {
-    platforms = stdenv.lib.platforms.unix;
-  };
 }
